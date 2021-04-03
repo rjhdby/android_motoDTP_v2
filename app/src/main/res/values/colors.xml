@@ -2,10 +2,11 @@
 <resources>
     <color name="crimson_glory">#af0a37</color>
     <color name="brick_red">#cb414c</color>
-
-    <color name="white">#ffffff</color>
     <color name="manatee">#969696</color>
-
+    <color name="white">#fff</color>
+    <color name="red">#f00</color>
+    <color name="light_yellow">#ffff00</color>
+    <color name="dark_blue">#ff21272b</color>
     <color name="charcoal">#3c3c3c</color>
     <color name="black">#000000</color>
     <color name="cold_grey_70">#515764</color>
