@@ -18,7 +18,7 @@ abstract class BaseActivity : AppCompatActivity() {
     private val appSnackBar by lazy { createErrorSnackBar() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
+        //setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(layoutResource)
     }
