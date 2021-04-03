@@ -1,0 +1,51 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/sf_pro_display_regular</item>
+        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
+    </style>
+
+    <!--Dialogs-->
+
+    <style name="AppDialog" parent="Base.Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorAccent">@color/crimson_glory</item>
+    </style>
+
+    <style name="AppDialogButton" parent="AppOutlinedButton">
+        <item name="android:fontFamily">@string/roboto_medium</item>
+    </style>
+
+    <style name="AppOutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:fontFamily">@string/roboto_regular</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/crimson_glory</item>
+        <item name="android:textSize">14sp</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="rippleColor">@color/brick_red</item>
+    </style>
+
+    <declare-styleable name="AppToolbar">
+        <attr name="title" />
+        <attr name="leftIcon" />
+        <attr name="rightButtonText" format="string" />
+        <attr name="progress" format="integer" />
+    </declare-styleable>
+
+    <style name="AppSnackBarText">
+        <item name="android:fontFamily">@string/roboto_medium</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+    </style>
+
+</resources>

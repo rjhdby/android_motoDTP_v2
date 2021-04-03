@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:background="@android:color/transparent"
+	>
+	
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:minWidth="280dp"
+		android:paddingStart="16dp"
+		android:paddingEnd="16dp"
+		android:paddingBottom="8dp"
+		android:background="@color/white"
+		>
+		
+		<androidx.appcompat.widget.AppCompatTextView
+			android:id="@+id/dialog_title"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:paddingTop="16dp"
+			android:textColor="@color/charcoal"
+			android:textSize="20sp"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			tools:visibility="gone"
+			tools:text="Прервать выдачу карты?"
+			/>
+		
+		<androidx.appcompat.widget.AppCompatImageView
+			android:id="@+id/dialog_icon"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="16dp"
+			app:layout_constraintTop_toTopOf="@id/dialog_text"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toStartOf="@id/dialog_text"
+			tools:src="@drawable/ic_dialog_negative"
+			/>
+		
+		<androidx.appcompat.widget.AppCompatTextView
+			android:id="@+id/dialog_text"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:textSize="16sp"
+			android:textColor="@color/manatee"
+			android:lineSpacingExtra="4sp"
+			app:layout_constraintTop_toBottomOf="@id/dialog_title"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/dialog_icon"
+			tools:text="Внесенные данные и фотографии будут сохранены в разделе «История». Карточка клиента не будет создана."
+			/>
+		
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/dialog_negative"
+			style="@style/AppDialogButton"
+			android:layout_width="wrap_content"
+			app:layout_constraintTop_toTopOf="@id/dialog_positive"
+			app:layout_constraintBottom_toBottomOf="@id/dialog_positive"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toStartOf="@id/dialog_positive"
+			app:layout_constraintHorizontal_chainStyle="packed"
+			app:layout_constraintHorizontal_bias="1"
+			tools:text="Пропустить"
+			/>
+		
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/dialog_positive"
+			style="@style/AppDialogButton"
+			android:layout_width="wrap_content"
+			android:layout_marginTop="16dp"
+			app:layout_constraintTop_toBottomOf="@id/dialog_text"
+			app:layout_constraintStart_toEndOf="@id/dialog_negative"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="1"
+			tools:text="Продолжить"
+			/>
+	
+	</androidx.constraintlayout.widget.ConstraintLayout>
+	
+</FrameLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="crimson_glory">#af0a37</color>
+    <color name="brick_red">#cb414c</color>
+
+    <color name="white">#ffffff</color>
+    <color name="manatee">#969696</color>
+
+    <color name="charcoal">#3c3c3c</color>
+    <color name="black">#000000</color>
+    <color name="cold_grey_70">#515764</color>
+    <color name="cold_grey_20">#D5D8DF</color>
+
+    <color name="colorPrimary">#1c0b43</color>
+    <color name="colorPrimaryDark">#392b5b</color>
+    <color name="colorAccent">#8b61ff</color>
+
+    <color name="background">#21242C</color>
+
+    <color name="colorGrayText">#999EA9</color>
+    <color name="blue">#3A83F1</color>
+
+</resources>

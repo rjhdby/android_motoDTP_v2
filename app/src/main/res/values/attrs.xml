@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="title" format="string" />
+    <attr name="leftIcon" format="reference" />
+    <attr name="icon" format="reference" />
+    <attr name="hint" format="string" />
+
+    <declare-styleable name="DrawerItemLayout">
+        <attr name="icon" />
+        <attr name="title" />
+    </declare-styleable>
+
+    <declare-styleable name="AppPicker">
+        <attr name="title" />
+        <attr name="hint" />
+    </declare-styleable>
+
+    <declare-styleable name="ErrorView">
+        <attr name="error_title" format="string" />
+        <attr name="heightMode" format="enum">
+            <enum name="WRAP_HEIGHT" value="0" />
+            <enum name="MATCH_HEIGHT" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="CalendarWeekDayView">
+        <attr name="weekday_title" format="string" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,17 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/fwd_vector">
+
+    <target
+        android:name="one"
+        android:animation="@anim/animation" />
+
+    <target
+        android:name="two"
+        android:animation="@anim/animation" />
+
+    <target
+        android:name="three"
+        android:animation="@anim/animation" />
+
+</animated-vector>

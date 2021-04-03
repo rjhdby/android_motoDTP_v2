@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="1"
+        android:stretchColumns="1,2">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#e0e0e0"
+            android:stretchColumns="1,2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:text="@string/what"
+                android:textColor="#0000A0"/>
+
+            <TextView
+                android:id="@+id/create_what"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#0000A0"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#f0f0f0">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:text="@string/where"
+                android:textColor="#0000A0"/>
+
+            <TextView
+                android:id="@+id/create_where"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#0000A0"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#e0e0e0">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:text="@string/when"
+                android:textColor="#0000A0"/>
+
+            <TextView
+                android:id="@+id/create_when"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#0000A0"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f0f0f0">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:text="@string/reported"
+                android:textColor="#0000A0"/>
+
+            <TextView
+                android:id="@+id/create_who"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#0000A0"/>
+
+        </TableRow>
+
+    </TableLayout>
+
+    <FrameLayout
+        android:id="@+id/activity_create_main_frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/create_type_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/activity_create_select_type_header"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+            <Button
+                android:id="@+id/OTHER"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_create_type_other_button"/>
+
+            <Button
+                android:id="@+id/STEAL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_create_type_steal_button"/>
+
+            <Button
+                android:id="@+id/BREAK"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_create_type_break_button"/>
+
+            <Button
+                android:id="@+id/ACCIDENT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_create_type_acc_button"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/create_acc_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <TextView
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/activity_create_select_type_header"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+            <Button
+                android:id="@+id/MOTO_MOTO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_create_acc_mm_button"/>
+
+            <Button
+                android:id="@+id/MOTO_MAN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_create_acc_mp_button"/>
+
+            <Button
+                android:id="@+id/SOLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_create_acc_solo_button"/>
+
+            <Button
+                android:id="@+id/MOTO_AUTO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_create_acc_ma_button"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/create_people_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/activity_create_people_header"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+            <Button
+                android:id="@+id/PEOPLE_LETHAL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_create_people_death_button"/>
+
+            <Button
+                android:id="@+id/PEOPLE_HEAVY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_create_people_hard_button"/>
+
+            <Button
+                android:id="@+id/PEOPLE_LIGHT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_create_people_light_button"/>
+
+            <Button
+                android:id="@+id/PEOPLE_OK"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_create_people_ok_button"/>
+
+            <Button
+                android:id="@+id/PEOPLE_UNKNOWN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_create_people_na_button"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/create_final_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/details"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+            <EditText
+                android:id="@+id/create_final_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:background="@android:color/background_dark"
+                android:gravity="top"
+                android:inputType="textFilter|textMultiLine|textNoSuggestions"
+                android:lines="3"
+                android:minLines="3">
+
+                <requestFocus/>
+            </EditText>
+
+            <CheckBox
+                android:id="@+id/forStat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:text="@string/activity_create_for_stat"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/create_map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+<!--
+                <fragment
+                    android:id="@+id/create_map_container"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+-->
+                <ImageView
+                    android:id="@+id/activity_create_map_pointer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/map_provider_category"
+                    android:src="@drawable/target"/>
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/ADDRESS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_confirm_button"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/SearchEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/search_address_hint"
+                    android:inputType="textPostalAddress"
+                    android:textColorHint="#44FFFFFF"
+                    android:visibility="visible"/>
+
+                <ImageButton
+                    android:id="@+id/SEARCH"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@android:drawable/ic_menu_search"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/activity_create_bottom_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:weightSum="1.5">
+
+        <Button
+            android:id="@+id/CANCEL"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/activity_auth_cancel_label"/>
+
+        <Button
+            android:id="@+id/BACK"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:enabled="false"
+            android:text="@string/activity_create_back_button"/>
+
+        <Button
+            android:id="@+id/CREATE"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:clickable="false"
+            android:enabled="false"
+            android:text="@string/activity_create_confirm_button"/>
+    </LinearLayout>
+
+</LinearLayout>
