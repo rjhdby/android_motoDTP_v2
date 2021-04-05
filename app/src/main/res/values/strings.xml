@@ -118,4 +118,5 @@
     <string name="search_address_hint">адрес</string>
     <string name="phone">+78007751734</string>
     <string name="addressDialog">Уточните адрес. Номер дома, в центр/в область/внешнее/внутреннее и т.д.</string>
+    <string name="unable_to_load">Не удалось загрузить данные</string>
 </resources>

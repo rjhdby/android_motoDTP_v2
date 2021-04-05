@@ -1,18 +1,24 @@
 package motocitizen.data.network.factory.mocks
 
-const val getAccidentListZero = """
+const val getAccidentList = """
 [
    {
       "id":"2",
-      "name":"Авария IM-216832",
-      "category":2,
-      "status":"Выяснение причин",
-      "statusType":"normal",
-      "description":"Авария базы даных",
-      "affectedSystems":[
-         "Платежи"
-      ],
-      "detectionDate":"2020-06-25T10:31:10Z"
+      "created":1617587675,
+      "updated" : 1617612875,
+      "verified":false,
+      "hidden":false,
+      "description":"Все хорошо",
+      "conflict":false
+   },
+   {
+      "id":"3",
+      "created":1617674075,
+      "updated" : 1617728075,
+      "verified":true,
+      "hidden":false,
+      "description":"Упс",
+      "conflict": true
    }
 ]
 """

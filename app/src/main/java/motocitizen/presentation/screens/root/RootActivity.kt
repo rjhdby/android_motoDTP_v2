@@ -30,9 +30,8 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         bottom_navigation.isVisibleWithAnimation =
             bottom_navigation.menu.size() > 1 && destination.id in listOf(
                 R.id.homeFragment,
-                R.id.createPointFragment
-                //R.id.notificationsFragment,
-                //R.id.settingsFragment
+                R.id.createPointFragment,
+                R.id.mapFragment,
             )
     }
 
@@ -73,8 +72,7 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         val navGraphIds = listOf(
             R.navigation.home,
             R.navigation.events,
-            //R.navigation.notifications,
-            //R.navigation.settings
+            R.navigation.map,
         )
 
         // Setup the bottom navigation view with a list of navigation graphs
@@ -138,6 +136,13 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
                     )
                         .setIcon(R.drawable.create)
                 }
+                bottom_navigation.menu.add(
+                    Menu.NONE,
+                    R.id.map,
+                    Menu.NONE,
+                    getString(R.string.tab_map)
+                )
+                    .setIcon(R.drawable.ic_map_white_48dp)
                 // ToDo: Add more items
                 initBottomNavigation()
             }

@@ -1,6 +1,6 @@
 package motocitizen.domain.repos
 
-import io.reactivex.Observable
+import io.reactivex.Single
 import motocitizen.domain.model.accident.Accident
 
 interface AccidentRepo {
@@ -11,5 +11,5 @@ interface AccidentRepo {
             lon: Double?,
             radius: Int?,
             lastFetch: Int?
-    ): Observable<List<Accident>>
+    ): Single<List<Accident>>
 }

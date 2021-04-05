@@ -34,19 +34,23 @@ class MockInterceptor : Interceptor {
             if (request.body != null) {
                 val body = bodyToString(request)
                 when {
+// todo Код от проекта - донора
+/*
                     uri.endsWith("/accidents/") -> {
                         when {
-                            body.equals("{\"categories\":[1,2,3],\"limit\":10,\"page\":1,\"systemID\":\"1\"}") -> getAccidentListZero
-                            else -> getAccidentListZero
+                            body.equals("{\"categories\":[1,2,3],\"limit\":10,\"page\":1,\"systemID\":\"1\"}") -> getAccidentList
+                            else -> getAccidentList
                         }
                     }
                     uri.endsWith("/pushToken/update") -> {
                         pushTokenUpdate
                     }
+ */
                     else -> empty
                 }
             } else {
                 when {
+                    uri.contains("accident/list/") -> getAccidentList
                     uri.endsWith("/checkVersion?version=1.0") -> getCheckVersionNormal
                     uri.endsWith("/checkVersion?version=1.2") -> getCheckVersionNormalDeprecated
                     uri.endsWith("/checkVersion?version=1.3") -> getCheckVersionNormalUnsupported
