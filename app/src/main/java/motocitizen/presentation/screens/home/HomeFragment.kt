@@ -1,6 +1,7 @@
 package motocitizen.presentation.screens.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ import motocitizen.main.R
 import motocitizen.presentation.base.showSimpleDialog
 import motocitizen.presentation.base.showSimpleDialogWithButton
 import motocitizen.presentation.base.viewmodel.VMFragment
+import motocitizen.presentation.screens.root.RootActivity
 
 @AndroidEntryPoint
 class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
@@ -54,6 +56,22 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
                 cancellable = false
             )
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        observeLocation()
+    }
+
+    private fun observeLocation() {
+        val activity = requireActivity() as RootActivity
+        activity.viewModel.observeLocation(this, { locPoint ->
+            Log.d(
+                "observeLocation",
+                "HomeFragment longitude= ${locPoint.longitude}, latitude = ${locPoint.latitude}"
+            )
+
+        })
     }
 
     override fun onResume() {

@@ -1,8 +1,15 @@
 package motocitizen.presentation.screens.root
 
+import android.annotation.SuppressLint
+import android.location.Criteria
+import android.location.LocationManager
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import motocitizen.data.gps.LocListener
+import motocitizen.data.gps.LocationPoint
 import motocitizen.data.network.restrictions.Restrictions
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
@@ -18,10 +25,31 @@ class RootViewModel @ViewModelInject constructor(
     val checkRestrictionsState: LiveData<LcenState<Restrictions>>
         get() = _checkRestrictionsState
 
-    fun onAfterInit() {
+    private val locationPoint = MutableLiveData<LocationPoint>()
+    lateinit var locationManager: LocationManager
+    private val locationListener = LocListener()
+
+    @SuppressLint("MissingPermission")
+    fun starLocationUpdate() {
+        locationListener.setLivedata(locationPoint)
+        val provider: String? = locationManager.getBestProvider(Criteria(), true)
+
+        locationManager.requestLocationUpdates(provider!!, 1000L, 1f, locationListener)
+    }
+
+    fun onAfterInit(locManager: LocationManager) {
         checkClientCertificate()
         loadRestrictions()
+        locationManager = locManager
     }
+
+    fun observeLocation(owner: LifecycleOwner, observe: (LocationPoint) -> Unit) {
+        locationPoint.observe(owner) {locPoint->
+            observe(locPoint)
+        }
+
+    }
+
 
     private fun loadRestrictions() {
         safeSubscribe {
