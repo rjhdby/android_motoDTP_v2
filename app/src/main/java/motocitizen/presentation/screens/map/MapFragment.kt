@@ -51,10 +51,7 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map) {
     private fun observeLocation() {
         val activity = requireActivity() as RootActivity
         activity.viewModel.observeLocation(this,{locPoint ->
-            Log.d(
-                "observeLocation",
-                "MapFragment longitude= ${locPoint.longitude}, latitude = ${locPoint.latitude}"
-            )
+
 
         })
     }

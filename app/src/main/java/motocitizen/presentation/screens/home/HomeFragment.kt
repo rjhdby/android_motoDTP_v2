@@ -66,10 +66,7 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
     private fun observeLocation() {
         val activity = requireActivity() as RootActivity
         activity.viewModel.observeLocation(this, { locPoint ->
-            Log.d(
-                "observeLocation",
-                "HomeFragment longitude= ${locPoint.longitude}, latitude = ${locPoint.latitude}"
-            )
+
 
         })
     }
