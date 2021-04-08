@@ -10,7 +10,6 @@ import android.os.Build
 import android.os.Bundle
 import android.security.KeyChain
 import android.security.KeyChainAliasCallback
-import android.util.Log
 import android.view.Menu
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
@@ -33,7 +32,6 @@ import motocitizen.presentation.base.viewmodel.commands.VMCommand
 @AndroidEntryPoint
 class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
     private val REQST_CODE = 100
-
     private var currentNavController: LiveData<NavController>? = null
 
     private val destinationChangedListener = OnDestinationChangedListener { _, destination, _ ->
@@ -46,14 +44,12 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
     }
 
     private fun checkLocationPermission() {
-
         val permissionStatus = ContextCompat.checkSelfPermission(
             this,
             Manifest.permission.ACCESS_FINE_LOCATION
         )
 
         if (permissionStatus == PackageManager.PERMISSION_GRANTED) {
-
             startLocationUpdate()
         } else {
             if (Build.VERSION.SDK_INT >= 23) {
@@ -69,7 +65,6 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
                 )
             }
         }
-
     }
 
     override fun onRequestPermissionsResult(
@@ -86,8 +81,6 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
                 }
             }
         }
-
-
     }
 
     private fun startLocationUpdate() {

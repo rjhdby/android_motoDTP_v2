@@ -8,14 +8,12 @@ class LocListener :
     LocationListener {
 
     private var pointLD = MutableLiveData<LocationPoint>()
-    fun setLivedata(livedata: MutableLiveData<LocationPoint>) {
-        pointLD = livedata
+    fun setLiveData(liveData: MutableLiveData<LocationPoint>) {
+        pointLD = liveData
     }
-
 
     override fun onLocationChanged(loc: Location) {
         pointLD.value = LocationPoint(loc.longitude, loc.latitude)
 
     }
-
 }

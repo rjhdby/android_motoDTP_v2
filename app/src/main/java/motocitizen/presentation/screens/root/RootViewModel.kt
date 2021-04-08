@@ -3,7 +3,6 @@ package motocitizen.presentation.screens.root
 import android.annotation.SuppressLint
 import android.location.Criteria
 import android.location.LocationManager
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -26,12 +25,12 @@ class RootViewModel @ViewModelInject constructor(
         get() = _checkRestrictionsState
 
     private val locationPoint = MutableLiveData<LocationPoint>()
-    lateinit var locationManager: LocationManager
+    private lateinit var locationManager: LocationManager
     private val locationListener = LocListener()
 
     @SuppressLint("MissingPermission")
     fun starLocationUpdate() {
-        locationListener.setLivedata(locationPoint)
+        locationListener.setLiveData(locationPoint)
         val provider: String? = locationManager.getBestProvider(Criteria(), true)
 
         locationManager.requestLocationUpdates(provider!!, 1000L, 1f, locationListener)
@@ -47,9 +46,7 @@ class RootViewModel @ViewModelInject constructor(
         locationPoint.observe(owner) {locPoint->
             observe(locPoint)
         }
-
     }
-
 
     private fun loadRestrictions() {
         safeSubscribe {
