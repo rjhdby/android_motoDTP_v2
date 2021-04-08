@@ -12,6 +12,7 @@ import motocitizen.main.R
 import motocitizen.presentation.base.showSimpleDialog
 import motocitizen.presentation.base.showSimpleDialogWithButton
 import motocitizen.presentation.base.viewmodel.VMFragment
+import motocitizen.presentation.screens.root.RootActivity
 
 @AndroidEntryPoint
 class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
@@ -54,6 +55,18 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
                 cancellable = false
             )
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        observeLocation()
+    }
+
+    private fun observeLocation() {
+        val activity = requireActivity() as RootActivity
+        activity.viewModel.observeLocation(this, { locPoint ->
+
+        })
     }
 
     override fun onResume() {

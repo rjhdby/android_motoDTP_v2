@@ -1,12 +1,19 @@
 package motocitizen.presentation.screens.root
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.security.KeyChain
 import android.security.KeyChainAliasCallback
 import android.view.Menu
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import androidx.navigation.NavController.OnDestinationChangedListener
@@ -19,11 +26,12 @@ import motocitizen.presentation.base.isVisibleWithAnimation
 import motocitizen.presentation.base.setupWithNavController
 import motocitizen.presentation.base.viewmodel.VMActivity
 import motocitizen.presentation.base.viewmodel.commands.VMCommand
+
 //import motocitizen.presentation.screens.accident.AccidentFragmentArgs
 
 @AndroidEntryPoint
 class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
-
+    private val REQST_CODE = 100
     private var currentNavController: LiveData<NavController>? = null
 
     private val destinationChangedListener = OnDestinationChangedListener { _, destination, _ ->
@@ -33,6 +41,50 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
                 R.id.createPointFragment,
                 R.id.mapFragment,
             )
+    }
+
+    private fun checkLocationPermission() {
+        val permissionStatus = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+
+        if (permissionStatus == PackageManager.PERMISSION_GRANTED) {
+            startLocationUpdate()
+        } else {
+            if (Build.VERSION.SDK_INT >= 23) {
+                requestPermissions(
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    REQST_CODE
+                )
+            } else {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    REQST_CODE
+                )
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            REQST_CODE -> {
+                if ((grantResults.isNotEmpty() &&
+                            grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                ) {
+                    startLocationUpdate()
+                }
+            }
+        }
+    }
+
+    private fun startLocationUpdate() {
+        viewModel.starLocationUpdate()
     }
 
     override val viewModel: RootViewModel by viewModels()
@@ -113,9 +165,18 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         }*/
     }
 
+    override fun onStart() {
+        super.onStart()
+        checkLocationPermission()
+    }
+
     override fun initViewModel() {
         super.initViewModel()
-        viewModel.onAfterInit()
+
+        val locationManager =
+            this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        viewModel.onAfterInit(locationManager)
+
         viewModel.checkRestrictionsState.observe { checkRestrictionsState ->
             val restrictions = checkRestrictionsState.asContentOrNull()
             if (restrictions != null) {

@@ -9,6 +9,7 @@ import motocitizen.domain.model.accident.Accident
 import motocitizen.domain.usecases.AccidentUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 
+
 class MapViewModel @ViewModelInject constructor(
     private val getAccidentUseCase: AccidentUseCase
 ) : BaseViewModel() {
@@ -25,7 +26,6 @@ class MapViewModel @ViewModelInject constructor(
     init {
         loadData()
     }
-
 
     fun loadData() {
         safeSubscribe {
