@@ -1,7 +1,9 @@
 package motocitizen.data.network.accident
 
 import io.reactivex.Single
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface AccidentApi {
@@ -14,4 +16,7 @@ interface AccidentApi {
         @Query("radius") radius: Int?,
         @Query("lastFetch") lastFetch: Int?,
     ): Single<List<AccidentResponse>>
+
+    @POST("/accident/create/")
+    fun createAccident(@Body request: CreateAccidentRequest): Single<AccidentResponse>
 }

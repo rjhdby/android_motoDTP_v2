@@ -1,5 +1,8 @@
 package motocitizen.domain.usecases
 
+import motocitizen.domain.model.accident.AccidentHardness
+import motocitizen.domain.model.accident.AccidentType
+import motocitizen.domain.model.accident.Address
 import motocitizen.domain.repos.AccidentRepo
 import javax.inject.Inject
 
@@ -20,5 +23,17 @@ class AccidentUseCase @Inject constructor(
         lon = lon,
         radius = radius,
         lastFetch = lastFetch,
+    )
+
+    fun createAccident(
+        type: AccidentType,
+        hardness: AccidentHardness,
+        location: Address,
+        description: String,
+    ) = accidentRepo.createAccident(
+        type = type,
+        hardness = hardness,
+        location = location,
+        description = description,
     )
 }

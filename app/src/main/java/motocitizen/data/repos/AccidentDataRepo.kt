@@ -4,6 +4,9 @@ import io.reactivex.Single
 import motocitizen.data.converters.AccidentConverter
 import motocitizen.data.network.accident.AccidentApi
 import motocitizen.domain.model.accident.Accident
+import motocitizen.domain.model.accident.AccidentHardness
+import motocitizen.domain.model.accident.AccidentType
+import motocitizen.domain.model.accident.Address
 import motocitizen.domain.repos.AccidentRepo
 import motocitizen.domain.utils.schedulersIoToMain
 import javax.inject.Inject
@@ -21,6 +24,24 @@ class AccidentDataRepo @Inject constructor(
     ): Single<List<Accident>> {
         return api.getAccidentList(token, depth, lat, lon, radius, lastFetch)
             .map { AccidentConverter.toAccidentList(it) }
+            .schedulersIoToMain()
+    }
+
+    override fun createAccident(
+        type: AccidentType,
+        hardness: AccidentHardness,
+        location: Address,
+        description: String
+    ): Single<Accident> {
+        return api.createAccident(
+            AccidentConverter.toCreateAccidentRequest(
+                type,
+                hardness,
+                location,
+                description
+            )
+        )
+            .map { AccidentConverter.toAccident(it) }
             .schedulersIoToMain()
     }
 }
