@@ -141,6 +141,7 @@
                 android:text="@string/activity_create_type_acc_button"/>
         </LinearLayout>
 
+
         <LinearLayout
             android:id="@+id/create_acc_frame"
             android:layout_width="match_parent"

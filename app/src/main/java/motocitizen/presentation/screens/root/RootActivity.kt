@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.security.KeyChain
 import android.security.KeyChainAliasCallback
 import android.view.Menu
+import android.view.View
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -38,7 +39,6 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         bottom_navigation.isVisibleWithAnimation =
             bottom_navigation.menu.size() > 1 && destination.id in listOf(
                 R.id.homeFragment,
-                R.id.createPointFragment,
                 R.id.mapFragment,
             )
     }
@@ -123,7 +123,7 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
     private fun initBottomNavigation() {
         val navGraphIds = listOf(
             R.navigation.home,
-            R.navigation.events,
+            R.navigation.create_accident,
             R.navigation.map,
         )
 
@@ -188,10 +188,10 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
                     getString(R.string.home)
                 )
                     .setIcon(R.drawable.ic_home)
-                if (restrictions.events) {
+                if (restrictions.create) {
                     bottom_navigation.menu.add(
                         Menu.NONE,
-                        R.id.events,
+                        R.id.create_accident,
                         Menu.NONE,
                         getString(R.string.activity_main_add_point_button)
                     )
@@ -230,5 +230,10 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
 
     override fun alias(alias: String?) {
         viewModel.onAliasChosen(alias)
+    }
+
+    fun toHome(){
+        val view: View = bottom_navigation.findViewById(R.id.home)
+        view.performClick()
     }
 }

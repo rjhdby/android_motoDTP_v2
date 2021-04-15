@@ -5,7 +5,7 @@ const val getRestrictions = """
     "accidentDescriptions": true,
     "accidentWorkers": true,
     "accidentHistory": true,
-    "events": true,
+    "create": true,
     "metrics": true,
     "planWorkers": true,
     "push": true

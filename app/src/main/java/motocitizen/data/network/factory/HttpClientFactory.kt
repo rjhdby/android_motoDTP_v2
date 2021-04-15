@@ -17,8 +17,6 @@ object HttpClientFactory {
     private const val WRITE_TIMEOUT_SECONDS = 30L
     private const val USER_AGENT = "User-Agent"
     private const val ANDROID = "Android"
-    private const val APP_NAME = "App-Name"
-    private const val NAME = "DTP"
     private const val APP_VERSION = "App-Version"
     private const val PLATFORM = "Platform"
     private const val PLATFORM_VERSION = "Platform-Version"
@@ -56,7 +54,6 @@ object HttpClientFactory {
             val originalRequest = chain.request()
             val requestWithUserAgent = originalRequest.newBuilder()
                 .header(USER_AGENT, ANDROID)
-                .header(APP_NAME, NAME)
                 .header(APP_VERSION, BuildConfig.VERSION_NAME)
                 .header(PLATFORM, ANDROID)
                 .header(PLATFORM_VERSION, android.os.Build.VERSION.RELEASE.toString())
