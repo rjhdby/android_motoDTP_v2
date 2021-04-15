@@ -9,8 +9,8 @@ data class RestrictionsResponse(
     val accidentWorkers: Boolean = false, // Доступны ли участники аварии
     @SerializedName("accidentHistory")
     val accidentHistory: Boolean = false, // Доступна ли история аварии
-    @SerializedName("events")
-    val events: Boolean = false, // Доступны ли события
+    @SerializedName("create")
+    val create: Boolean = true, // Доступны ли события
     @SerializedName("metrics")
     val metrics: Boolean = false, // Доступен ли просмотр базового списка метрик
     @SerializedName("planWorkers")

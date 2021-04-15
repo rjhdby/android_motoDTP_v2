@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/create_people_frame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <motocitizen.presentation.widgets.AppToolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <Button
+        android:id="@+id/PEOPLE_LETHAL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/activity_create_people_death_button" />
+
+    <Button
+        android:id="@+id/PEOPLE_HEAVY"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/activity_create_people_hard_button" />
+
+    <Button
+        android:id="@+id/PEOPLE_LIGHT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/activity_create_people_light_button" />
+
+    <Button
+        android:id="@+id/PEOPLE_OK"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/activity_create_people_ok_button" />
+
+    <Button
+        android:id="@+id/PEOPLE_UNKNOWN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/activity_create_people_na_button" />
+</LinearLayout>

@@ -15,12 +15,14 @@ object AccidentConverter {
             Accident(
                 id = accident.id,
                 created = accident.created,
-                updated = accident.updated,
+                type = accident.type,
                 resolved = accident.resolved,
                 verified = accident.verified,
                 hidden = accident.hidden,
+                hardness = accident.hardness,
+                location = accident.location,
                 description = accident.description,
-                conflict = accident.conflict
+                conflict = accident.conflict,
             )
         }
     }
@@ -31,12 +33,14 @@ object AccidentConverter {
             Accident(
                 id = it.id,
                 created = it.created,
-                updated = it.updated,
+                type = it.type,
                 resolved = it.resolved,
                 verified = it.verified,
                 hidden = it.hidden,
+                hardness = it.hardness,
+                location = it.location,
                 description = it.description,
-                conflict = it.conflict
+                conflict = it.conflict,
             )
         }
     }
