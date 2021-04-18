@@ -174,6 +174,11 @@ dependencies {
 
     // pull to refresh
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    //anko
+    ext.anko_version = "0.10.8"
+    implementation "org.jetbrains.anko:anko:$anko_version"
+    implementation "org.jetbrains.anko:anko-commons:$anko_version"
 }
 
 androidExtensions {

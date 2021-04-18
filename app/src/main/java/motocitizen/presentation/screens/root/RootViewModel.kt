@@ -1,6 +1,7 @@
 package motocitizen.presentation.screens.root
 
 import android.annotation.SuppressLint
+import android.graphics.Point
 import android.location.Criteria
 import android.location.LocationManager
 import androidx.hilt.lifecycle.ViewModelInject
@@ -19,6 +20,7 @@ import motocitizen.presentation.base.viewmodel.commands.VMCommand
 class RootViewModel @ViewModelInject constructor(
     private val getRestrictions: GetRestrictionsUseCase,
 ) : BaseViewModel() {
+
 
     private val _checkRestrictionsState = MutableLiveData<LcenState<Restrictions>>(LcenState.None)
     val checkRestrictionsState: LiveData<LcenState<Restrictions>>

@@ -9,14 +9,18 @@ object AccidentConverter {
         val result = getNotNull(response)
         return result.map { accident ->
             Accident(
-                    id = accident.id,
-                    created = accident.created,
-                    updated = accident.updated,
-                    resolved = accident.resolved,
-                    verified = accident.verified,
-                    hidden = accident.hidden,
-                    description = accident.description,
-                    conflict = accident.conflict
+                id = accident.id,
+                updated = accident.updated,
+                created = accident.created,
+                resolved = accident.resolved,
+                verified = accident.verified,
+                hidden = accident.hidden,
+                description = accident.description,
+                conflict = accident.conflict,
+                messages = accident.messages,
+                location = accident.location,
+                type = accident.type,
+                hardness = accident.hardness
             )
         }
     }

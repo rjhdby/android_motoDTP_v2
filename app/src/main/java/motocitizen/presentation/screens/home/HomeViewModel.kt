@@ -106,4 +106,5 @@ class HomeViewModel @ViewModelInject constructor(
             plannedWorkCurrentPage = 0,
         )
     }
+
 }

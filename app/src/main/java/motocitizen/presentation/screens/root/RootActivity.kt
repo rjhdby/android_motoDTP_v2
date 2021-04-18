@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Point
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
@@ -31,6 +32,8 @@ import motocitizen.presentation.base.viewmodel.commands.VMCommand
 
 @AndroidEntryPoint
 class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
+
+
     private val REQST_CODE = 100
     private var currentNavController: LiveData<NavController>? = null
 

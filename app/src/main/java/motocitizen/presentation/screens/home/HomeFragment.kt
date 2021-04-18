@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
+import motocitizen.data.gps.LocListener
 import motocitizen.data.network.version.VersionStatus
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.main.R
@@ -30,9 +31,20 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
                 return false
             }
         }
+
         swipe_to_refresh.setOnRefreshListener {
             viewModel.loadRestrictions()
             swipe_to_refresh.isRefreshing = false
+        }
+    }
+
+    private fun showAccidents() {
+        val accidentEpoxyController = AccidentEpoxyController()
+
+        LocListener.currentLocation.observe(requireParentFragment()) {
+
+            recycler_view_home.setControllerAndBuildModels(accidentEpoxyController)
+            LocListener.currentLocation.removeObservers(requireParentFragment())
         }
     }
 
@@ -40,8 +52,7 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
         viewModel.onAfterInit()
         viewModel.homeViewState.observe { viewState ->
             renderCheckVersionState(viewState.checkVersionState)
-            recycler_view_home.withModels {
-            }
+
         }
     }
 
@@ -73,4 +84,6 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
         super.onResume()
         viewModel.loadRestrictions()
     }
+
+
 }
