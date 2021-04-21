@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/create_accident"
+    app:startDestination="@id/createMapFragment">
+    <fragment
+        android:id="@+id/createMapFragment"
+        android:name="motocitizen.presentation.screens.accident.create.map.CreateMapFragment"
+        android:label="CreateMapFragment"
+        tools:layout="@layout/fragment_create_map">
+        <action
+            android:id="@+id/action_createMapFragment_to_createTypeFragment"
+            app:destination="@id/createTypeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createTypeFragment"
+        android:name="motocitizen.presentation.screens.accident.create.type.CreateTypeFragment"
+        android:label="CreateTypeFragment"
+        tools:layout="@layout/fragment_create_type">
+        <action
+            android:id="@+id/action_createTypeFragment_to_createDescriptionFragment"
+            app:destination="@id/createDescriptionFragment" />
+        <action
+            android:id="@+id/action_createTypeFragment_to_createSubTypeFragment"
+            app:destination="@id/createSubTypeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createDescriptionFragment"
+        android:name="motocitizen.presentation.screens.accident.create.description.CreateDescriptionFragment"
+        android:label="CreateDescriptionFragment"
+        tools:layout="@layout/fragment_create_final">
+        <argument
+            android:name="type"
+            app:argType="motocitizen.domain.model.accident.AccidentType" />
+        <argument
+            android:name="hardness"
+            app:argType="motocitizen.domain.model.accident.AccidentHardness" />
+    </fragment>
+    <fragment
+        android:id="@+id/createSubTypeFragment"
+        android:name="motocitizen.presentation.screens.accident.create.subtype.SubTypeFragment"
+        android:label="CreateSubTypeFragment"
+        tools:layout="@layout/fragment_sub_type">
+        <action
+            android:id="@+id/action_createSubTypeFragment_to_damageFragment"
+            app:destination="@id/damageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/damageFragment"
+        android:name="motocitizen.presentation.screens.accident.create.damage.DamageFragment"
+        android:label="DamageFragment"
+        tools:layout="@layout/fragment_create_people">
+        <argument
+            android:name="type"
+            app:argType="motocitizen.domain.model.accident.AccidentType" />
+        <action
+            android:id="@+id/action_createDamageFragment_to_createDescriptionFragment"
+            app:destination="@id/createDescriptionFragment" />
+    </fragment>
+</navigation>

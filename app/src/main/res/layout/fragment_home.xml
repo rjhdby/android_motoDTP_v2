@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="@dimen/bottom_navigation_height">
 
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
     <com.airbnb.epoxy.EpoxyRecyclerView
 
         android:id="@+id/recycler_view_home"
