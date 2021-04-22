@@ -32,14 +32,9 @@ data class Accident(
         .setLatitude(location.lat)
         .build()
 
-    //TODO
-    companion object {
-        var isOwner = true
-    }
-
+    //TODO реализовать логику
     fun isOwner(): Boolean {
-        isOwner = !isOwner
-        return isOwner
+        return true
     }
 
     fun messagesText(): Spanned {

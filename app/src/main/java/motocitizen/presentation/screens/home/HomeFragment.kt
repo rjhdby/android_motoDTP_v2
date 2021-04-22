@@ -31,7 +31,7 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
                 return false
             }
         }
-
+        showAccidents()
         swipe_to_refresh.setOnRefreshListener {
             viewModel.loadRestrictions()
             swipe_to_refresh.isRefreshing = false
