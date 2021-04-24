@@ -12,7 +12,6 @@ import java.util.*
 data class Accident(
     val id: String,// Идентификатор аварии
     val created: String,// Идентификатор аварии
-    var updated: String,
     var type: Type,
     var resolved: String? = null,
     var verified: Boolean,

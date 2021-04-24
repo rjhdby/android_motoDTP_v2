@@ -1,24 +1,56 @@
 package motocitizen.presentation.screens.home
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.internal.modules.ApplicationContextModule
 import kotlinx.android.synthetic.main.fragment_home.*
+import motocitizen.app.App
+import motocitizen.app.DaggerApp_HiltComponents_SingletonC
 import motocitizen.data.gps.LocListener
 import motocitizen.data.network.version.VersionStatus
 import motocitizen.domain.lcenstate.LcenState
+import motocitizen.domain.model.accident.Accident
+import motocitizen.domain.usecases.AccidentUseCase
 import motocitizen.main.R
 import motocitizen.presentation.base.showSimpleDialog
 import motocitizen.presentation.base.showSimpleDialogWithButton
 import motocitizen.presentation.base.viewmodel.VMFragment
 import motocitizen.presentation.screens.root.RootActivity
+import javax.inject.Inject
+import javax.net.ssl.SSLSocketFactory
+import javax.net.ssl.TrustManager
 
 @AndroidEntryPoint
 class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
 
     override val viewModel: HomeViewModel by viewModels()
+    @Inject
+    lateinit var trustManager: TrustManager
+
+    @Inject
+    lateinit var sslSocketFactoryFactory: SSLSocketFactory
+
+    @Inject
+    lateinit var accidentUseCase: AccidentUseCase
+
+    private var accidentEpoxyController = AccidentEpoxyController()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        DaggerApp_HiltComponents_SingletonC.builder()
+            .applicationContextModule(ApplicationContextModule(requireContext()))
+            .build()
+            .injectApp(App())
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        showAccidentsList()
+    }
 
     override fun initUi(savedInstanceState: Bundle?) {
         recycler_view_home.itemAnimator = object : DefaultItemAnimator() {
@@ -28,23 +60,13 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
                 preInfo: ItemHolderInfo,
                 postInfo: ItemHolderInfo,
             ): Boolean {
+
                 return false
             }
         }
-        showAccidents()
         swipe_to_refresh.setOnRefreshListener {
             viewModel.loadRestrictions()
             swipe_to_refresh.isRefreshing = false
-        }
-    }
-
-    private fun showAccidents() {
-        val accidentEpoxyController = AccidentEpoxyController()
-
-        LocListener.currentLocation.observe(requireParentFragment()) {
-
-            recycler_view_home.setControllerAndBuildModels(accidentEpoxyController)
-            LocListener.currentLocation.removeObservers(requireParentFragment())
         }
     }
 
@@ -52,7 +74,6 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
         viewModel.onAfterInit()
         viewModel.homeViewState.observe { viewState ->
             renderCheckVersionState(viewState.checkVersionState)
-
         }
     }
 
@@ -73,9 +94,19 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
         observeLocation()
     }
 
+    private fun showAccidentsList() {
+        viewModel.accidentList.observe(viewLifecycleOwner) { accidents ->
+            accidentEpoxyController.setAccidents(accidents as MutableList<Accident>)
+            LocListener.currentLocation.observe(viewLifecycleOwner) {
+                recycler_view_home.setControllerAndBuildModels(accidentEpoxyController)
+                LocListener.currentLocation.removeObservers(viewLifecycleOwner)
+            }
+        }
+    }
+
     private fun observeLocation() {
         val activity = requireActivity() as RootActivity
-        activity.viewModel.observeLocation(this, { locPoint ->
+        activity.viewModel.observeLocation(viewLifecycleOwner, { locPoint ->
 
         })
     }
@@ -83,7 +114,7 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
     override fun onResume() {
         super.onResume()
         viewModel.loadRestrictions()
-    }
 
+    }
 
 }

@@ -10,15 +10,21 @@ data class AccidentResponse(
     val id: String,
     @SerializedName("created")
     val created: String,
-    @SerializedName("updated")
-    var updated: String,
-//        var type: AccidentType,
+    @SerializedName("type")
+    var type: Type,
     @SerializedName("resolved")
     var resolved: String? = null,
     @SerializedName("verified")
     var verified: Boolean,
     @SerializedName("hidden")
     var hidden: Boolean,
+    @SerializedName("hardness")
+    var hardness: Hardness,
+    @SerializedName("creator")
+    var creator :String,
+//    @SerializedName("updated")
+//    var updated: String,
+//        var type: AccidentType,
 //        var hardness: AccidentHardness,
 //        @field:JsonSerialize(using = ToStringSerializer::class) val creator: ObjectId,
     @SerializedName("location")
@@ -28,10 +34,5 @@ data class AccidentResponse(
     @SerializedName("conflict")
     var conflict: Boolean = false,
     @SerializedName("messages")
-    var messages: Int,
-    @SerializedName("type")
-    var type: Type,
-    @SerializedName("hardness")
-    var hardness: Hardness
-
+    var messages: Int
 )

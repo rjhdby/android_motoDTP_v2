@@ -1,5 +1,3 @@
-@file:JvmName("DateUtils")
-
 package motocitizen.domain.utils
 
 import java.util.*

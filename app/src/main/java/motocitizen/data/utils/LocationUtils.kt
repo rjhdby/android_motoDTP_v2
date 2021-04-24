@@ -1,4 +1,3 @@
-@file:JvmName("LocationUtils")
 
 package motocitizen.data.utils
 
