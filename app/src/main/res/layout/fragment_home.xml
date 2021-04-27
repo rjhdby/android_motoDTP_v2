@@ -6,21 +6,18 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="@dimen/bottom_navigation_height">
 
-<!--TODO TextView перекрывает все что под ним-->
+<!--TODO TextView Занимает все место и перекрывает recycler_view_home-->
 <!--        <TextView-->
-<!--            android:id="@+id/result"-->
+<!--            android:i d="@+id/result"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="0dp"-->
 <!--            android:text="@string/home"-->
 <!--            android:textAppearance="?android:attr/textAppearanceLarge" />-->
 
         <com.airbnb.epoxy.EpoxyRecyclerView
-
             android:id="@+id/recycler_view_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

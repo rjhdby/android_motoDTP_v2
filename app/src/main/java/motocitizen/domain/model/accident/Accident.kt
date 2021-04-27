@@ -12,19 +12,16 @@ import java.util.*
 data class Accident(
     val id: String,// Идентификатор аварии
     val created: String,// Идентификатор аварии
-    var type: Type,
+    var type: AccidentType,
     var resolved: String? = null,
     var verified: Boolean,
     var hidden: Boolean,
-//    var hardness: AccidentHardness,
 //        @field:JsonSerialize(using = ToStringSerializer::class) val creator: ObjectId,
     var location: Address,
-
     var description: String,
     var conflict: Boolean = false,
     var messages: Int,
-    var hardness: Hardness
-
+    var hardness: AccidentHardness
 ) {
     var coordinates: LatLng = LatLng.newBuilder()
         .setLongitude(location.lon)
@@ -57,11 +54,11 @@ data class Accident(
     }
 
     fun isAccident(): Boolean =
-        type in arrayOf(Type.MOTO_AUTO, Type.MOTO_MOTO, Type.MOTO_MAN, Type.SOLO)
+        type in arrayOf(AccidentType.MOTO_AUTO, AccidentType.MOTO_MOTO, AccidentType.MOTO_PEDESTRIAN, AccidentType.SOLO)
 
     fun title(): String {
         val damage =
-            if (hardness == Hardness.UNKNOWN || !isAccident()) "" else ", " + hardness.text
+            if (hardness == AccidentHardness.UNKNOWN || !isAccident()) "" else ", " + hardness.text
         return String.format(
             "%s%s(%s)%n%s%n%s",
             type.text,
@@ -76,6 +73,4 @@ data class Accident(
         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZ", Locale.getDefault())
         return sdf.parse(created)!!.getIntervalFromNowInText()
     }
-
-
 }

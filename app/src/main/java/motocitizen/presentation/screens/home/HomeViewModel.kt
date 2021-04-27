@@ -3,8 +3,7 @@ package motocitizen.presentation.screens.home
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.SingleObserver
-import io.reactivex.disposables.Disposable
+import io.reactivex.observers.DisposableSingleObserver
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.isContent
 import motocitizen.domain.lcenstate.toLcenEventObservable
@@ -60,20 +59,18 @@ class HomeViewModel @ViewModelInject constructor(
 
     fun loadAccidentList() {
         getAccidentUseCase.getAccidentList("1", 999)
-            .subscribe(object : SingleObserver<List<Accident>> {
-                override fun onSubscribe(d: Disposable) {
-
-                }
+            .subscribe(object : DisposableSingleObserver<List<Accident>>() {
 
                 override fun onSuccess(accidetns: List<Accident>) {
                     Timber.d(accidetns.size.toString())
                     accidentList.postValue(accidetns)
+                    dispose()
                 }
 
                 override fun onError(e: Throwable) {
                     Timber.d(e.message.toString())
+                    dispose()
                 }
-
             })
     }
 
@@ -112,10 +109,6 @@ class HomeViewModel @ViewModelInject constructor(
                     ::handleError
                 )
         }
-    }
-
-    fun getAccidentsList() {
-
     }
 
     private fun onLogin() {

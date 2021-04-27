@@ -20,7 +20,6 @@ class LocListener :
     override fun onLocationChanged(loc: Location) {
         pointLD.value = LocationPoint(loc.longitude, loc.latitude)
         currentLocation.value =
-            LatLng.newBuilder().setLatitude(loc.latitude).setLongitude(loc.latitude).build()
-
+            LatLng.newBuilder().setLatitude(loc.latitude).setLongitude(loc.longitude).build()
     }
 }

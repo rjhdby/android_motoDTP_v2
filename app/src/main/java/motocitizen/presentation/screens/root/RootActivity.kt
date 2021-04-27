@@ -34,7 +34,6 @@ import motocitizen.presentation.base.viewmodel.commands.VMCommand
 @AndroidEntryPoint
 class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
 
-
     private val REQST_CODE = 100
     private var currentNavController: LiveData<NavController>? = null
 

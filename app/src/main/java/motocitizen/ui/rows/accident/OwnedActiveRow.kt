@@ -8,5 +8,4 @@ import motocitizen.main.R
 class OwnedActiveRow(context: Context) : OwnedRow(context) {
     override val textColor: Int = ACTIVE_COLOR
     override val background: Int = R.drawable.owner_message_row
-
 }

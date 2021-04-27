@@ -34,8 +34,8 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 55.568,
+      "lon": 37.8488,
       "address": "Площадь Ленина"
     },
     "description": "string",
@@ -45,32 +45,32 @@ const val getAccidentList = """
     {
     "id": "2",
     "created": "2021-04-01T13:51:42.000+00:00",
-    "type": "OTHER",
+    "type": "BREAK",
     "resolved": "2021-04-01T13:51:42.000+00:00",
     "verified": true,
     "hidden": true,
     "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 55.1028,
+      "lon": 37.3000501,
       "address": "string"
     },
     "description": "string",
     "conflict": true,
     "messages": 0
   },
-  {
+    {
     "id": "607b28f563d52731fca2798b",
     "created": "2021-04-17T18:29:09.000+00:00",
-    "type": "OTHER",
+    "type": "STEAL",
     "verified": false,
     "hidden": false,
     "hardness": "UNKNOWN",
     "creator": "607b289b63d52731fca27989",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 55.2028,
+      "lon": 37.3100001,
       "address": "string"
     },
     "description": "кто-то что-то как-то",
@@ -80,15 +80,15 @@ const val getAccidentList = """
   {
     "id": "3",
     "created": "2021-04-01T13:51:42.000+00:00",
-    "type": "OTHER",
+    "type": "MOTO_MOTO",
     "resolved": "2021-04-01T13:51:42.000+00:00",
     "verified": true,
     "hidden": true,
     "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 55.3028,
+      "lon": 37.3180001,
       "address": "string"
     },
     "description": "string",
@@ -98,15 +98,15 @@ const val getAccidentList = """
     {
     "id": "4",
     "created": "2021-04-01T13:51:42.000+00:00",
-    "type": "OTHER",
+    "type": "MOTO_AUTO",
     "resolved": "2021-04-01T13:51:42.000+00:00",
     "verified": true,
     "hidden": true,
-    "hardness": "UNKNOWN",
+    "hardness": "NO",
     "creator": "string",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 55.4028,
+      "lon": 37.3280001,
       "address": "string"
     },
     "description": "string",
@@ -116,14 +116,14 @@ const val getAccidentList = """
   {
     "id": "5607b28f563d52731fca2798b",
     "created": "2021-04-17T18:29:09.000+00:00",
-    "type": "OTHER",
+    "type": "MOTO_PEDESTRIAN",
     "verified": false,
     "hidden": false,
-    "hardness": "UNKNOWN",
+    "hardness": "LIGHT",
     "creator": "607b289b63d52731fca27989",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 55.4128,
+      "lon": 37.4280001,
       "address": "string"
     },
     "description": "кто-то что-то как-то",
@@ -137,11 +137,11 @@ const val getAccidentList = """
     "resolved": "2021-04-01T13:51:42.000+00:00",
     "verified": true,
     "hidden": true,
-    "hardness": "UNKNOWN",
+    "hardness": "HEAVY",
     "creator": "string",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 55.5028,
+      "lon": 37.4582201,
       "address": "string"
     },
     "description": "string",
@@ -155,11 +155,11 @@ const val getAccidentList = """
     "resolved": "2021-04-01T13:51:42.000+00:00",
     "verified": true,
     "hidden": true,
-    "hardness": "UNKNOWN",
+    "hardness": "LETHAL",
     "creator": "string",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 55.5128,
+      "lon": 37.4592201,
       "address": "string"
     },
     "description": "string",
@@ -175,8 +175,8 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "607b289b63d52731fca27989",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 55.5228,
+      "lon": 37.4599201,
       "address": "string"
     },
     "description": "кто-то что-то как-то",
@@ -193,8 +193,8 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 55.6228,
+      "lon": 37.4609201,
       "address": "string"
     },
     "description": "string",
@@ -211,8 +211,8 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 55.7228,
+      "lon": 37.4709201,
       "address": "string"
     },
     "description": "string",
@@ -228,8 +228,8 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "607b289b63d52731fca27989",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 55.87,
+      "lon": 37.4719201,
       "address": "string"
     },
     "description": "кто-то что-то как-то",
@@ -246,8 +246,8 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 55.9,
+      "lon": 37.4819201,
       "address": "string"
     },
     "description": "string",
@@ -264,8 +264,8 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 56.0,
+      "lon": 37.5813201,
       "address": "string"
     },
     "description": "string",
@@ -281,8 +281,8 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "607b289b63d52731fca27989",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 56.60,
+      "lon": 37.5913201,
       "address": "string"
     },
     "description": "кто-то что-то как-то",
@@ -298,8 +298,8 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 56.70,
+      "lon": 37.6213201,
       "address": "string"
     },
     "description": "string",
@@ -316,8 +316,8 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 56.80,
+      "lon": 37.6413201,
       "address": "string"
     },
     "description": "string",
@@ -333,8 +333,8 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "607b289b63d52731fca27989",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 56.85,
+      "lon": 37.6613201,
       "address": "Где-то"
     },
     "description": "кто-то что-то как-то",
@@ -350,8 +350,8 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 56.8,
+      "lon": 37.8613201,
       "address": "Москва"
     },
     "description": "string",
@@ -368,8 +368,8 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 54.99,
+      "lon": 37.9913201,
       "address": "адресс"
     },
     "description": "string",
@@ -385,13 +385,14 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "607b289b63d52731fca27989",
     "location": {
-      "lat": 0,
-      "lon": 0,
+      "lat": 55.0,
+      "lon": 37.8913901,
       "address": "Площадь Ленина"
     },
     "description": "кто-то что-то как-то",
     "conflict": false,
     "messages": 4
   }
+  
 ]
 """

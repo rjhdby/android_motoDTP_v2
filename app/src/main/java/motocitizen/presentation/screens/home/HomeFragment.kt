@@ -14,29 +14,16 @@ import motocitizen.data.gps.LocListener
 import motocitizen.data.network.version.VersionStatus
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.model.accident.Accident
-import motocitizen.domain.usecases.AccidentUseCase
 import motocitizen.main.R
 import motocitizen.presentation.base.showSimpleDialog
 import motocitizen.presentation.base.showSimpleDialogWithButton
 import motocitizen.presentation.base.viewmodel.VMFragment
 import motocitizen.presentation.screens.root.RootActivity
-import javax.inject.Inject
-import javax.net.ssl.SSLSocketFactory
-import javax.net.ssl.TrustManager
 
 @AndroidEntryPoint
 class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
 
     override val viewModel: HomeViewModel by viewModels()
-    @Inject
-    lateinit var trustManager: TrustManager
-
-    @Inject
-    lateinit var sslSocketFactoryFactory: SSLSocketFactory
-
-    @Inject
-    lateinit var accidentUseCase: AccidentUseCase
-
     private var accidentEpoxyController = AccidentEpoxyController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +31,7 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
             .applicationContextModule(ApplicationContextModule(requireContext()))
             .build()
             .injectApp(App())
+        viewModel.loadRestrictions()
         super.onCreate(savedInstanceState)
     }
 
@@ -60,7 +48,6 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
                 preInfo: ItemHolderInfo,
                 postInfo: ItemHolderInfo,
             ): Boolean {
-
                 return false
             }
         }
@@ -110,11 +97,4 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
 
         })
     }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadRestrictions()
-
-    }
-
 }

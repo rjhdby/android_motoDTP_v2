@@ -1,4 +1,3 @@
-
 package motocitizen.data.utils
 
 import android.location.Address
