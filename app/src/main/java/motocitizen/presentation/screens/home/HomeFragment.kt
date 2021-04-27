@@ -6,10 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.internal.modules.ApplicationContextModule
 import kotlinx.android.synthetic.main.fragment_home.*
-import motocitizen.app.App
-import motocitizen.app.DaggerApp_HiltComponents_SingletonC
 import motocitizen.data.gps.LocListener
 import motocitizen.data.network.version.VersionStatus
 import motocitizen.domain.lcenstate.LcenState
@@ -27,10 +24,6 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
     private var accidentEpoxyController = AccidentEpoxyController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        DaggerApp_HiltComponents_SingletonC.builder()
-            .applicationContextModule(ApplicationContextModule(requireContext()))
-            .build()
-            .injectApp(App())
         viewModel.loadRestrictions()
         super.onCreate(savedInstanceState)
     }

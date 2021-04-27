@@ -58,6 +58,7 @@ class HomeViewModel @ViewModelInject constructor(
     }
 
     fun loadAccidentList() {
+        //todo тестовый запрос
         getAccidentUseCase.getAccidentList("1", 999)
             .subscribe(object : DisposableSingleObserver<List<Accident>>() {
 
@@ -73,7 +74,6 @@ class HomeViewModel @ViewModelInject constructor(
                 }
             })
     }
-
 
     fun loadMetrics() {
         if (state.checkRestrictionsState.asContentOrNull()?.metrics != true) return
@@ -127,5 +127,4 @@ class HomeViewModel @ViewModelInject constructor(
             plannedWorkCurrentPage = 0,
         )
     }
-
 }
