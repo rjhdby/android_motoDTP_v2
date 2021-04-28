@@ -52,11 +52,11 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
-      "lat": 55.1028,
-      "lon": 37.3000501,
-      "address": "string"
+      "lat": 45.05739,
+      "lon": 38.96582333,
+      "address": "Краснодарск"
     },
-    "description": "string",
+    "description": "Могло быть и хуже",
     "conflict": true,
     "messages": 0
   },
@@ -122,11 +122,11 @@ const val getAccidentList = """
     "hardness": "LIGHT",
     "creator": "607b289b63d52731fca27989",
     "location": {
-      "lat": 55.4128,
-      "lon": 37.4280001,
-      "address": "string"
+      "lat": 45.06739,
+      "lon": 38.93582333,
+      "address": "Краснодарск"
     },
-    "description": "кто-то что-то как-то",
+    "description": "Упал, очнулся - гипс",
     "conflict": false,
     "messages": 0
   },
