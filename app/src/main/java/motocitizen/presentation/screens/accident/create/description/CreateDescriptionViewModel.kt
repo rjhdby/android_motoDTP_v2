@@ -39,7 +39,7 @@ class CreateDescriptionViewModel @ViewModelInject constructor(
                 type = type,
                 hardness = hardness,
                 //todo Убрать после реализации
-                location = Address(54.0f, 37.1f, "Москва"),
+                location = Address(54.0, 37.1, "Москва"),
                 description = description
             )
                 .toLcenEventObservable { it }
