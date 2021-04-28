@@ -11,12 +11,11 @@ import java.util.*
 
 data class Accident(
     val id: String,// Идентификатор аварии
-    val created: String,// Идентификатор аварии
+    val created: String,
     var type: AccidentType,
     var resolved: String? = null,
     var verified: Boolean,
     var hidden: Boolean,
-//        @field:JsonSerialize(using = ToStringSerializer::class) val creator: ObjectId,
     var location: Address,
     var description: String,
     var conflict: Boolean = false,
@@ -34,7 +33,14 @@ data class Accident(
         .setLatitude(location.lat)
         .build()
 
-    //TODO реализовать логику
+    val accidentsWithCrashes: EnumSet<AccidentType> = EnumSet.of(
+        AccidentType.MOTO_AUTO,
+        AccidentType.MOTO_MOTO,
+        AccidentType.MOTO_PEDESTRIAN,
+        AccidentType.SOLO
+    )
+
+    //TODO реализовать логику, является ли текущий юзер создателем инцидента
     fun isOwner(): Boolean {
         return true
     }
@@ -61,13 +67,9 @@ data class Accident(
         }
     }
 
-    fun isAccident(): Boolean =
-        type in arrayOf(
-            AccidentType.MOTO_AUTO,
-            AccidentType.MOTO_MOTO,
-            AccidentType.MOTO_PEDESTRIAN,
-            AccidentType.SOLO
-        )
+    fun isAccident(): Boolean {
+        return accidentsWithCrashes.contains(type)
+    }
 
     fun title(): String {
         val damage =
