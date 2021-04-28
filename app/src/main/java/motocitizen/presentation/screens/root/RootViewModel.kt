@@ -33,7 +33,7 @@ class RootViewModel @ViewModelInject constructor(
         locationListener.setLiveData(locationPoint)
         val provider: String? = locationManager.getBestProvider(Criteria(), true)
 
-        locationManager.requestLocationUpdates(provider!!, 1000L, 1f, locationListener)
+        locationManager.requestLocationUpdates(provider!!, 100L, 1f, locationListener)
     }
 
     fun onAfterInit(locManager: LocationManager) {

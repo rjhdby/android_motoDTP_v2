@@ -23,6 +23,7 @@ object AccidentConverter {
                 location = accident.location,
                 description = accident.description,
                 conflict = accident.conflict,
+                messages = accident.messages
             )
         }
     }
@@ -41,6 +42,7 @@ object AccidentConverter {
                 location = it.location,
                 description = it.description,
                 conflict = it.conflict,
+                messages = it.messages
             )
         }
     }

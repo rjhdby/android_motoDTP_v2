@@ -86,7 +86,9 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_version"
 
-    implementation "com.google.android.gms:play-services-maps:16.0.0"
+    //play-services
+    implementation "com.google.android.gms:play-services-maps:17.0.1"
+    implementation "com.google.android.gms:play-services-location:18.0.0"
 
     //network
     def retrofit_version = '2.9.0'

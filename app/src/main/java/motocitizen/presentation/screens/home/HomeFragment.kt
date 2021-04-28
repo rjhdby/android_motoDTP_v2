@@ -1,13 +1,16 @@
 package motocitizen.presentation.screens.home
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
+import motocitizen.data.gps.LocListener
 import motocitizen.data.network.version.VersionStatus
 import motocitizen.domain.lcenstate.LcenState
+import motocitizen.domain.model.accident.Accident
 import motocitizen.main.R
 import motocitizen.presentation.base.showSimpleDialog
 import motocitizen.presentation.base.showSimpleDialogWithButton
@@ -18,6 +21,17 @@ import motocitizen.presentation.screens.root.RootActivity
 class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
 
     override val viewModel: HomeViewModel by viewModels()
+    private var accidentEpoxyController = AccidentEpoxyController()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel.loadRestrictions()
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        showAccidentsList()
+    }
 
     override fun initUi(savedInstanceState: Bundle?) {
         recycler_view_home.itemAnimator = object : DefaultItemAnimator() {
@@ -40,8 +54,6 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
         viewModel.onAfterInit()
         viewModel.homeViewState.observe { viewState ->
             renderCheckVersionState(viewState.checkVersionState)
-            recycler_view_home.withModels {
-            }
         }
     }
 
@@ -62,15 +74,20 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
         observeLocation()
     }
 
-    private fun observeLocation() {
-        val activity = requireActivity() as RootActivity
-        activity.viewModel.observeLocation(this, { locPoint ->
-
-        })
+    private fun showAccidentsList() {
+        viewModel.accidentList.observe(viewLifecycleOwner) { accidents ->
+            accidentEpoxyController.setAccidents(accidents as MutableList<Accident>)
+            LocListener.currentLocation.observe(viewLifecycleOwner) {
+                recycler_view_home.setControllerAndBuildModels(accidentEpoxyController)
+                LocListener.currentLocation.removeObservers(viewLifecycleOwner)
+            }
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadRestrictions()
+    private fun observeLocation() {
+        val activity = requireActivity() as RootActivity
+        activity.viewModel.observeLocation(viewLifecycleOwner, { locPoint ->
+
+        })
     }
 }

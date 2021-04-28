@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipe_to_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="@dimen/bottom_navigation_height">
 
-    <TextView
-        android:id="@+id/result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/home"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+<!--TODO TextView Занимает все место и перекрывает recycler_view_home-->
+<!--        <TextView-->
+<!--            android:i d="@+id/result"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:text="@string/home"-->
+<!--            android:textAppearance="?android:attr/textAppearanceLarge" />-->
 
-    <com.airbnb.epoxy.EpoxyRecyclerView
-        android:id="@+id/recycler_view_home"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <com.airbnb.epoxy.EpoxyRecyclerView
+            android:id="@+id/recycler_view_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
