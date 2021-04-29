@@ -3,7 +3,6 @@ package motocitizen.presentation.screens.home
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.observers.DisposableSingleObserver
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.isContent
 import motocitizen.domain.lcenstate.toLcenEventObservable
@@ -16,7 +15,6 @@ import motocitizen.presentation.base.viewmodel.BaseViewModel
 import motocitizen.presentation.base.viewmodel.delegate
 import motocitizen.presentation.base.viewmodel.mapDistinct
 import org.joda.time.DateTime
-import timber.log.Timber
 
 private const val NOW_CHANGES_PAGE = 0
 private const val FUTURE_CHANGES_PAGE = 1
@@ -58,21 +56,19 @@ class HomeViewModel @ViewModelInject constructor(
     }
 
     fun loadAccidentList() {
-        //todo тестовый запрос
-        getAccidentUseCase.getAccidentList("1", 999)
-            .subscribe(object : DisposableSingleObserver<List<Accident>>() {
-
-                override fun onSuccess(accidetns: List<Accident>) {
-                    Timber.d(accidetns.size.toString())
-                    accidentList.postValue(accidetns)
-                    dispose()
-                }
-
-                override fun onError(e: Throwable) {
-                    Timber.d(e.message.toString())
-                    dispose()
-                }
-            })
+        safeSubscribe {
+            //todo тестовый запрос
+            getAccidentUseCase.getAccidentList("1", 999)
+                .toLcenEventObservable { it }
+                .subscribe(
+                    { accidents ->
+                        if (accidents.isContent()) {
+                            accidentList.value = accidents.asContent()
+                        }
+                    },
+                    ::handleError
+                )
+        }
     }
 
     fun loadMetrics() {
