@@ -28,6 +28,7 @@ class HomeViewModel @ViewModelInject constructor(
 
     fun loadAccidentList() {
         safeSubscribe {
+            //todo Подставить реальные данные
             getAccidentUseCase.getAccidentList("1", 999)
                 .toLcenEventObservable { it }
                 .subscribe(
