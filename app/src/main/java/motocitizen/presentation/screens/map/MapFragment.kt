@@ -30,15 +30,15 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map) {
 
     override fun onStart() {
         super.onStart()
-        observeLocation()
+//        observeLocation()
     }
 
-    private fun observeLocation() {
-        val activity = requireActivity() as RootActivity
-        activity.viewModel.observeLocation(this,{locPoint ->
-
-        })
-    }
+//    private fun observeLocation() {
+//        val activity = requireActivity() as RootActivity
+//        activity.viewModel.observeLocation(this,{locPoint ->
+//
+//        })
+//    }
 
     override fun initViewModel() {
         viewModel.loadAccidentListState.observe {

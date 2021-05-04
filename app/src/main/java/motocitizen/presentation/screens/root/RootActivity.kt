@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Point
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
@@ -45,49 +44,54 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
             )
     }
 
-    private fun checkLocationPermission() {
-        val permissionStatus = ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
+//    private fun checkLocationPermission() {
+//        val permissionStatus = ContextCompat.checkSelfPermission(
+//            this,
+//            Manifest.permission.ACCESS_FINE_LOCATION
+//        )
+//
+//        if (permissionStatus == PackageManager.PERMISSION_GRANTED) {
+//            startLocationUpdate()
+//        } else {
+//            if (Build.VERSION.SDK_INT >= 23) {
+//                requestPermissions(
+//                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+//                    REQST_CODE
+//                )
+//            } else {
+//                ActivityCompat.requestPermissions(
+//                    this,
+//                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+//                    REQST_CODE
+//                )
+//            }
+//        }
+//    }
 
-        if (permissionStatus == PackageManager.PERMISSION_GRANTED) {
-            startLocationUpdate()
-        } else {
-            if (Build.VERSION.SDK_INT >= 23) {
-                requestPermissions(
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    REQST_CODE
-                )
-            } else {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    REQST_CODE
-                )
-            }
-        }
-    }
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        when (requestCode) {
+//            REQST_CODE -> {
+//                if ((grantResults.isNotEmpty() &&
+//                            grantResults[0] == PackageManager.PERMISSION_GRANTED)
+//                ) {
+//                    startLocationUpdate()
+//                }
+//            }
+//        }
+//    }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        when (requestCode) {
-            REQST_CODE -> {
-                if ((grantResults.isNotEmpty() &&
-                            grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                ) {
-                    startLocationUpdate()
-                }
-            }
-        }
-    }
-
-    private fun startLocationUpdate() {
-        viewModel.starLocationUpdate()
-    }
+//    private fun startLocationUpdate() {
+//        if (isGpsEnable()) {
+//            viewModel.starLocationUpdate()
+//        } else {
+//            viewModel.starLocationUpdate()
+//        }
+//
+//    }
 
     override val viewModel: RootViewModel by viewModels()
 
@@ -169,7 +173,7 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
 
     override fun onStart() {
         super.onStart()
-        checkLocationPermission()
+//        checkLocationPermission()
     }
 
     override fun initViewModel() {
@@ -234,8 +238,16 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         viewModel.onAliasChosen(alias)
     }
 
-    fun toHome(){
+    fun toHome() {
         val view: View = bottom_navigation.findViewById(R.id.home)
         view.performClick()
     }
+
+    fun isGpsEnable(): Boolean {
+        val locationManager =
+            this.getSystemService(LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
+
 }

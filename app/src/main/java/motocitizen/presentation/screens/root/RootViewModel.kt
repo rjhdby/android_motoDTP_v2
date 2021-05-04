@@ -1,12 +1,16 @@
 package motocitizen.presentation.screens.root
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.location.Criteria
 import android.location.LocationManager
+import androidx.core.app.ActivityCompat
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.location.FusedLocationProviderClient
 import motocitizen.data.gps.LocListener
 import motocitizen.data.gps.LocationPoint
 import motocitizen.data.network.restrictions.Restrictions
@@ -15,8 +19,10 @@ import motocitizen.domain.lcenstate.toLcenEventObservable
 import motocitizen.domain.usecases.GetRestrictionsUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 import motocitizen.presentation.base.viewmodel.commands.VMCommand
+import timber.log.Timber
 
-class RootViewModel @ViewModelInject constructor(
+class RootViewModel @SuppressLint("StaticFieldLeak")
+@ViewModelInject constructor(
     private val getRestrictions: GetRestrictionsUseCase,
 ) : BaseViewModel() {
 
@@ -28,12 +34,21 @@ class RootViewModel @ViewModelInject constructor(
     private lateinit var locationManager: LocationManager
     private val locationListener = LocListener()
 
-    @SuppressLint("MissingPermission")
-    fun starLocationUpdate() {
-        locationListener.setLiveData(locationPoint)
-        val provider: String? = locationManager.getBestProvider(Criteria(), true)
+//    @SuppressLint("MissingPermission")
+//    fun starLocationUpdate() {
+//        try {
+//            locationListener.setLiveData(locationPoint)
+//            val provider: String? = locationManager.getBestProvider(Criteria(), true)
+//
+//            locationManager.requestLocationUpdates(provider!!, 1000L, 1f, locationListener)
+//        } catch (e: Exception) {
+//            Timber.d(e.message)
+//        }
+//    }
 
-        locationManager.requestLocationUpdates(provider!!, 1000L, 1f, locationListener)
+
+    fun stopLocationUpdate() {
+        locationManager.removeUpdates(locationListener)
     }
 
     fun onAfterInit(locManager: LocationManager) {
@@ -42,11 +57,11 @@ class RootViewModel @ViewModelInject constructor(
         locationManager = locManager
     }
 
-    fun observeLocation(owner: LifecycleOwner, observe: (LocationPoint) -> Unit) {
-        locationPoint.observe(owner) {locPoint->
-            observe(locPoint)
-        }
-    }
+//    fun observeLocation(owner: LifecycleOwner, observe: (LocationPoint) -> Unit) {
+//        locationPoint.observe(owner) { locPoint ->
+//            observe(locPoint)
+//        }
+//    }
 
     private fun loadRestrictions() {
         safeSubscribe {
