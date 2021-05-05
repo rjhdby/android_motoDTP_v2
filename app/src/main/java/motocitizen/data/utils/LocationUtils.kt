@@ -34,7 +34,8 @@ fun LatLng.distanceString(): String {
 
 fun Meter.toKilometers(): Kilometer = (this / 10).toFloat() / 100
 
-fun LatLng.metersFromUser(): Meter = (distanceTo(LocListener.currentLocation.value!!) * 1000).toLong()
+fun LatLng.metersFromUser(): Meter =
+    (distanceTo(LocListener.currentLocation.value!!) * 1000).toLong()
 
 fun Address.buildAddressString(): String {
     return StringBuilder()
@@ -46,6 +47,5 @@ fun Address.buildAddressString(): String {
         .toString()
         .trim()
 }
-
 //val Address.latLng
 //    get() = LatLng(latitude, longitude)

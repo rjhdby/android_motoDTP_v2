@@ -1,6 +1,5 @@
 package motocitizen.presentation.screens.map
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,10 +15,14 @@ import motocitizen.domain.model.accident.Accident
 import motocitizen.domain.usecases.AccidentUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 
-
 class MapViewModel @ViewModelInject constructor(
     private val getAccidentUseCase: AccidentUseCase
 ) : BaseViewModel() {
+    companion object{
+        const val LOC_REQUEST_INTERVAL = 500L
+        const val LOC_REQUEST_FAST_INTERVAL = 250L
+        const val LOC_REQUEST_SMALLEST_DISTANCE = 1f
+    }
     var isBindCam = true
     lateinit var locationRequest: LocationRequest
     lateinit var locationCallback: LocationCallback
@@ -56,9 +59,9 @@ class MapViewModel @ViewModelInject constructor(
     fun buildLocationRequest() {
         locationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationRequest.interval = 250
-        locationRequest.fastestInterval = 100
-        locationRequest.smallestDisplacement = 1f
+        locationRequest.interval = LOC_REQUEST_INTERVAL
+        locationRequest.fastestInterval = LOC_REQUEST_FAST_INTERVAL
+        locationRequest.smallestDisplacement = LOC_REQUEST_SMALLEST_DISTANCE
     }
 
     fun buildLocationCallBack(gMap: GoogleMap) {

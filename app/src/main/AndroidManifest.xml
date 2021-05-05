@@ -43,8 +43,7 @@
             android:resource="@color/red"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyB1TZbR5gywyLeGduCCcraQzSBIeiH99pk"/>
-
+            android:value="AIzaSyDfQZrnHvn-fNCYmFQSMBa-1ClE0ZCWUQ4"/>
         <activity
             android:name="motocitizen.presentation.screens.splash.SplashActivity"
             android:launchMode="singleTop"

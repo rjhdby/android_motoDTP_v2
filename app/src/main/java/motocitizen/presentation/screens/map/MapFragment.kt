@@ -1,20 +1,23 @@
 package motocitizen.presentation.screens.map
 
-import android.Manifest
-import android.content.pm.PackageManager
+import android.annotation.SuppressLint
+import android.location.Location
 import android.os.Bundle
-import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.*
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_map.*
+import motocitizen.app.App
+import motocitizen.app.utils.DEFAULT_ZOOM
 import motocitizen.app.utils.accidentMarker
 import motocitizen.domain.lcenstate.isContent
 import motocitizen.domain.lcenstate.isError
@@ -30,10 +33,12 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     override val viewModel: MapViewModel by viewModels()
     private lateinit var googleMap: GoogleMap
+    private var lastKnownLocation: Location? = null
+    private val defaultLocation = LatLng(0.0, 0.0)
 
     companion object {
         private const val MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey"
-        private const val MAP_MIN_ZOOM: Float = 7f
+        private const val MAP_MIN_ZOOM: Float = 1f
     }
 
     override fun initUi(savedInstanceState: Bundle?) {
@@ -68,36 +73,27 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
         Timber.i(list.size.toString())
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
+    @SuppressLint("MissingPermission")
+    override fun onMapReady(gMap: GoogleMap) {
+        googleMap = gMap
         googleMap.setMinZoomPreference(MAP_MIN_ZOOM)
+        setLastLocation()
 
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
+        if (App.locPermission) {
+            googleMap.isMyLocationEnabled = true
+            setMapListeners()
+            viewModel.buildLocationCallBack(googleMap)
+            fusedLocationProviderClient.requestLocationUpdates(
+                viewModel.locationRequest,
+                viewModel.locationCallback,
+                requireActivity().mainLooper
+            )
         }
-        googleMap.isMyLocationEnabled = true
-        setMapListeners(googleMap)
-        viewModel.buildLocationCallBack(googleMap)
-        fusedLocationProviderClient.requestLocationUpdates(
-            viewModel.locationRequest,
-            viewModel.locationCallback,
-            null
-        )
 
         showAccidentsMarkers()
-//        val cameraUpdate = CameraUpdateFactory.newLatLng()
-//        googleMap.moveCamera(cameraUpdate)
-//        showAccidentsMarkers()
     }
 
-    private fun setMapListeners(gMap: GoogleMap) {
-        googleMap = gMap
+    private fun setMapListeners() {
         googleMap.setOnMarkerClickListener(this)
         googleMap.setOnMyLocationButtonClickListener(this)
         googleMap.setOnCameraMoveStartedListener(this)
@@ -121,13 +117,10 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
 
     override fun onMyLocationButtonClick(): Boolean {
         viewModel.isBindCam = false
-//        googleMap.stopAnimation()
         googleMap.setOnCameraIdleListener {
             googleMap.setOnCameraIdleListener(null)
             viewModel.isBindCam = true
         }
-
-
         return false
     }
 
@@ -136,6 +129,39 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
             OnCameraMoveStartedListener.REASON_GESTURE -> {
                 viewModel.isBindCam = false
             }
+        }
+    }
+
+    private fun setLastLocation() {
+        try {
+            if (App.locPermission) {
+                val locationResult = fusedLocationProviderClient.lastLocation
+
+                locationResult.addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        lastKnownLocation = task.result
+                        if (lastKnownLocation != null) {
+
+                            googleMap.moveCamera(
+                                CameraUpdateFactory.newLatLngZoom(
+                                    LatLng(
+                                        lastKnownLocation!!.latitude,
+                                        lastKnownLocation!!.longitude
+                                    ), DEFAULT_ZOOM
+                                )
+                            )
+                        }
+                    } else {
+                        googleMap.moveCamera(
+                            CameraUpdateFactory
+                                .newLatLngZoom(defaultLocation, DEFAULT_ZOOM)
+                        )
+                        googleMap.uiSettings.isMyLocationButtonEnabled = false
+                    }
+                }
+            }
+        } catch (e: SecurityException) {
+            Timber.e(e)
         }
     }
 }

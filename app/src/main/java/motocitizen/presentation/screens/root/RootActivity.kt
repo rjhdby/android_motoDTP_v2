@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Point
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +20,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavController.OnDestinationChangedListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import motocitizen.app.App
 import motocitizen.app.push.NOTIFICATION_ACCIDENT_ID_KEY
 import motocitizen.app.push.NOTIFICATION_ACCIDENT_NAME_KEY
 import motocitizen.main.R
@@ -52,6 +52,7 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         )
 
         if (permissionStatus == PackageManager.PERMISSION_GRANTED) {
+            App.locPermission = true
             startLocationUpdate()
         } else {
             if (Build.VERSION.SDK_INT >= 23) {
@@ -79,8 +80,9 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
                 if ((grantResults.isNotEmpty() &&
                             grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 ) {
+                    App.locPermission = true
                     startLocationUpdate()
-                }
+                } else App.locPermission = false
             }
         }
     }
@@ -234,7 +236,7 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         viewModel.onAliasChosen(alias)
     }
 
-    fun toHome(){
+    fun toHome() {
         val view: View = bottom_navigation.findViewById(R.id.home)
         view.performClick()
     }
