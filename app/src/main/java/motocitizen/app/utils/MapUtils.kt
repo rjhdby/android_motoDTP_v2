@@ -10,7 +10,8 @@ import motocitizen.utils.MS_IN_HOUR
 import java.util.*
 
 const val DEFAULT_ZOOM = 16f
-
+private const val ACCIDENT_AGE_NEW = 2
+private const val ACCIDENT_AGE_OLD = 6
 private const val DENSE = 1f
 private const val SEMI_DENSE = 0.5f
 private const val TRANSPARENT = 0.2f
@@ -20,8 +21,8 @@ fun GoogleMap.accidentMarker(accident: Accident): Marker = addMarker(makeMarker(
 private fun calculateAlpha(accident: Accident): Float {
     val age = ((Date().time - accident.getTimeCreationMS()) / MS_IN_HOUR).toInt()
     return when {
-        age < 2 -> DENSE
-        age < 6 -> SEMI_DENSE
+        age < ACCIDENT_AGE_NEW -> DENSE
+        age < ACCIDENT_AGE_OLD -> SEMI_DENSE
         else -> TRANSPARENT
     }
 }

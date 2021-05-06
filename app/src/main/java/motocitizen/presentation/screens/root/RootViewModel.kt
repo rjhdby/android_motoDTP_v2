@@ -20,6 +20,11 @@ class RootViewModel @ViewModelInject constructor(
     private val getRestrictions: GetRestrictionsUseCase,
 ) : BaseViewModel() {
 
+    companion object {
+        const val LOC_MIN_TIME_UPDATE = 1000L
+        const val LOC_MIN_DISTANCE = 1F
+    }
+
     private val _checkRestrictionsState = MutableLiveData<LcenState<Restrictions>>(LcenState.None)
     val checkRestrictionsState: LiveData<LcenState<Restrictions>>
         get() = _checkRestrictionsState
@@ -29,11 +34,17 @@ class RootViewModel @ViewModelInject constructor(
     private val locationListener = LocListener()
 
     @SuppressLint("MissingPermission")
+    //todo переделать LocListener на FusedLocationProviderClient
     fun starLocationUpdate() {
         locationListener.setLiveData(locationPoint)
         val provider: String? = locationManager.getBestProvider(Criteria(), true)
 
-        locationManager.requestLocationUpdates(provider!!, 100L, 1f, locationListener)
+        locationManager.requestLocationUpdates(
+            provider!!,
+            LOC_MIN_TIME_UPDATE,
+            LOC_MIN_DISTANCE,
+            locationListener
+        )
     }
 
     fun onAfterInit(locManager: LocationManager) {
@@ -43,7 +54,7 @@ class RootViewModel @ViewModelInject constructor(
     }
 
     fun observeLocation(owner: LifecycleOwner, observe: (LocationPoint) -> Unit) {
-        locationPoint.observe(owner) {locPoint->
+        locationPoint.observe(owner) { locPoint ->
             observe(locPoint)
         }
     }

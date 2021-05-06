@@ -28,12 +28,13 @@ data class Accident(
         const val DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ"
     }
 
-    lateinit var sdf: SimpleDateFormat
+    private var sdf: SimpleDateFormat = SimpleDateFormat(DATE_TIME_PATTERN, Locale.getDefault())
 
     var coordinates: LatLng = LatLng.newBuilder()
         .setLongitude(location.lon)
         .setLatitude(location.lat)
         .build()
+
 
     val accidentsWithCrashes: EnumSet<AccidentType> = EnumSet.of(
         AccidentType.MOTO_AUTO,
@@ -86,14 +87,7 @@ data class Accident(
         )
     }
 
-    fun getTimeAfterCreation(): String {
-        sdf = SimpleDateFormat(DATE_TIME_PATTERN, Locale.getDefault())
-
-        return sdf.parse(created)!!.getIntervalFromNowInText()
-    }
-
-    fun getTimeCreationMS(): Long {
-        sdf = SimpleDateFormat(DATE_TIME_PATTERN, Locale.getDefault())
-        return sdf.parse(created).time
-    }
+    fun getTimeAfterCreation(): String = sdf.parse(created)!!.getIntervalFromNowInText()
+    
+    fun getTimeCreationMS(): Long = sdf.parse(created)!!.time
 }

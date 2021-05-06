@@ -10,6 +10,7 @@ typealias Meter = Long
 typealias Kilometer = Float
 
 const val EQUATOR = 20038
+const val METERS_IN_KILOMETER = 1000
 
 //fun Location.toLatLng(): LatLng = LatLng(latitude, longitude)
 
@@ -35,7 +36,7 @@ fun LatLng.distanceString(): String {
 fun Meter.toKilometers(): Kilometer = (this / 10).toFloat() / 100
 
 fun LatLng.metersFromUser(): Meter =
-    (distanceTo(LocListener.currentLocation.value!!) * 1000).toLong()
+    (distanceTo(LocListener.currentLocation.value!!) * METERS_IN_KILOMETER).toLong()
 
 fun Address.buildAddressString(): String {
     return StringBuilder()
