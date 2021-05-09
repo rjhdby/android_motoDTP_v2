@@ -13,6 +13,7 @@ class App : Application() {
 
     companion object {
         const val SEARCH_DELAY_MILLISECONDS = 1000L
+        var locPermission = false
     }
 
     override fun onCreate() {
