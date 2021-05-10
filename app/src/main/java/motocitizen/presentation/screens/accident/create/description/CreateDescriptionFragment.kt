@@ -17,7 +17,6 @@ import motocitizen.main.R
 import motocitizen.presentation.base.onTextChanged
 import motocitizen.presentation.base.viewmodel.VMFragment
 import motocitizen.presentation.screens.root.RootActivity
-import timber.log.Timber
 
 const val MINIMAL_TEXT_SIZE = 6
 
@@ -29,11 +28,11 @@ class CreateDescriptionFragment :
     private val args: CreateDescriptionFragmentArgs by navArgs()
 
     override fun initViewModel() {
-        viewModel.onAfterInit(args.type, args.hardness)
+        viewModel.onAfterInit(args.type, args.hardness, args.address)
     }
 
     fun toHome(accident: Accident) {
-        var navController = findNavController()
+        val navController = findNavController()
         navController.popBackStack(R.id.createMapFragment, false)
         val root = activity as RootActivity
         root.toHome()
@@ -47,14 +46,14 @@ class CreateDescriptionFragment :
 
         create_final_text.onTextChanged { input ->
             requestKeyboard()
-            CREATE.isEnabled = args.type.isAccident() || input.length > MINIMAL_TEXT_SIZE
+            create_button.isEnabled = args.type.isAccident() || input.length > MINIMAL_TEXT_SIZE
         }
         //todo Убрать после отладки
         create_final_text.setText("Ни чего страшного")
-        CREATE.isEnabled = true
+        create_button.isEnabled = true
         //todo Убрать после отладки
 
-        CREATE.setOnClickListener {
+        create_button.setOnClickListener {
             viewModel.create(create_final_text.text.toString())
         }
 

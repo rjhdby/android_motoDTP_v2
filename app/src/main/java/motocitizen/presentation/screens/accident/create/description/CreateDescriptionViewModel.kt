@@ -6,7 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
-import motocitizen.domain.model.accident.*
+import motocitizen.domain.model.accident.Accident
+import motocitizen.domain.model.accident.AccidentHardness
+import motocitizen.domain.model.accident.AccidentType
+import motocitizen.domain.model.accident.Address
 import motocitizen.domain.usecases.AccidentUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 
@@ -23,10 +26,12 @@ class CreateDescriptionViewModel @ViewModelInject constructor(
 
     lateinit var type: AccidentType
     lateinit var hardness: AccidentHardness
+    lateinit var address: Address
 
-    fun onAfterInit(type: AccidentType, hardness: AccidentHardness) {
+    fun onAfterInit(type: AccidentType, hardness: AccidentHardness, address: Address) {
         this.type = type
         this.hardness = hardness
+        this.address = address
     }
 
     fun navigateUp() {
@@ -38,8 +43,7 @@ class CreateDescriptionViewModel @ViewModelInject constructor(
             accidentUseCase.createAccident(
                 type = type,
                 hardness = hardness,
-                //todo Убрать после реализации
-                location = Address(54.0, 37.1, "Москва"),
+                location = address,
                 description = description
             )
                 .toLcenEventObservable { it }

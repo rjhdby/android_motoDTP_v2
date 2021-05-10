@@ -18,7 +18,7 @@ class DamageFragment : VMFragment<DamageViewModel>(R.layout.fragment_create_peop
     override val viewModel: DamageViewModel by viewModels()
 
     override fun initViewModel() {
-        viewModel.onAfterInit(args.type)
+        viewModel.onAfterInit(args.type, args.address)
     }
 
     override fun initUi(savedInstanceState: Bundle?) {
