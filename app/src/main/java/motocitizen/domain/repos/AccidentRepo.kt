@@ -8,7 +8,6 @@ import motocitizen.domain.model.accident.Address
 
 interface AccidentRepo {
     fun getAccidentList(
-        token: String,
         depth: Int,
         lat: Double?,
         lon: Double?,
