@@ -49,7 +49,8 @@ class RootViewModel @ViewModelInject constructor(
 
     fun onAfterInit(locManager: LocationManager) {
         checkClientCertificate()
-        loadRestrictions()
+        // todo Со старого проекта, вероятно не понадобится.
+        //loadRestrictions()
         locationManager = locManager
     }
 

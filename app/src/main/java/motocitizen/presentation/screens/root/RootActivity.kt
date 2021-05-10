@@ -181,37 +181,29 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
             this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         viewModel.onAfterInit(locationManager)
 
-        viewModel.checkRestrictionsState.observe { checkRestrictionsState ->
-            val restrictions = checkRestrictionsState.asContentOrNull()
-            if (restrictions != null) {
-                bottom_navigation.menu.clear()
-                bottom_navigation.menu.add(
-                    Menu.NONE,
-                    R.id.home,
-                    Menu.NONE,
-                    getString(R.string.home)
-                )
-                    .setIcon(R.drawable.ic_home)
-                if (restrictions.create) {
-                    bottom_navigation.menu.add(
-                        Menu.NONE,
-                        R.id.create_accident,
-                        Menu.NONE,
-                        getString(R.string.activity_main_add_point_button)
-                    )
-                        .setIcon(R.drawable.create)
-                }
-                bottom_navigation.menu.add(
-                    Menu.NONE,
-                    R.id.map,
-                    Menu.NONE,
-                    getString(R.string.tab_map)
-                )
-                    .setIcon(R.drawable.ic_map_white_48dp)
-                // ToDo: Add more items
-                initBottomNavigation()
-            }
-        }
+        bottom_navigation.menu.clear()
+        bottom_navigation.menu.add(
+            Menu.NONE,
+            R.id.home,
+            Menu.NONE,
+            getString(R.string.home)
+        ).setIcon(R.drawable.ic_home)
+
+        bottom_navigation.menu.add(
+            Menu.NONE,
+            R.id.create_accident,
+            Menu.NONE,
+            getString(R.string.activity_main_add_point_button)
+        ).setIcon(R.drawable.create)
+
+        bottom_navigation.menu.add(
+            Menu.NONE,
+            R.id.map,
+            Menu.NONE,
+            getString(R.string.tab_map)
+        ).setIcon(R.drawable.ic_map_white_48dp)
+        // ToDo: Add more items
+        initBottomNavigation()
     }
 
     override fun onCommandReceived(command: VMCommand) {

@@ -52,27 +52,11 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
     }
 
     override fun initViewModel() {
-        viewModel.onAfterInit()
-        viewModel.homeViewState.observe { viewState ->
-            renderCheckVersionState(viewState.checkVersionState)
-        }
         viewModel.loadAccidentListState.observe {
             show_progress.isVisible = it.isLoading()
             error_view.isVisible = it.isError()
             view_panel.isVisible = it.isContent()
             it.asContentOrNull()?.let(::renderContent)
-        }
-    }
-
-    private fun renderCheckVersionState(checkVersionState: LcenState<VersionStatus>) {
-        val versionStatus = checkVersionState.asContentOrNull() ?: return
-        when (versionStatus) {
-            VersionStatus.NORMAL -> Unit
-            VersionStatus.DEPRECATED -> showSimpleDialogWithButton(R.string.api_version_deprecated)
-            VersionStatus.UNSUPPORTED -> showSimpleDialog(
-                textResId = R.string.api_version_unsupported,
-                cancellable = false
-            )
         }
     }
 

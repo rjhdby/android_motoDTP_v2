@@ -47,7 +47,7 @@ class MapViewModel @ViewModelInject constructor(
 
     private fun loadAccidentList() {
         safeSubscribe {
-            getAccidentUseCase.getAccidentList(token = token, depth = depth)
+            getAccidentUseCase.getAccidentList(depth = depth)
                 .toLcenEventObservable { it }
                 .subscribe(
                     _loadAccidentListState::postValue,

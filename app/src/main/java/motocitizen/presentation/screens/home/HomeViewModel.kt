@@ -20,8 +20,6 @@ class HomeViewModel @ViewModelInject constructor(
     private val liveState = MutableLiveData(createInitialViewState())
     private var state: HomeViewState by liveState.delegate()
 
-    val homeViewState: LiveData<HomeViewState> = liveState.mapDistinct { it }
-
     private val _loadAccidentListState = MutableLiveData<LcenState<List<Accident>>>(LcenState.None)
     val loadAccidentListState: LiveData<LcenState<List<Accident>>>
         get() = _loadAccidentListState
@@ -29,7 +27,7 @@ class HomeViewModel @ViewModelInject constructor(
     fun loadAccidentList() {
         safeSubscribe {
             //todo Подставить реальные данные
-            getAccidentUseCase.getAccidentList("1", 999)
+            getAccidentUseCase.getAccidentList(999)
                 .toLcenEventObservable { it }
                 .subscribe(
                     _loadAccidentListState::postValue,
@@ -38,26 +36,9 @@ class HomeViewModel @ViewModelInject constructor(
         }
     }
 
-    fun onAfterInit() {
-        getVersionStatus()
-    }
-
-    private fun getVersionStatus() {
-        safeSubscribe {
-            checkVersion()
-                .toLcenEventObservable { it }
-                .subscribe(
-                    { state = state.copy(checkVersionState = it) },
-                    ::handleError
-                )
-        }
-    }
-
     private fun createInitialViewState(): HomeViewState {
         return HomeViewState(
-            checkVersionState = LcenState.None,
             checkRestrictionsState = LcenState.None,
-            plannedWorkCurrentPage = 0,
         )
     }
 }
