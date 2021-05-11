@@ -34,11 +34,11 @@ class MockInterceptor : Interceptor {
             if (request.body != null) { // Note: Для POST
                 val body = bodyToString(request)
                 when {
-                    uri.endsWith("accident/create/") -> {
+                    uri.endsWith("accident/") -> {
                         when {
                             // todo Код от проекта - донора
                             //body.equals("{\"categories\":[1,2,3],\"limit\":10,\"page\":1,\"systemID\":\"1\"}") -> getAccidentList
-                            else -> accident
+                            else -> newAccident
                         }
                     }
                     // todo Код от проекта - донора
