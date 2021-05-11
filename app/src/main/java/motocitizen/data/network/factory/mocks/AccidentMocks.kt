@@ -1,8 +1,8 @@
 package motocitizen.data.network.factory.mocks
 
-const val accident = """
+const val newAccident = """
 {
-  "id": "string",
+  "id": "1",
   "created": "2021-04-15T10:32:36.556Z",
   "type": "OTHER",
   "resolved": "2021-04-15T10:32:36.556Z",
@@ -15,7 +15,7 @@ const val accident = """
     "lon": 37.1,
     "address": "Площадь Ленина"
   },
-  "description": "string",
+  "description": "Бывает...",
   "conflict": true,
   "messages": 0
 }
