@@ -120,4 +120,9 @@
     <string name="addressDialog">Уточните адрес. Номер дома, в центр/в область/внешнее/внутреннее и т.д.</string>
     <string name="unable_to_load">Не удалось загрузить данные</string>
     <string name="accident_created_succ">Инцидент успешно создан</string>
+    <string name="conflict">Конфликт</string>
+    <string name="set_conflict">Установить конфликт</string>
+    <string name="drop_conflict">Снять конфликт</string>
+    <string name="skeleton">skeleton</string>
+    <string name="medicine"> (%1$s)</string>
 </resources>

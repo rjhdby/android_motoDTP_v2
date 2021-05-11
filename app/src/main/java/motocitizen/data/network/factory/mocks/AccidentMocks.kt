@@ -3,9 +3,30 @@ package motocitizen.data.network.factory.mocks
 const val newAccident = """
 {
   "id": "1",
-  "created": "2021-04-15T10:32:36.556Z",
+  "created": "2021-04-15T10:32:36.000+00:00",
   "type": "OTHER",
-  "resolved": "2021-04-15T10:32:36.556Z",
+  "resolved": "2021-04-15T10:32:36.000+00:00",
+  "verified": true,
+  "hidden": true,
+  "hardness": "UNKNOWN",
+  "creator": "string",
+  "location": {
+    "lat": 54.2,
+    "lon": 37.1,
+    "address": "Площадь Ленина"
+  },
+  "description": "Бывает...",
+  "conflict": false,
+  "messages": 0
+}
+"""
+
+const val conflictAccident = """
+{
+  "id": "1",
+  "created": "2021-04-15T10:32:36.000+00:00",
+  "type": "OTHER",
+  "resolved": "2021-04-15T10:32:36.000+00:00",
   "verified": true,
   "hidden": true,
   "hardness": "UNKNOWN",
@@ -17,6 +38,27 @@ const val newAccident = """
   },
   "description": "Бывает...",
   "conflict": true,
+  "messages": 0
+}
+"""
+
+const val noConflictAccident = """
+{
+  "id": "1",
+  "created": "2021-04-15T10:32:36.000+00:00",
+  "type": "OTHER",
+  "resolved": "2021-04-15T10:32:36.000+00:00",
+  "verified": true,
+  "hidden": true,
+  "hardness": "UNKNOWN",
+  "creator": "string",
+  "location": {
+    "lat": 54.2,
+    "lon": 37.1,
+    "address": "Площадь Ленина"
+  },
+  "description": "Бывает...",
+  "conflict": false,
   "messages": 0
 }
 """
