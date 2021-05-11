@@ -20,6 +20,7 @@ object HttpClientFactory {
     private const val APP_VERSION = "App-Version"
     private const val PLATFORM = "Platform"
     private const val PLATFORM_VERSION = "Platform-Version"
+    private const val TOKEN = "token"
 
     fun okHttpClient(
         builder: OkHttpClient.Builder.() -> Unit = {},
@@ -33,7 +34,7 @@ object HttpClientFactory {
                 addInterceptor(getUserAgentInterceptor())
                 addInterceptor(getLoggingInterceptor())
                 addInterceptor(ErrorInterceptor())
-                if (BuildConfig.DEBUG) {
+                if (BuildConfig.FLAVOR.equals("local")) {
                     addInterceptor(MockInterceptor())
                 }
                 //addInterceptor(interceptor)
@@ -57,6 +58,8 @@ object HttpClientFactory {
                 .header(APP_VERSION, BuildConfig.VERSION_NAME)
                 .header(PLATFORM, ANDROID)
                 .header(PLATFORM_VERSION, android.os.Build.VERSION.RELEASE.toString())
+                //todo подставлять реальный токен
+                .header(TOKEN, "xxx")
                 .build()
             chain.proceed(requestWithUserAgent)
         }

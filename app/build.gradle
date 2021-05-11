@@ -27,7 +27,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        buildConfigField "String", API_VERSION, '"1.0"'
+        buildConfigField "String", API_VERSION, '"1"'
     }
 
     buildTypes {
@@ -45,6 +45,9 @@ android {
     productFlavors {
         local {
             buildConfigField "String", SERVER_URL, '"https://ya.ru"'
+        }
+        develop {
+            buildConfigField "String", SERVER_URL, '"http://188.166.126.84:8080"'
         }
         prod {
             buildConfigField "String", SERVER_URL, '"https://moto.dtp.ru/api"'
@@ -86,7 +89,9 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_version"
 
-    implementation "com.google.android.gms:play-services-maps:16.0.0"
+    //play-services
+    implementation "com.google.android.gms:play-services-maps:17.0.1"
+    implementation "com.google.android.gms:play-services-location:18.0.0"
 
     //network
     def retrofit_version = '2.9.0'

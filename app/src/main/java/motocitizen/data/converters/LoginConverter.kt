@@ -43,13 +43,7 @@ object LoginConverter {
         val result = getNotNull(response)
         return result.let {
             val restrictions = Restrictions(
-                accidentDescriptions = it.accidentDescriptions,
-                accidentWorkers = it.accidentWorkers,
-                accidentHistory = it.accidentHistory,
                 create = it.create,
-                metrics = it.metrics,
-                planWorkers = it.planWorkers,
-                push = it.push
             )
             restrictions
         }

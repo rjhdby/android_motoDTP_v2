@@ -22,46 +22,45 @@
             android:layout_gravity="top"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
+            android:contentDescription="skeleton"
             android:scaleType="fitXY"
-            android:src="@drawable/skeleton_accident_description"
-            android:contentDescription="skeleton" />
+            android:src="@drawable/skeleton_accident_description" />
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
-<motocitizen.presentation.widgets.ErrorView
-    android:id="@+id/error_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:visibility="gone"
-    app:heightMode="MATCH_HEIGHT"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:visibility="visible" />
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/view_panel"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipToPadding="false"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
-
-    <TextView
+    <motocitizen.presentation.widgets.ErrorView
+        android:id="@+id/error_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/tab_map"
-        android:textColor="@color/white"
-        android:textSize="14sp"
+        android:visibility="gone"
+        app:heightMode="MATCH_HEIGHT"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <fragment
+            android:id="@+id/map_fragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="80dp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

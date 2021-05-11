@@ -294,7 +294,7 @@
             </FrameLayout>
 
             <Button
-                android:id="@+id/ADDRESS"
+                android:id="@+id/saveButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_confirm_button"/>
@@ -320,7 +320,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@android:drawable/ic_menu_search"/>
+                    android:src="@android:drawable/ic_menu_search"
+                    android:contentDescription="search" />
             </LinearLayout>
 
         </LinearLayout>
@@ -351,7 +352,7 @@
             android:text="@string/activity_create_back_button"/>
 
         <Button
-            android:id="@+id/CREATE"
+            android:id="@+id/create_button"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

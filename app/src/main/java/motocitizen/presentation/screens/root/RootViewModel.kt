@@ -1,16 +1,9 @@
 package motocitizen.presentation.screens.root
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.pm.PackageManager
-import android.location.Criteria
 import android.location.LocationManager
-import androidx.core.app.ActivityCompat
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.location.FusedLocationProviderClient
 import motocitizen.data.gps.LocListener
 import motocitizen.data.gps.LocationPoint
 import motocitizen.data.network.restrictions.Restrictions
@@ -19,12 +12,15 @@ import motocitizen.domain.lcenstate.toLcenEventObservable
 import motocitizen.domain.usecases.GetRestrictionsUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 import motocitizen.presentation.base.viewmodel.commands.VMCommand
-import timber.log.Timber
 
-class RootViewModel @SuppressLint("StaticFieldLeak")
-@ViewModelInject constructor(
+class RootViewModel @ViewModelInject constructor(
     private val getRestrictions: GetRestrictionsUseCase,
 ) : BaseViewModel() {
+
+    companion object {
+        const val LOC_MIN_TIME_UPDATE = 1000L
+        const val LOC_MIN_DISTANCE = 1F
+    }
 
     private val _checkRestrictionsState = MutableLiveData<LcenState<Restrictions>>(LcenState.None)
     val checkRestrictionsState: LiveData<LcenState<Restrictions>>
@@ -53,7 +49,8 @@ class RootViewModel @SuppressLint("StaticFieldLeak")
 
     fun onAfterInit(locManager: LocationManager) {
         checkClientCertificate()
-        loadRestrictions()
+        // todo Со старого проекта, вероятно не понадобится.
+        //loadRestrictions()
         locationManager = locManager
     }
 

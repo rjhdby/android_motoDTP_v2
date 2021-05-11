@@ -19,15 +19,11 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.splash.*
 import motocitizen.app.App
 import motocitizen.data.gps.LocListener
-import motocitizen.data.network.version.VersionStatus
-import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.isContent
 import motocitizen.domain.lcenstate.isError
 import motocitizen.domain.lcenstate.isLoading
 import motocitizen.domain.model.accident.Accident
 import motocitizen.main.R
-import motocitizen.presentation.base.showSimpleDialog
-import motocitizen.presentation.base.showSimpleDialogWithButton
 import motocitizen.presentation.base.viewmodel.VMFragment
 import motocitizen.presentation.screens.root.RootActivity
 import timber.log.Timber
@@ -82,6 +78,7 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
 
     override fun initUi(savedInstanceState: Bundle?) {
         recycler_view_home.setController(accidentEpoxyController)
+        accidentEpoxyController.clickListener = viewModel::onItemPressed
         recycler_view_home.itemAnimator = object : DefaultItemAnimator() {
             override fun animateChange(
                 oldHolder: RecyclerView.ViewHolder,
@@ -100,27 +97,11 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
 
 
     override fun initViewModel() {
-        viewModel.onAfterInit()
-        viewModel.homeViewState.observe { viewState ->
-            renderCheckVersionState(viewState.checkVersionState)
-        }
         viewModel.loadAccidentListState.observe {
             show_progress.isVisible = it.isLoading()
             error_view.isVisible = it.isError()
             view_panel.isVisible = it.isContent()
             it.asContentOrNull()?.let(::renderContent)
-        }
-    }
-
-    private fun renderCheckVersionState(checkVersionState: LcenState<VersionStatus>) {
-        val versionStatus = checkVersionState.asContentOrNull() ?: return
-        when (versionStatus) {
-            VersionStatus.NORMAL -> Unit
-            VersionStatus.DEPRECATED -> showSimpleDialogWithButton(R.string.api_version_deprecated)
-            VersionStatus.UNSUPPORTED -> showSimpleDialog(
-                textResId = R.string.api_version_unsupported,
-                cancellable = false
-            )
         }
     }
 

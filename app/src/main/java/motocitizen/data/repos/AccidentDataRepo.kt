@@ -15,14 +15,13 @@ class AccidentDataRepo @Inject constructor(
     private val api: AccidentApi,
 ) : AccidentRepo {
     override fun getAccidentList(
-        token: String,
         depth: Int,
         lat: Double?,
         lon: Double?,
         radius: Int?,
         lastFetch: Int?
     ): Single<List<Accident>> {
-        return api.getAccidentList(token, depth, lat, lon, radius, lastFetch)
+        return api.getAccidentList(depth, lat, lon, radius, lastFetch)
             .map { AccidentConverter.toAccidentList(it) }
             .schedulersIoToMain()
     }
@@ -41,6 +40,12 @@ class AccidentDataRepo @Inject constructor(
                 description
             )
         )
+            .map { AccidentConverter.toAccident(it) }
+            .schedulersIoToMain()
+    }
+
+    override fun getAccident(id: String): Single<Accident> {
+        return api.getAccident(id)
             .map { AccidentConverter.toAccident(it) }
             .schedulersIoToMain()
     }

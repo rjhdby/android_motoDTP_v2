@@ -50,6 +50,8 @@ class MockInterceptor : Interceptor {
             } else { // Note: Для GET
                 when {
                     uri.contains("accident/list/") -> getAccidentList
+                    uri.endsWith("accident/?id=1") -> accidentFirst
+                    uri.endsWith("accident/?id=2") -> accidentSecond
                     uri.endsWith("/checkVersion?version=1.0") -> getCheckVersionNormal
                     uri.endsWith("/checkVersion?version=1.2") -> getCheckVersionNormalDeprecated
                     uri.endsWith("/checkVersion?version=1.3") -> getCheckVersionNormalUnsupported
