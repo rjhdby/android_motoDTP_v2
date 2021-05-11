@@ -31,7 +31,7 @@ class MockInterceptor : Interceptor {
         val uri = chain.request().url.toUri().toString()
         val request = chain.request()
         val responseString =
-            if (request.body != null) { // Note: Для POST
+            if (request.body != null) { // Note: Для POST & PUT
                 val body = bodyToString(request)
                 when {
                     uri.endsWith("accident/") -> {
@@ -40,6 +40,12 @@ class MockInterceptor : Interceptor {
                             //body.equals("{\"categories\":[1,2,3],\"limit\":10,\"page\":1,\"systemID\":\"1\"}") -> getAccidentList
                             else -> newAccident
                         }
+                    }
+                    uri.endsWith("conflict") -> {
+                        conflictAccident
+                    }
+                    uri.endsWith("conflict/cancel") -> {
+                        noConflictAccident
                     }
                     // todo Код от проекта - донора
                     uri.endsWith("/pushToken/update") -> {

@@ -36,4 +36,8 @@ class AccidentUseCase @Inject constructor(
     )
 
     fun getAccident(id: String) = accidentRepo.getAccident(id)
+
+    fun setConflict(id: String) = accidentRepo.setConflict(id)
+
+    fun dropConflict(id: String) = accidentRepo.dropConflict(id)
 }
