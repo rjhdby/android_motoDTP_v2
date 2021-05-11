@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_create_map.*
 import motocitizen.app.App
 import motocitizen.app.utils.DEFAULT_ZOOM
+import motocitizen.domain.model.accident.Address
 import motocitizen.main.R
 import motocitizen.presentation.base.viewmodel.VMFragment
 import motocitizen.presentation.screens.root.RootActivity
@@ -57,11 +58,13 @@ class CreateMapFragment : VMFragment<CreateMapViewModel>(R.layout.fragment_creat
         (childFragmentManager.findFragmentById(R.id.create_map_container) as SupportMapFragment).getMapAsync(
             this
         )
-        ADDRESS.setOnClickListener {
-            viewModel.navigateToType()
+        saveButton.setOnClickListener {
+            val camera = googleMap.cameraPosition
+//todo Добавить опеределение адреса
 //            builder.location = AccidentLocation(MyLocationManager.getAddress(latLng), latLng)
 //            changeFrameTo(TYPE)
 //            EmptyAddressDialog(this, builder.location.address, this::addressDialogCallback)
+            viewModel.navigateToType(Address(camera.target.latitude, camera.target.longitude, ""))
         }
     }
 

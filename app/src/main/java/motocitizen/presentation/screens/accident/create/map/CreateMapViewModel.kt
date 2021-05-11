@@ -8,6 +8,7 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import motocitizen.domain.model.accident.Address
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 import motocitizen.presentation.screens.map.MapViewModel
 
@@ -19,9 +20,9 @@ class CreateMapViewModel @ViewModelInject constructor(
     lateinit var locationRequest: LocationRequest
     lateinit var locationCallback: LocationCallback
 
-    fun navigateToType() {
+    fun navigateToType(address: Address) {
         navController.navigate(
-            CreateMapFragmentDirections.actionCreateMapFragmentToCreateTypeFragment()
+            CreateMapFragmentDirections.actionCreateMapFragmentToCreateTypeFragment(address)
         )
     }
 

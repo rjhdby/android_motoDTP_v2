@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_createTypeFragment_to_createSubTypeFragment"
             app:destination="@id/createSubTypeFragment" />
+        <argument
+            android:name="address"
+            app:argType="motocitizen.domain.model.accident.Address" />
     </fragment>
     <fragment
         android:id="@+id/createDescriptionFragment"
@@ -36,6 +39,9 @@
         <argument
             android:name="hardness"
             app:argType="motocitizen.domain.model.accident.AccidentHardness" />
+        <argument
+            android:name="address"
+            app:argType="motocitizen.domain.model.accident.Address" />
     </fragment>
     <fragment
         android:id="@+id/createSubTypeFragment"
@@ -45,6 +51,9 @@
         <action
             android:id="@+id/action_createSubTypeFragment_to_damageFragment"
             app:destination="@id/damageFragment" />
+        <argument
+            android:name="address"
+            app:argType="motocitizen.domain.model.accident.Address" />
     </fragment>
     <fragment
         android:id="@+id/damageFragment"
@@ -54,6 +63,9 @@
         <argument
             android:name="type"
             app:argType="motocitizen.domain.model.accident.AccidentType" />
+        <argument
+            android:name="address"
+            app:argType="motocitizen.domain.model.accident.Address" />
         <action
             android:id="@+id/action_createDamageFragment_to_createDescriptionFragment"
             app:destination="@id/createDescriptionFragment" />

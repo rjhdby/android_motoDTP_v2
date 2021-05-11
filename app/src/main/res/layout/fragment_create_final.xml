@@ -17,7 +17,7 @@
         android:id="@+id/result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Инцидент успешно создан"
+        android:text="@string/accident_created_succ"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,7 +54,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="skeleton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -105,7 +106,7 @@
             app:layout_constraintTop_toBottomOf="@id/create_final_text" />
         <!-- todo Убрать после реализации нижней панели -->
         <Button
-            android:id="@+id/CREATE"
+            android:id="@+id/create_button"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

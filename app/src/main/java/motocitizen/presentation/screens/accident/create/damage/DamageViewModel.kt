@@ -4,6 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.navigation.NavController
 import motocitizen.domain.model.accident.AccidentHardness
 import motocitizen.domain.model.accident.AccidentType
+import motocitizen.domain.model.accident.Address
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 
 class DamageViewModel @ViewModelInject constructor(
@@ -11,9 +12,11 @@ class DamageViewModel @ViewModelInject constructor(
 ) : BaseViewModel() {
 
     lateinit var type: AccidentType
+    lateinit var address: Address
 
-    fun onAfterInit(type: AccidentType){
+    fun onAfterInit(type: AccidentType, address: Address){
         this.type = type
+        this.address = address
     }
 
     fun navigateUp() {
@@ -22,7 +25,7 @@ class DamageViewModel @ViewModelInject constructor(
 
     fun setMedicine(medicine: AccidentHardness) {
         navController.navigate(
-            DamageFragmentDirections.actionCreateDamageFragmentToCreateDescriptionFragment(type, medicine)
+            DamageFragmentDirections.actionCreateDamageFragmentToCreateDescriptionFragment(type, medicine, address)
         )
     }
 }

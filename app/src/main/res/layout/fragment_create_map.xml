@@ -16,7 +16,7 @@
         android:layout_gravity="center"
         android:layout_weight="1">
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/create_map_container"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
@@ -32,7 +32,7 @@
     </FrameLayout>
 
     <Button
-        android:id="@+id/ADDRESS"
+        android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/settings_confirm_button" />
@@ -58,6 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_search" />
+            android:src="@android:drawable/ic_menu_search"
+            android:contentDescription="search" />
     </LinearLayout>
 </LinearLayout>

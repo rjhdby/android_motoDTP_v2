@@ -2,6 +2,7 @@ package motocitizen.presentation.screens.accident.create.subtype
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_sub_type.*
 import kotlinx.android.synthetic.main.fragment_sub_type.tool_bar
@@ -14,7 +15,10 @@ class SubTypeFragment : VMFragment<SubTypeViewModel>(R.layout.fragment_sub_type)
 
     override val viewModel: SubTypeViewModel by viewModels()
 
+    private val args: SubTypeFragmentArgs by navArgs()
+
     override fun initViewModel() {
+        viewModel.onAfterInit(args.address)
     }
 
     override fun initUi(savedInstanceState: Bundle?) {
