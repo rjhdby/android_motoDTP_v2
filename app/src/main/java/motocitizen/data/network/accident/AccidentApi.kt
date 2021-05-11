@@ -16,7 +16,7 @@ interface AccidentApi {
         @Query("lastFetch") lastFetch: Int?,
     ): Single<List<AccidentResponse>>
 
-    @POST("accident/create/")
+    @POST("accident/")
     fun createAccident(@Body request: CreateAccidentRequest): Single<AccidentResponse>
 
     @GET("accident/")
