@@ -26,9 +26,11 @@ data class Accident(
         const val MESSAGE_FORMAT = "<b>%s</b>"
         const val TITLE_FORMAT = "%s%s(%s)%n%s%n%s"
         const val DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ"
+        const val TIME_FORMAT = "HH:mm"
     }
 
     private var sdf: SimpleDateFormat = SimpleDateFormat(DATE_TIME_PATTERN, Locale.getDefault())
+    private var time: SimpleDateFormat = SimpleDateFormat(TIME_FORMAT, Locale.getDefault())
 
     var coordinates: LatLng = LatLng.newBuilder()
         .setLongitude(location.lon)
@@ -88,6 +90,8 @@ data class Accident(
     }
 
     fun getTimeAfterCreation(): String = sdf.parse(created)!!.getIntervalFromNowInText()
-    
+
     fun getTimeCreationMS(): Long = sdf.parse(created)!!.time
+
+    fun getTimeCreation(): String = time.format(sdf.parse(created)!!)
 }

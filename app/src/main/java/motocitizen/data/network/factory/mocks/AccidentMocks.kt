@@ -21,9 +21,7 @@ const val accident = """
 }
 """
 
-const val getAccidentList = """
-[
-
+const val accidentFirst = """
   {
     "id": "1",
     "created": "2021-04-01T13:51:42.000+00:00",
@@ -38,25 +36,66 @@ const val getAccidentList = """
       "lon": 37.8488,
       "address": "Площадь Ленина"
     },
-    "description": "string",
+    "description": "Держака нет!",
     "conflict": true,
     "messages": 0
-  },
-    {
+  }
+"""
+
+const val accidentSecond = """
+  {
     "id": "2",
+    "created": "2021-04-17T18:29:09.000+00:00",
+    "type": "MOTO_PEDESTRIAN",
+    "verified": false,
+    "hidden": false,
+    "hardness": "LIGHT",
+    "creator": "607b289b63d52731fca27989",
+    "location": {
+      "lat": 45.06739,
+      "lon": 38.93582333,
+      "address": "Краснодарск"
+    },
+    "description": "Упал, очнулся - гипс",
+    "conflict": true,
+    "messages": 0
+  }
+"""
+
+const val getAccidentList = """
+[
+  {
+    "id": "1",
     "created": "2021-04-01T13:51:42.000+00:00",
-    "type": "BREAK",
+    "type": "OTHER",
     "resolved": "2021-04-01T13:51:42.000+00:00",
     "verified": true,
     "hidden": true,
     "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
-      "lat": 45.05739,
-      "lon": 38.96582333,
+      "lat": 55.568,
+      "lon": 37.8488,
+      "address": "Площадь Ленина"
+    },
+    "description": "Держака нет!",
+    "conflict": true,
+    "messages": 0
+  },
+    {
+    "id": "2",
+    "created": "2021-04-17T18:29:09.000+00:00",
+    "type": "MOTO_PEDESTRIAN",
+    "verified": false,
+    "hidden": false,
+    "hardness": "LIGHT",
+    "creator": "607b289b63d52731fca27989",
+    "location": {
+      "lat": 45.06739,
+      "lon": 38.93582333,
       "address": "Краснодарск"
     },
-    "description": "Могло быть и хуже",
+    "description": "Упал, очнулся - гипс",
     "conflict": true,
     "messages": 0
   },

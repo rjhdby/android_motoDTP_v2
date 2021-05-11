@@ -3,17 +3,16 @@ package motocitizen.presentation.screens.home
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavController
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
 import motocitizen.domain.model.accident.Accident
 import motocitizen.domain.usecases.AccidentUseCase
-import motocitizen.domain.usecases.CheckVersionUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 import motocitizen.presentation.base.viewmodel.delegate
-import motocitizen.presentation.base.viewmodel.mapDistinct
 
 class HomeViewModel @ViewModelInject constructor(
-    private val checkVersion: CheckVersionUseCase,
+    private val navController: NavController,
     private val getAccidentUseCase: AccidentUseCase
 ) : BaseViewModel() {
 
@@ -39,6 +38,12 @@ class HomeViewModel @ViewModelInject constructor(
     private fun createInitialViewState(): HomeViewState {
         return HomeViewState(
             checkRestrictionsState = LcenState.None,
+        )
+    }
+
+    fun onItemPressed(item: Accident) {
+        navController.navigate(
+            HomeFragmentDirections.actionHomeFragmentToAccidentFragment(item.id)
         )
     }
 }

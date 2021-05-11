@@ -34,4 +34,6 @@ class AccidentUseCase @Inject constructor(
         location = location,
         description = description,
     )
+
+    fun getAccident(id: String) = accidentRepo.getAccident(id)
 }

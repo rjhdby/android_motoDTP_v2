@@ -21,4 +21,6 @@ interface AccidentRepo {
         location: Address,
         description: String,
     ): Single<Accident>
+
+    fun getAccident(id: String): Single<Accident>
 }

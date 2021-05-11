@@ -5,6 +5,7 @@ import android.graphics.Typeface
 import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.TextView
+import com.airbnb.epoxy.CallbackProp
 import com.airbnb.epoxy.ModelView
 import com.airbnb.epoxy.TextProp
 import motocitizen.main.R
@@ -20,6 +21,9 @@ abstract class Row protected constructor(context: Context) :
         private const val MIN_LINE_SIZE = 3
     }
 
+    @set:CallbackProp
+    open var clickListener: (() -> Unit)? = null
+
     private var titleText = TextView(context)
     private var dateText = TextView(context)
     private var messageText = TextView(context)
@@ -33,7 +37,7 @@ abstract class Row protected constructor(context: Context) :
 
         setBackgroundResource(background)
         setMargins()
-//        setUpListeners()
+        setUpListeners()
         this.addView(titleText)
         this.addView(dateText)
         this.addView(messageText)
@@ -82,14 +86,14 @@ abstract class Row protected constructor(context: Context) :
         layoutPar.setMargins(margins.left, margins.top, margins.right, margins.bottom)
     }
 
-//    private fun setUpListeners() {
-//        setOnClickListener { clickListener() }
+    private fun setUpListeners() {
+        setOnClickListener { clickListener() }
 //        setOnLongClickListener { longClickListener(it) }
-//    }
+    }
 
-//    private fun clickListener() {
-//        (context as Activity).goTo(Screens.DETAILS, mapOf(AccidentDetailsActivity.ACCIDENT_ID_KEY to accident.id))
-//    }
+    private fun clickListener() {
+        clickListener?.invoke()
+    }
 //
 //    private fun longClickListener(v: View): Boolean {
 //        AccidentContextMenu(context, accident).showAsDropDown(v)
