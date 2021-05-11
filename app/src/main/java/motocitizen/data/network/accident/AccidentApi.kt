@@ -18,4 +18,7 @@ interface AccidentApi {
 
     @POST("accident/create/")
     fun createAccident(@Body request: CreateAccidentRequest): Single<AccidentResponse>
+
+    @GET("accident/")
+    fun getAccident(@Query("id") id: String): Single<AccidentResponse>
 }

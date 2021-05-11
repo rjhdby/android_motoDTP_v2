@@ -10,8 +10,17 @@
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_accidentFragment"/>
-        <action
-            android:id="@+id/action_homeFragment_to_accidentListFragment" />
+            android:id="@+id/action_homeFragment_to_accidentFragment"
+            app:destination="@id/accidentDetailsFragment" />
+        <action android:id="@+id/action_homeFragment_to_accidentListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accidentDetailsFragment"
+        android:name="motocitizen.presentation.screens.accident.details.AccidentDetailsFragment"
+        android:label="AccidentDetailsFragment"
+        tools:layout="@layout/activity_accident_details">
+        <argument
+            android:name="accidentId"
+            app:argType="string" />
     </fragment>
 </navigation>

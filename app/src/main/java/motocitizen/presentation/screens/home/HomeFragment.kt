@@ -8,15 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
 import motocitizen.data.gps.LocListener
-import motocitizen.data.network.version.VersionStatus
-import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.isContent
 import motocitizen.domain.lcenstate.isError
 import motocitizen.domain.lcenstate.isLoading
 import motocitizen.domain.model.accident.Accident
 import motocitizen.main.R
-import motocitizen.presentation.base.showSimpleDialog
-import motocitizen.presentation.base.showSimpleDialogWithButton
 import motocitizen.presentation.base.viewmodel.VMFragment
 import motocitizen.presentation.screens.root.RootActivity
 import timber.log.Timber
@@ -35,6 +31,7 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
 
     override fun initUi(savedInstanceState: Bundle?) {
         recycler_view_home.setController(accidentEpoxyController)
+        accidentEpoxyController.clickListener = viewModel::onItemPressed
         recycler_view_home.itemAnimator = object : DefaultItemAnimator() {
             override fun animateChange(
                 oldHolder: RecyclerView.ViewHolder,
