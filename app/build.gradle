@@ -20,7 +20,7 @@ android {
 
     defaultConfig {
         applicationId "motocitizen.main"
-        minSdkVersion 26
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 26
         versionName "1.2.8"
@@ -163,7 +163,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0"
 
     // navigation
-    def nav_version = "2.3.3"
+    def nav_version = "2.3.5"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
