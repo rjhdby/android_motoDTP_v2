@@ -43,7 +43,7 @@
         <activity
             android:name="motocitizen.presentation.screens.splash.SplashActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="fullSensor">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -52,7 +52,7 @@
         <activity
             android:name="motocitizen.presentation.screens.root.RootActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="fullSensor">
+            android:screenOrientation="portrait">
         </activity>
 
         <service
