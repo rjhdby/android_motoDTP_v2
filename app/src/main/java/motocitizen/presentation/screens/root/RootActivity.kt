@@ -8,11 +8,13 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.security.KeyChain
 import android.security.KeyChainAliasCallback
 import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
@@ -28,6 +30,7 @@ import motocitizen.presentation.base.isVisibleWithAnimation
 import motocitizen.presentation.base.setupWithNavController
 import motocitizen.presentation.base.viewmodel.VMActivity
 import motocitizen.presentation.base.viewmodel.commands.VMCommand
+
 
 //import motocitizen.presentation.screens.accident.AccidentFragmentArgs
 
@@ -166,6 +169,23 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
     override fun onResume() {
         super.onResume()
         checkLocationPermission()
+        if (!checkGpsEnable()) {
+            buildAlertMessageNoGps()
+        }
+    }
+
+    private fun buildAlertMessageNoGps() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(R.string.location_disabled_message_text)
+            .setCancelable(false)
+            .setPositiveButton(
+                R.string.enable
+            ) { _, _ -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) }
+            .setNegativeButton(
+                R.string.cancel
+            ) { dialog, _ -> dialog.cancel() }
+        val alert: AlertDialog = builder.create()
+        alert.show()
     }
 
     override fun initViewModel() {
@@ -174,7 +194,6 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         val locationManager =
             this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         viewModel.onAfterInit(locationManager)
-
         bottom_navigation.menu.clear()
         bottom_navigation.menu.add(
             Menu.NONE,

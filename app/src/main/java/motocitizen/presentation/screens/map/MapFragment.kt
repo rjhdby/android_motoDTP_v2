@@ -24,6 +24,7 @@ import motocitizen.domain.lcenstate.isLoading
 import motocitizen.domain.model.accident.Accident
 import motocitizen.main.R
 import motocitizen.presentation.base.viewmodel.VMFragment
+import motocitizen.presentation.screens.root.RootActivity
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -33,7 +34,7 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
     override val viewModel: MapViewModel by viewModels()
     private lateinit var googleMap: GoogleMap
     private var lastKnownLocation: Location? = null
-    private val defaultLocation = LatLng(0.0, 0.0)
+    private val defaultLocation = LatLng(55.75375094653797, 37.62135415470559)
 
     companion object {
         private const val MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey"
@@ -127,31 +128,38 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
 
     private fun setLastLocation() {
         try {
-            if (App.isLocPermission) {
-                val locationResult = viewModel.fusedLocationProviderClient.lastLocation
+            if (App.isLocPermission && (requireActivity() as RootActivity).checkGpsEnable()) {
+                    val locationResult = viewModel.fusedLocationProviderClient.lastLocation
 
-                locationResult.addOnCompleteListener(requireActivity()) { task ->
-                    if (task.isSuccessful) {
-                        lastKnownLocation = task.result
-                        if (lastKnownLocation != null) {
+                    locationResult.addOnCompleteListener(requireActivity()) { task ->
+                        if (task.isSuccessful) {
+                            lastKnownLocation = task.result
+                            if (lastKnownLocation != null) {
 
-                            googleMap.moveCamera(
-                                CameraUpdateFactory.newLatLngZoom(
-                                    LatLng(
-                                        lastKnownLocation!!.latitude,
-                                        lastKnownLocation!!.longitude
-                                    ), DEFAULT_ZOOM
+                                googleMap.moveCamera(
+                                    CameraUpdateFactory.newLatLngZoom(
+                                        LatLng(
+                                            lastKnownLocation!!.latitude,
+                                            lastKnownLocation!!.longitude
+                                        ), DEFAULT_ZOOM
+                                    )
                                 )
+                            }
+                        } else {
+                            googleMap.moveCamera(
+                                CameraUpdateFactory
+                                    .newLatLngZoom(defaultLocation, DEFAULT_ZOOM)
                             )
+                            googleMap.uiSettings.isMyLocationButtonEnabled = false
                         }
-                    } else {
-                        googleMap.moveCamera(
-                            CameraUpdateFactory
-                                .newLatLngZoom(defaultLocation, DEFAULT_ZOOM)
-                        )
-                        googleMap.uiSettings.isMyLocationButtonEnabled = false
                     }
                 }
+            else{
+                googleMap.moveCamera(
+                    CameraUpdateFactory
+                        .newLatLngZoom(defaultLocation, DEFAULT_ZOOM)
+                )
+                googleMap.uiSettings.isMyLocationButtonEnabled = false
             }
         } catch (e: SecurityException) {
             Timber.e(e)
