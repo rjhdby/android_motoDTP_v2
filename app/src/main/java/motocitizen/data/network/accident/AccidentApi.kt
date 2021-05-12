@@ -1,10 +1,7 @@
 package motocitizen.data.network.accident
 
 import io.reactivex.Single
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface AccidentApi {
     @GET("accident/list/")
@@ -19,6 +16,12 @@ interface AccidentApi {
     @POST("accident/")
     fun createAccident(@Body request: CreateAccidentRequest): Single<AccidentResponse>
 
-    @GET("accident/")
-    fun getAccident(@Query("id") id: String): Single<AccidentResponse>
+    @GET("accident/{id}")
+    fun getAccident(@Path("id") id: String): Single<AccidentResponse>
+
+    @PUT("accident/{id}/conflict")
+    fun setConflict(@Path("id") id: String): Single<AccidentResponse>
+
+    @PUT("accident/{id}/conflict/cancel")
+    fun dropConflict(@Path("id") id: String): Single<AccidentResponse>
 }

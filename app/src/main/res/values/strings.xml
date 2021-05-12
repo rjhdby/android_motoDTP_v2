@@ -123,4 +123,9 @@
     <string name="location_disabled_message_text">"Для корректной работы приложения необходимо включить геоданные."</string>
     <string name="cancel">Отмена</string>
     <string name="enable">Включить</string>
+    <string name="conflict">Конфликт</string>
+    <string name="set_conflict">Установить конфликт</string>
+    <string name="drop_conflict">Снять конфликт</string>
+    <string name="skeleton">skeleton</string>
+    <string name="medicine"> (%1$s)</string>
 </resources>

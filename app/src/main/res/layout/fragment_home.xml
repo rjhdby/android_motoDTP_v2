@@ -26,9 +26,9 @@
                 android:layout_width="220dp"
                 android:layout_height="83dp"
                 android:layout_gravity="top"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:contentDescription="skeleton"
+                android:contentDescription="@string/skeleton"
                 android:scaleType="fitXY"
                 android:src="@drawable/skeleton_accident_description" />
 

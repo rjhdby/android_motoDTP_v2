@@ -49,4 +49,16 @@ class AccidentDataRepo @Inject constructor(
             .map { AccidentConverter.toAccident(it) }
             .schedulersIoToMain()
     }
+
+    override fun setConflict(id: String): Single<Accident> {
+        return api.setConflict(id)
+            .map { AccidentConverter.toAccident(it) }
+            .schedulersIoToMain()
+    }
+
+    override fun dropConflict(id: String): Single<Accident> {
+        return api.dropConflict(id)
+            .map { AccidentConverter.toAccident(it) }
+            .schedulersIoToMain()
+    }
 }

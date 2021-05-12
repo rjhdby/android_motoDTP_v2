@@ -23,4 +23,8 @@ interface AccidentRepo {
     ): Single<Accident>
 
     fun getAccident(id: String): Single<Accident>
+
+    fun setConflict(id: String): Single<Accident>
+
+    fun dropConflict(id: String): Single<Accident>
 }
