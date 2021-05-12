@@ -34,9 +34,12 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
     override val viewModel: MapViewModel by viewModels()
     private lateinit var googleMap: GoogleMap
     private var lastKnownLocation: Location? = null
-    private val defaultLocation = LatLng(55.75375094653797, 37.62135415470559)
+
+    private val defaultLocation = LatLng(MSC_CENTER_LAT, MSC_CENTER_LON)
 
     companion object {
+        const val MSC_CENTER_LAT = 55.75375094653797
+        const val MSC_CENTER_LON = 37.62135415470559
         private const val MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey"
         private const val MAP_MIN_ZOOM: Float = 1f
     }
@@ -129,32 +132,31 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
     private fun setLastLocation() {
         try {
             if (App.isLocPermission && (requireActivity() as RootActivity).checkGpsEnable()) {
-                    val locationResult = viewModel.fusedLocationProviderClient.lastLocation
+                val locationResult = viewModel.fusedLocationProviderClient.lastLocation
 
-                    locationResult.addOnCompleteListener(requireActivity()) { task ->
-                        if (task.isSuccessful) {
-                            lastKnownLocation = task.result
-                            if (lastKnownLocation != null) {
+                locationResult.addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        lastKnownLocation = task.result
+                        if (lastKnownLocation != null) {
 
-                                googleMap.moveCamera(
-                                    CameraUpdateFactory.newLatLngZoom(
-                                        LatLng(
-                                            lastKnownLocation!!.latitude,
-                                            lastKnownLocation!!.longitude
-                                        ), DEFAULT_ZOOM
-                                    )
-                                )
-                            }
-                        } else {
                             googleMap.moveCamera(
-                                CameraUpdateFactory
-                                    .newLatLngZoom(defaultLocation, DEFAULT_ZOOM)
+                                CameraUpdateFactory.newLatLngZoom(
+                                    LatLng(
+                                        lastKnownLocation!!.latitude,
+                                        lastKnownLocation!!.longitude
+                                    ), DEFAULT_ZOOM
+                                )
                             )
-                            googleMap.uiSettings.isMyLocationButtonEnabled = false
                         }
+                    } else {
+                        googleMap.moveCamera(
+                            CameraUpdateFactory
+                                .newLatLngZoom(defaultLocation, DEFAULT_ZOOM)
+                        )
+                        googleMap.uiSettings.isMyLocationButtonEnabled = false
                     }
                 }
-            else{
+            } else {
                 googleMap.moveCamera(
                     CameraUpdateFactory
                         .newLatLngZoom(defaultLocation, DEFAULT_ZOOM)
