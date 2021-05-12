@@ -120,7 +120,7 @@
     <string name="addressDialog">Уточните адрес. Номер дома, в центр/в область/внешнее/внутреннее и т.д.</string>
     <string name="unable_to_load">Не удалось загрузить данные</string>
     <string name="accident_created_succ">Инцидент успешно создан</string>
-    <string name="location_disabled_message_text">"Для коректной работы приложения необходимо включить геодннные."</string>
+    <string name="location_disabled_message_text">"Для коректной работы приложения необходимо включить геоднные."</string>
     <string name="cancel">Отмена</string>
     <string name="enable">Включить</string>
 </resources>
