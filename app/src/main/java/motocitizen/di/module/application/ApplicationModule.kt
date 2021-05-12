@@ -1,6 +1,8 @@
 package motocitizen.di.module.application
 
 import android.content.Context
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,6 +48,13 @@ object ApplicationModule {
             sharedPrefsStorage,
             objectTransformer
         )
+
+    @Provides
+    @Singleton
+    fun provideFusedLocationClient(@ApplicationContext appContext: Context): FusedLocationProviderClient {
+        return LocationServices.getFusedLocationProviderClient(appContext)
+    }
+
 
     @Provides
     @Singleton

@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.*
@@ -25,18 +24,22 @@ import motocitizen.domain.lcenstate.isLoading
 import motocitizen.domain.model.accident.Accident
 import motocitizen.main.R
 import motocitizen.presentation.base.viewmodel.VMFragment
+import motocitizen.presentation.screens.root.RootActivity
 import timber.log.Timber
 
 @AndroidEntryPoint
 class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyCallback,
     OnMarkerClickListener, OnMyLocationButtonClickListener, OnCameraMoveStartedListener {
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
     override val viewModel: MapViewModel by viewModels()
     private lateinit var googleMap: GoogleMap
     private var lastKnownLocation: Location? = null
-    private val defaultLocation = LatLng(0.0, 0.0)
+
+    private val defaultLocation = LatLng(MSC_CENTER_LAT, MSC_CENTER_LON)
 
     companion object {
+        const val MSC_CENTER_LAT = 55.75375094653797
+        const val MSC_CENTER_LON = 37.62135415470559
         private const val MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey"
         private const val MAP_MIN_ZOOM: Float = 1f
     }
@@ -45,12 +48,6 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
         (childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment).getMapAsync(
             this
         )
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        fusedLocationProviderClient = LocationServices
-            .getFusedLocationProviderClient(requireActivity())
     }
 
     override fun initViewModel() {
@@ -79,11 +76,11 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
         googleMap.setMinZoomPreference(MAP_MIN_ZOOM)
         setLastLocation()
 
-        if (App.locPermission) {
+        if (App.isLocPermission) {
             googleMap.isMyLocationEnabled = true
             setMapListeners()
             viewModel.buildLocationCallBack(googleMap)
-            fusedLocationProviderClient.requestLocationUpdates(
+            viewModel.fusedLocationProviderClient.requestLocationUpdates(
                 viewModel.locationRequest,
                 viewModel.locationCallback,
                 requireActivity().mainLooper
@@ -134,8 +131,8 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
 
     private fun setLastLocation() {
         try {
-            if (App.locPermission) {
-                val locationResult = fusedLocationProviderClient.lastLocation
+            if (App.isLocPermission && (requireActivity() as RootActivity).checkGpsEnable()) {
+                val locationResult = viewModel.fusedLocationProviderClient.lastLocation
 
                 locationResult.addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
@@ -159,6 +156,12 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
                         googleMap.uiSettings.isMyLocationButtonEnabled = false
                     }
                 }
+            } else {
+                googleMap.moveCamera(
+                    CameraUpdateFactory
+                        .newLatLngZoom(defaultLocation, DEFAULT_ZOOM)
+                )
+                googleMap.uiSettings.isMyLocationButtonEnabled = false
             }
         } catch (e: SecurityException) {
             Timber.e(e)

@@ -1,13 +1,19 @@
 package motocitizen.presentation.screens.home
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
+import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
+import com.google.type.LatLng
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
-import motocitizen.data.gps.LocListener
+import motocitizen.app.App
+import motocitizen.data.utils.lastLocation
 import motocitizen.domain.lcenstate.isContent
 import motocitizen.domain.lcenstate.isError
 import motocitizen.domain.lcenstate.isLoading
@@ -16,13 +22,43 @@ import motocitizen.main.R
 import motocitizen.presentation.base.viewmodel.VMFragment
 import motocitizen.presentation.screens.root.RootActivity
 import timber.log.Timber
-import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
 
     override val viewModel: HomeViewModel by viewModels()
     private var accidentEpoxyController = AccidentEpoxyController()
+    private var lastKnownLocation: Location? = null
+
+    private fun updateLastLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        try {
+            val locationResult = viewModel.fusedLocationProviderClient.lastLocation
+            locationResult.addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    lastKnownLocation = task.result
+                    if (lastKnownLocation != null) {
+                        val latLng: LatLng = LatLng.newBuilder()
+                            .setLongitude(lastKnownLocation!!.longitude)
+                            .setLatitude(lastKnownLocation!!.latitude)
+                            .build()
+                        lastLocation.value = latLng
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Timber.d(e)
+        }
+    }
 
     override fun onResume() {
         super.onResume()
@@ -43,12 +79,14 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
             }
         }
         swipe_to_refresh.setOnRefreshListener {
+            updateLastLocation()
             viewModel.loadAccidentList()
             swipe_to_refresh.isRefreshing = false
         }
     }
 
     override fun initViewModel() {
+        updateLastLocation()
         viewModel.loadAccidentListState.observe {
             show_progress.isVisible = it.isLoading()
             error_view.isVisible = it.isError()
@@ -57,29 +95,12 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        observeLocation()
-    }
-
     private fun renderContent(list: List<Accident>) {
-        //todo Переделать, т.к. приводит к длительному ожиданию, особенно после запуска приложения
-        val start = Date()
-        LocListener.currentLocation.observe(viewLifecycleOwner) {
-            //todo Убрать после рефакторинга <--
-            val end = Date()
-            val res = (end.time - start.time) / 1000
-            Timber.d("Wait location is: $res sec.")
-            //todo Убрать после рефакторинга -->
-            accidentEpoxyController.setData(list)
-            LocListener.currentLocation.removeObservers(viewLifecycleOwner)
-        }
-    }
 
-    private fun observeLocation() {
-        val activity = requireActivity() as RootActivity
-        activity.viewModel.observeLocation(viewLifecycleOwner, { locPoint ->
-            Timber.d("Location is: ${locPoint.latitude} x ${locPoint.longitude}")
-        })
+        lastLocation.observe(this) {
+            if ((requireActivity() as RootActivity).checkGpsEnable() && App.isLocPermission) {
+                accidentEpoxyController.setData(list)
+            }
+        }
     }
 }

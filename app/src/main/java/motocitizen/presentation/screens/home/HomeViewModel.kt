@@ -4,6 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
+import com.google.android.gms.location.FusedLocationProviderClient
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
 import motocitizen.domain.model.accident.Accident
@@ -13,7 +14,8 @@ import motocitizen.presentation.base.viewmodel.delegate
 
 class HomeViewModel @ViewModelInject constructor(
     private val navController: NavController,
-    private val getAccidentUseCase: AccidentUseCase
+    private val getAccidentUseCase: AccidentUseCase,
+    var fusedLocationProviderClient: FusedLocationProviderClient
 ) : BaseViewModel() {
 
     private val liveState = MutableLiveData(createInitialViewState())
@@ -37,7 +39,7 @@ class HomeViewModel @ViewModelInject constructor(
 
     private fun createInitialViewState(): HomeViewState {
         return HomeViewState(
-            checkRestrictionsState = LcenState.None,
+            LcenState.None
         )
     }
 
