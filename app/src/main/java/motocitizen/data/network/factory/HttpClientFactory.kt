@@ -59,7 +59,7 @@ object HttpClientFactory {
                 .header(PLATFORM, ANDROID)
                 .header(PLATFORM_VERSION, android.os.Build.VERSION.RELEASE.toString())
                 //todo подставлять реальный токен
-                .header(TOKEN, "xxx")
+                .header(TOKEN, "eyJhbGciOiJIUzUxMiJ9.eyJpZCI6IjYwOTk1OGI0NjEzM2M1NzhlZDZhNGJkYyJ9.lwqWJTg6tmiHF4SkSzOWmCMgEvwxaMuKWPWP2uRj6yhg0A11fFcqfmtQqR4FK1ESK0IZB574RpxE7wxIx_kTOw")
                 .build()
             chain.proceed(requestWithUserAgent)
         }

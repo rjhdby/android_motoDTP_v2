@@ -74,7 +74,7 @@ class CreateMapFragment : VMFragment<CreateMapViewModel>(R.layout.fragment_creat
         googleMap.setMinZoomPreference(MAP_MIN_ZOOM)
         setLastLocation()
 
-        if (App.locPermission) {
+        if (App.isLocPermission) {
             googleMap.isMyLocationEnabled = true
             setMapListeners()
             viewModel.buildLocationCallBack(googleMap)
@@ -88,7 +88,7 @@ class CreateMapFragment : VMFragment<CreateMapViewModel>(R.layout.fragment_creat
 
     private fun setLastLocation() {
         try {
-            if (App.locPermission) {
+            if (App.isLocPermission) {
                 val locationResult = fusedLocationProviderClient.lastLocation
 
                 locationResult.addOnCompleteListener(requireActivity()) { task ->

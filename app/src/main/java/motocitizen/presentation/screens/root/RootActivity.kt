@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Point
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +20,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavController.OnDestinationChangedListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import motocitizen.app.App
 import motocitizen.app.push.NOTIFICATION_ACCIDENT_ID_KEY
 import motocitizen.app.push.NOTIFICATION_ACCIDENT_NAME_KEY
 import motocitizen.main.R
@@ -45,54 +45,45 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
             )
     }
 
-//    private fun checkLocationPermission() {
-//        val permissionStatus = ContextCompat.checkSelfPermission(
-//            this,
-//            Manifest.permission.ACCESS_FINE_LOCATION
-//        )
-//
-//        if (permissionStatus == PackageManager.PERMISSION_GRANTED) {
-//            startLocationUpdate()
-//        } else {
-//            if (Build.VERSION.SDK_INT >= 23) {
-//                requestPermissions(
-//                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-//                    REQST_CODE
-//                )
-//            } else {
-//                ActivityCompat.requestPermissions(
-//                    this,
-//                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-//                    REQST_CODE
-//                )
-//            }
-//        }
-//    }
+    private fun checkLocationPermission() {
+        val permissionStatus = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
 
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<out String>,
-//        grantResults: IntArray
-//    ) {
-//        when (requestCode) {
-//            REQST_CODE -> {
-//                if ((grantResults.isNotEmpty() &&
-//                            grantResults[0] == PackageManager.PERMISSION_GRANTED)
-//                ) {
-//                    startLocationUpdate()
-//                }
-//            }
-//        }
-//    }
+        if (permissionStatus == PackageManager.PERMISSION_GRANTED) {
+            App.isLocPermission = true
+        } else {
+            if (Build.VERSION.SDK_INT >= 23) {
+                requestPermissions(
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    REQST_CODE
+                )
+            } else {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    REQST_CODE
+                )
+            }
+        }
+    }
 
-//    private fun startLocationUpdate() {
-//        if (isGpsEnable()) {
-//            viewModel.starLocationUpdate()
-//        } else {
-//            viewModel.starLocationUpdate()
-//        }
-//
-//    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            REQST_CODE -> {
+                if ((grantResults.isNotEmpty() &&
+                            grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                ) {
+                    App.isLocPermission = true
+                }
+            }
+        }
+    }
 
     override val viewModel: RootViewModel by viewModels()
 
@@ -172,9 +163,9 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         }*/
     }
 
-    override fun onStart() {
-        super.onStart()
-//        checkLocationPermission()
+    override fun onResume() {
+        super.onResume()
+        checkLocationPermission()
     }
 
     override fun initViewModel() {
@@ -231,16 +222,14 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         viewModel.onAliasChosen(alias)
     }
 
-    fun toHome(){
+    fun toHome() {
         val view: View = bottom_navigation.findViewById(R.id.home)
         view.performClick()
     }
 
-    fun isGpsEnable(): Boolean {
+    fun checkGpsEnable(): Boolean {
         val locationManager =
             this.getSystemService(LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
-
-
 }

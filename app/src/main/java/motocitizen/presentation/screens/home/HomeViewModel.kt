@@ -9,14 +9,11 @@ import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
 import motocitizen.domain.model.accident.Accident
 import motocitizen.domain.usecases.AccidentUseCase
-import motocitizen.domain.usecases.CheckVersionUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 import motocitizen.presentation.base.viewmodel.delegate
-import motocitizen.presentation.base.viewmodel.mapDistinct
 
 class HomeViewModel @ViewModelInject constructor(
     private val navController: NavController,
-    private val checkVersion: CheckVersionUseCase,
     private val getAccidentUseCase: AccidentUseCase,
     var fusedLocationProviderClient: FusedLocationProviderClient
 ) : BaseViewModel() {
@@ -31,7 +28,7 @@ class HomeViewModel @ViewModelInject constructor(
     fun loadAccidentList() {
         safeSubscribe {
             //todo Подставить реальные данные
-            getAccidentUseCase.getAccidentList("1", 999)
+            getAccidentUseCase.getAccidentList(999)
                 .toLcenEventObservable { it }
                 .subscribe(
                     _loadAccidentListState::postValue,
@@ -42,7 +39,7 @@ class HomeViewModel @ViewModelInject constructor(
 
     private fun createInitialViewState(): HomeViewState {
         return HomeViewState(
-            checkVersionState = LcenState.None
+            LcenState.None
         )
     }
 

@@ -3,6 +3,7 @@ package motocitizen.presentation.screens.map
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -16,7 +17,8 @@ import motocitizen.domain.usecases.AccidentUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 
 class MapViewModel @ViewModelInject constructor(
-    private val getAccidentUseCase: AccidentUseCase
+    private val getAccidentUseCase: AccidentUseCase,
+    var fusedLocationProviderClient: FusedLocationProviderClient
 ) : BaseViewModel() {
     companion object{
         const val LOC_REQUEST_INTERVAL = 500L
