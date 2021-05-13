@@ -1,4 +1,4 @@
-package motocitizen.data.network.user
+package motocitizen.data.network.main
 
 import motocitizen.data.network.factory.ApiFactory
 import motocitizen.data.network.factory.HttpClientFactory

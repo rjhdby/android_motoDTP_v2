@@ -1,4 +1,4 @@
-package motocitizen.data.network.user
+package motocitizen.data.network.main
 
 import motocitizen.domain.exceptions.AuthException
 import motocitizen.domain.providers.UserDataProvider

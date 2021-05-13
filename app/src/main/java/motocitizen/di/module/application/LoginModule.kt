@@ -7,7 +7,7 @@ import dagger.hilt.android.components.ActivityComponent
 import motocitizen.app.device.DeviceManager
 import motocitizen.app.push.FirebasePushManager
 import motocitizen.data.network.login.LoginApi
-import motocitizen.data.network.user.UserApiFactory
+import motocitizen.data.network.main.UserApiFactory
 import motocitizen.data.repos.LoginDataRepo
 import motocitizen.data.storage.keyvalue.SharedPrefsStorage
 import motocitizen.domain.repos.LoginRepo
