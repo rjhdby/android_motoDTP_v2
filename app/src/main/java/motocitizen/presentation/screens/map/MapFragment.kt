@@ -5,7 +5,6 @@ import android.location.Location
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.*
@@ -40,7 +39,6 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
     companion object {
         const val MSC_CENTER_LAT = 55.75375094653797
         const val MSC_CENTER_LON = 37.62135415470559
-        private const val MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey"
         private const val MAP_MIN_ZOOM: Float = 1f
     }
 
@@ -61,13 +59,13 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
 
     override fun onResume() {
         super.onResume()
-        if (::googleMap.isInitialized) {
-            showAccidentsMarkers()
-        }
+        viewModel.loadData()
     }
 
     private fun renderContent(list: List<Accident>) {
-        Timber.i(list.size.toString())
+        if (::googleMap.isInitialized) {
+            showAccidentsMarkers(list)
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -86,8 +84,6 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
                 requireActivity().mainLooper
             )
         }
-
-        showAccidentsMarkers()
     }
 
     private fun setMapListeners() {
@@ -96,14 +92,10 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
         googleMap.setOnCameraMoveStartedListener(this)
     }
 
-    private fun showAccidentsMarkers() {
+    private fun showAccidentsMarkers(list: List<Accident>) {
         googleMap.clear()
-        viewModel.loadAccidentListState.observe(viewLifecycleOwner) { accidents ->
-            if (accidents.isContent()) {
-                for (accident in accidents.asContent()) {
-                    googleMap.accidentMarker(accident)
-                }
-            }
+        for (accident in list) {
+            googleMap.accidentMarker(accident)
         }
     }
 
