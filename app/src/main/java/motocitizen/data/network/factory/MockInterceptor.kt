@@ -62,7 +62,7 @@ class MockInterceptor : Interceptor {
                     uri.endsWith("/checkVersion?version=1.0") -> getCheckVersionNormal
                     uri.endsWith("/checkVersion?version=1.2") -> getCheckVersionNormalDeprecated
                     uri.endsWith("/checkVersion?version=1.3") -> getCheckVersionNormalUnsupported
-                    uri.endsWith("/restrictions") -> getRestrictions
+                    uri.endsWith("/user/") -> getUser
                     else -> empty
                 }
             }

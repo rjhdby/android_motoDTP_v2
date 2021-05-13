@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import motocitizen.data.network.accident.AccidentApi
-import motocitizen.data.network.user.UserApiFactory
+import motocitizen.data.network.main.UserApiFactory
 import motocitizen.data.repos.AccidentDataRepo
 import motocitizen.domain.repos.AccidentRepo
 import motocitizen.domain.usecases.AccidentUseCase

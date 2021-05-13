@@ -4,8 +4,8 @@ import io.reactivex.Completable
 import motocitizen.data.network.login.AuthData
 import motocitizen.data.network.login.SignInApiRequest
 import motocitizen.data.network.login.SignInApiResponse
-import motocitizen.data.network.restrictions.Restrictions
-import motocitizen.data.network.restrictions.RestrictionsResponse
+import motocitizen.data.network.user.User
+import motocitizen.data.network.user.UserResponse
 import motocitizen.data.utils.getNotNull
 import motocitizen.domain.exceptions.ServerException
 import motocitizen.domain.model.login.SignIn
@@ -39,11 +39,13 @@ object LoginConverter {
         )
     }
 
-    fun toRestrictions(response: RestrictionsResponse): Restrictions {
+    fun toUser(response: UserResponse): User {
         val result = getNotNull(response)
         return result.let {
-            val restrictions = Restrictions(
-                create = it.create,
+            val restrictions = User(
+                id = it.id,
+                nick = it.nick,
+                role = it.role,
             )
             restrictions
         }

@@ -17,8 +17,8 @@ import motocitizen.data.storage.ObjectDataTransformer
 import motocitizen.data.storage.SessionMemory
 import motocitizen.data.storage.keyvalue.SharedPrefsStorage
 import motocitizen.data.storage.keyvalue.SharedPrefsStorageImpl
-import motocitizen.data.storage.restrictions.RestrictionsMemoryStorage
-import motocitizen.data.storage.restrictions.RestrictionsStorage
+import motocitizen.data.storage.user.UserMemoryStorage
+import motocitizen.data.storage.user.UserStorage
 import motocitizen.domain.providers.UserDataProvider
 import motocitizen.domain.repos.AppRepo
 import motocitizen.domain.storage.ObjectTransformer
@@ -94,6 +94,6 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideRestrictionsStorage(sessionMemory: SessionMemory): RestrictionsStorage =
-        RestrictionsMemoryStorage(sessionMemory)
+    fun provideUserStorage(sessionMemory: SessionMemory): UserStorage =
+        UserMemoryStorage(sessionMemory)
 }

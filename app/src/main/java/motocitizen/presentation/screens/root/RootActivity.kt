@@ -25,11 +25,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 import motocitizen.app.App
 import motocitizen.app.push.NOTIFICATION_ACCIDENT_ID_KEY
 import motocitizen.app.push.NOTIFICATION_ACCIDENT_NAME_KEY
+import motocitizen.data.network.user.User
+import motocitizen.domain.model.user.UserRole
 import motocitizen.main.R
 import motocitizen.presentation.base.isVisibleWithAnimation
 import motocitizen.presentation.base.setupWithNavController
 import motocitizen.presentation.base.viewmodel.VMActivity
 import motocitizen.presentation.base.viewmodel.commands.VMCommand
+import timber.log.Timber
 
 private const val REQST_CODE = 100
 
@@ -186,10 +189,16 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
 
     override fun initViewModel() {
         super.initViewModel()
-
         val locationManager =
             this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        viewModel.checkUserState.observe { checkRestrictionsState ->
+            checkRestrictionsState.asErrorOrNull()?.let { renderError(it) }
+            checkRestrictionsState.asContentOrNull()?.let { renderContent(it) }
+        }
         viewModel.onAfterInit(locationManager)
+    }
+
+    private fun renderContent(user: User) {
         bottom_navigation.menu.clear()
         bottom_navigation.menu.add(
             Menu.NONE,
@@ -198,12 +207,15 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
             getString(R.string.home)
         ).setIcon(R.drawable.ic_home)
 
-        bottom_navigation.menu.add(
-            Menu.NONE,
-            R.id.create_accident,
-            Menu.NONE,
-            getString(R.string.activity_main_add_point_button)
-        ).setIcon(R.drawable.create)
+        //todo Включить после завершения работ по авторизации
+        if (user.role != UserRole.READ_ONLY) {
+            bottom_navigation.menu.add(
+                Menu.NONE,
+                R.id.create_accident,
+                Menu.NONE,
+                getString(R.string.activity_main_add_point_button)
+            ).setIcon(R.drawable.create)
+        }
 
         bottom_navigation.menu.add(
             Menu.NONE,
@@ -246,5 +258,31 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         val locationManager =
             this.getSystemService(LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
+    private fun renderError(throwable: Throwable) {
+        Timber.e(throwable.toString())
+//todo Coming soon
+/*
+        val title = if (throwable is ForbiddenException) {
+            getString(R.string.no_permissions_error_title)
+        } else {
+            getString(R.string.error)
+        }
+        val description = if (throwable is ForbiddenException) {
+            getString(R.string.no_permissions_error_description)
+        } else {
+            getString(R.string.error_data_load)
+        }
+        supportFragmentManager.beginTransaction()
+            .add(
+                R.id.nav_host_container,
+                ErrorFragment.newInstance(
+                    title = title,
+                    description = description,
+                )
+            )
+            .commitNow()
+*/
     }
 }

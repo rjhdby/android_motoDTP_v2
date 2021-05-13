@@ -10,6 +10,8 @@ class FirebaseException : Exception()
 
 class AuthException : Exception()
 
+class ForbiddenException : Exception()
+
 class LockedException : Exception()
 
 class BadDataException : Exception()
