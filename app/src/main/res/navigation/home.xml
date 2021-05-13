@@ -10,9 +10,8 @@
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_accidentFragment"
+            android:id="@+id/action_homeFragment_to_accidentDetailsFragment"
             app:destination="@id/accidentDetailsFragment" />
-        <action android:id="@+id/action_homeFragment_to_accidentListFragment" />
     </fragment>
     <fragment
         android:id="@+id/accidentDetailsFragment"
@@ -22,5 +21,21 @@
         <argument
             android:name="accidentId"
             app:argType="string" />
+        <argument
+            android:name="mapEnable"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_accidentDetailsFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="motocitizen.presentation.screens.map.MapFragment"
+        android:label="MapFragment"
+        tools:layout="@layout/fragment_map">
+        <argument
+            android:name="accident"
+            app:argType="motocitizen.domain.model.accident.Accident"
+            app:nullable="true" />
     </fragment>
 </navigation>

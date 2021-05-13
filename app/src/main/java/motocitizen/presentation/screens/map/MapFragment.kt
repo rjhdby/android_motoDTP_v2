@@ -5,6 +5,7 @@ import android.location.Location
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.*
@@ -37,6 +38,7 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
     OnMarkerClickListener, OnMyLocationButtonClickListener, OnCameraMoveStartedListener {
 
     override val viewModel: MapViewModel by viewModels()
+    private val args: MapFragmentArgs by navArgs()
 
     private lateinit var googleMap: GoogleMap
 
@@ -57,6 +59,9 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
             error_view.isVisible = it.isError()
             view_panel.isVisible = it.isContent()
             it.asContentOrNull()?.let(::renderContent)
+        }
+        if (arguments != null) { //note Был ли переход с AccidentDetailsFragment
+            viewModel.onAfterInit(args.accident!!)
         }
     }
 
@@ -99,7 +104,7 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
 
     override fun onMarkerClick(marker: Marker): Boolean {
         viewModel.isBindCam = false
-        if (selected == marker.id && markers.containsKey(marker.id)) {
+        if (arguments == null && selected == marker.id && markers.containsKey(marker.id)) {
             viewModel.toDetails(markers[marker.id]!!)
         } else {
             marker.showInfoWindow()
@@ -126,39 +131,50 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
     }
 
     private fun setLastLocation() {
-        try {
-            if (App.isLocPermission && (requireActivity() as RootActivity).checkGpsEnable()) {
-                val locationResult = viewModel.fusedLocationProviderClient.lastLocation
-                locationResult.addOnCompleteListener(requireActivity()) { task ->
-                    if (task.isSuccessful) {
-                        lastKnownLocation = task.result
-                        if (lastKnownLocation != null) {
-                            googleMap.moveCamera(
-                                CameraUpdateFactory.newLatLngZoom(
-                                    LatLng(
-                                        lastKnownLocation!!.latitude,
-                                        lastKnownLocation!!.longitude
-                                    ), DEFAULT_ZOOM
-                                )
-                            )
-                        }
-                    } else {
-                        googleMap.moveCamera(
-                            CameraUpdateFactory
-                                .newLatLngZoom(defaultLocation, DEFAULT_ZOOM)
-                        )
-                        googleMap.uiSettings.isMyLocationButtonEnabled = false
-                    }
-                }
-            } else {
-                googleMap.moveCamera(
-                    CameraUpdateFactory
-                        .newLatLngZoom(defaultLocation, DEFAULT_ZOOM)
+        if (arguments != null) { //note Был ли переход с AccidentDetailsFragment
+            googleMap.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    LatLng(
+                        args.accident!!.location.lat,
+                        args.accident!!.location.lon
+                    ), DEFAULT_ZOOM
                 )
-                googleMap.uiSettings.isMyLocationButtonEnabled = false
+            )
+        } else {
+            try {
+                if (App.isLocPermission && (requireActivity() as RootActivity).checkGpsEnable()) {
+                    val locationResult = viewModel.fusedLocationProviderClient.lastLocation
+                    locationResult.addOnCompleteListener(requireActivity()) { task ->
+                        if (task.isSuccessful) {
+                            lastKnownLocation = task.result
+                            if (lastKnownLocation != null) {
+                                googleMap.moveCamera(
+                                    CameraUpdateFactory.newLatLngZoom(
+                                        LatLng(
+                                            lastKnownLocation!!.latitude,
+                                            lastKnownLocation!!.longitude
+                                        ), DEFAULT_ZOOM
+                                    )
+                                )
+                            }
+                        } else {
+                            googleMap.moveCamera(
+                                CameraUpdateFactory
+                                    .newLatLngZoom(defaultLocation, DEFAULT_ZOOM)
+                            )
+                            googleMap.uiSettings.isMyLocationButtonEnabled = false
+                        }
+                    }
+                } else {
+                    googleMap.moveCamera(
+                        CameraUpdateFactory
+                            .newLatLngZoom(defaultLocation, DEFAULT_ZOOM)
+                    )
+                    googleMap.uiSettings.isMyLocationButtonEnabled = false
+                }
+            } catch (e: SecurityException) {
+                Timber.e(e)
             }
-        } catch (e: SecurityException) {
-            Timber.e(e)
         }
     }
 }

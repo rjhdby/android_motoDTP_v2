@@ -9,19 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0"
         app:shimmer_base_alpha="0.6">
 
         <ImageView
             android:layout_width="220dp"
-            android:layout_height="83dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:contentDescription="skeleton"
+            android:contentDescription="@string/skeleton"
             android:scaleType="fitXY"
             android:src="@drawable/skeleton_accident_description" />
 
@@ -53,7 +51,6 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="80dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
