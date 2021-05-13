@@ -95,11 +95,31 @@ const val accidentSecond = """
     "creator": "607b289b63d52731fca27989",
     "location": {
       "lat": 45.06739,
-      "lon": 38.93582333,
+      "lon": 38.931,
       "address": "Краснодарск"
     },
     "description": "Упал, очнулся - гипс",
     "conflict": true,
+    "messages": 0
+  }
+"""
+
+const val accidentThrid = """
+{
+    "id": "3",
+    "created": "2021-04-17T18:29:09.000+00:00",
+    "type": "STEAL",
+    "verified": false,
+    "hidden": false,
+    "hardness": "UNKNOWN",
+    "creator": "607b289b63d52731fca27989",
+    "location": {
+      "lat": 55.2028,
+      "lon": 37.3100001,
+      "address": "string"
+    },
+    "description": "кто-то что-то как-то",
+    "conflict": false,
     "messages": 0
   }
 """
@@ -116,7 +136,7 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
-      "lat": 55.568,
+      "lat": 55.598,
       "lon": 37.8488,
       "address": "Площадь Ленина"
     },
@@ -134,7 +154,7 @@ const val getAccidentList = """
     "creator": "607b289b63d52731fca27989",
     "location": {
       "lat": 45.06739,
-      "lon": 38.93582333,
+      "lon": 38.938,
       "address": "Краснодарск"
     },
     "description": "Упал, очнулся - гипс",
@@ -142,7 +162,7 @@ const val getAccidentList = """
     "messages": 0
   },
     {
-    "id": "607b28f563d52731fca2798b",
+    "id": "3",
     "created": "2021-04-17T18:29:09.000+00:00",
     "type": "STEAL",
     "verified": false,
@@ -159,7 +179,7 @@ const val getAccidentList = """
     "messages": 0
   },
   {
-    "id": "3",
+    "id": "4",
     "created": "2021-04-01T13:51:42.000+00:00",
     "type": "MOTO_MOTO",
     "resolved": "2021-04-01T13:51:42.000+00:00",
@@ -177,7 +197,7 @@ const val getAccidentList = """
     "messages": 0
   },
     {
-    "id": "4",
+    "id": "5",
     "created": "2021-04-01T13:51:42.000+00:00",
     "type": "MOTO_AUTO",
     "resolved": "2021-04-01T13:51:42.000+00:00",
@@ -187,7 +207,7 @@ const val getAccidentList = """
     "creator": "string",
     "location": {
       "lat": 55.584028,
-      "lon": 37.38280001,
+      "lon": 38.38280001,
       "address": "string"
     },
     "description": "string",
@@ -195,7 +215,7 @@ const val getAccidentList = """
     "messages": 0
   },
   {
-    "id": "5607b28f563d52731fca2798b",
+    "id": "6",
     "created": "2021-04-17T18:29:09.000+00:00",
     "type": "MOTO_PEDESTRIAN",
     "verified": false,
@@ -203,8 +223,8 @@ const val getAccidentList = """
     "hardness": "LIGHT",
     "creator": "607b289b63d52731fca27989",
     "location": {
-      "lat": 45.06739,
-      "lon": 38.93582333,
+      "lat": 45.066,
+      "lon": 38.53586,
       "address": "Краснодарск"
     },
     "description": "Упал, очнулся - гипс",
@@ -212,7 +232,7 @@ const val getAccidentList = """
     "messages": 0
   },
   {
-    "id": "6",
+    "id": "7",
     "created": "2021-04-01T13:51:42.000+00:00",
     "type": "OTHER",
     "resolved": "2021-04-01T13:51:42.000+00:00",
@@ -230,7 +250,7 @@ const val getAccidentList = """
     "messages": 0
   },
     {
-    "id": "7",
+    "id": "8",
     "created": "2021-04-01T13:51:42.000+00:00",
     "type": "OTHER",
     "resolved": "2021-04-01T13:51:42.000+00:00",
@@ -248,7 +268,7 @@ const val getAccidentList = """
     "messages": 0
   },
   {
-    "id": "8607b28f563d52731fca2798b",
+    "id": "9",
     "created": "2021-04-17T18:29:09.000+00:00",
     "type": "OTHER",
     "verified": false,
@@ -265,7 +285,7 @@ const val getAccidentList = """
     "messages": 0
   },
   {
-    "id": "9",
+    "id": "10",
     "created": "2021-04-01T13:51:42.000+00:00",
     "type": "OTHER",
     "resolved": "2021-04-01T13:51:42.000+00:00",
@@ -274,7 +294,7 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
-      "lat": 55.6228,
+      "lat": 56.6228,
       "lon": 37.4609201,
       "address": "string"
     },
@@ -283,7 +303,7 @@ const val getAccidentList = """
     "messages": 0
   },
     {
-    "id": "10",
+    "id": "11",
     "created": "2021-04-01T13:51:42.000+00:00",
     "type": "OTHER",
     "resolved": "2021-04-01T13:51:42.000+00:00",
@@ -301,7 +321,7 @@ const val getAccidentList = """
     "messages": 0
   },
   {
-    "id": "11607b28f563d52731fca2798b",
+    "id": "12",
     "created": "2021-04-17T18:29:09.000+00:00",
     "type": "OTHER",
     "verified": false,
@@ -318,7 +338,7 @@ const val getAccidentList = """
     "messages": 0
   }
   ,{
-    "id": "12",
+    "id": "13",
     "created": "2021-04-01T13:51:42.000+00:00",
     "type": "OTHER",
     "resolved": "2021-04-01T13:51:42.000+00:00",
@@ -336,7 +356,7 @@ const val getAccidentList = """
     "messages": 1
   },
     {
-    "id": "132",
+    "id": "14",
     "created": "2021-04-01T13:51:42.000+00:00",
     "type": "OTHER",
     "resolved": "2021-04-01T13:51:42.000+00:00",
@@ -345,7 +365,7 @@ const val getAccidentList = """
     "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
-      "lat": 55.80,
+      "lat": 55.8,
       "lon": 37.75813201,
       "address": "string"
     },
@@ -354,7 +374,7 @@ const val getAccidentList = """
     "messages": 6
   },
   {
-    "id": "14607b28f563d52731fca2798b",
+    "id": "15",
     "created": "2021-04-17T18:29:09.000+00:00",
     "type": "OTHER",
     "verified": false,
@@ -370,7 +390,7 @@ const val getAccidentList = """
     "conflict": false,
     "messages": 8
   },{
-    "id": "151",
+    "id": "16",
     "created": "2021-04-01T13:51:42.000+00:00",
     "type": "OTHER",
     "resolved": "2021-04-01T13:51:42.000+00:00",
@@ -388,7 +408,7 @@ const val getAccidentList = """
     "messages": 1
   },
     {
-    "id": "162",
+    "id": "17",
     "created": "2021-04-01T13:51:42.000+00:00",
     "type": "OTHER",
     "resolved": "2021-04-01T13:51:42.000+00:00",
@@ -398,82 +418,12 @@ const val getAccidentList = """
     "creator": "string",
     "location": {
       "lat": 56.80,
-      "lon": 37.6413201,
+      "lon": 37.94132,
       "address": "string"
     },
     "description": "string",
     "conflict": true,
     "messages": 0
-  },
-  {
-    "id": "17607b28f563d52731fca2798b",
-    "created": "2021-04-17T18:29:09.000+00:00",
-    "type": "OTHER",
-    "verified": false,
-    "hidden": false,
-    "hardness": "UNKNOWN",
-    "creator": "607b289b63d52731fca27989",
-    "location": {
-      "lat": 56.85,
-      "lon": 37.6613201,
-      "address": "Где-то"
-    },
-    "description": "кто-то что-то как-то",
-    "conflict": false,
-    "messages": 8
-  },{
-    "id": "181",
-    "created": "2021-04-01T13:51:42.000+00:00",
-    "type": "OTHER",
-    "resolved": "2021-04-01T13:51:42.000+00:00",
-    "verified": true,
-    "hidden": true,
-    "hardness": "UNKNOWN",
-    "creator": "string",
-    "location": {
-      "lat": 56.8,
-      "lon": 37.8613201,
-      "address": "Москва"
-    },
-    "description": "string",
-    "conflict": true,
-    "messages": 2
-  },
-    {
-    "id": "192",
-    "created": "2021-04-01T13:51:42.000+00:00",
-    "type": "OTHER",
-    "resolved": "2021-04-01T13:51:42.000+00:00",
-    "verified": true,
-    "hidden": true,
-    "hardness": "UNKNOWN",
-    "creator": "string",
-    "location": {
-      "lat": 54.99,
-      "lon": 37.9913201,
-      "address": "адресс"
-    },
-    "description": "string",
-    "conflict": true,
-    "messages": 4
-  },
-  {
-    "id": "20607b28f563d52731fca2798b",
-    "created": "2021-04-17T18:29:09.000+00:00",
-    "type": "OTHER",
-    "verified": false,
-    "hidden": false,
-    "hardness": "UNKNOWN",
-    "creator": "607b289b63d52731fca27989",
-    "location": {
-      "lat": 55.0,
-      "lon": 37.8913901,
-      "address": "Площадь Ленина"
-    },
-    "description": "кто-то что-то как-то",
-    "conflict": false,
-    "messages": 4
   }
-  
 ]
 """
