@@ -20,34 +20,28 @@ class MapViewModel @ViewModelInject constructor(
     private val getAccidentUseCase: AccidentUseCase,
     var fusedLocationProviderClient: FusedLocationProviderClient
 ) : BaseViewModel() {
-    companion object{
+    companion object {
         const val LOC_REQUEST_INTERVAL = 500L
         const val LOC_REQUEST_FAST_INTERVAL = 250L
         const val LOC_REQUEST_SMALLEST_DISTANCE = 1f
     }
+
     var isBindCam = true
     lateinit var locationRequest: LocationRequest
     lateinit var locationCallback: LocationCallback
 
     //todo убрать после реализации входных параметров
-    private val token: String = "sasdacxc"
-    private val depth: Int = 5
-    //todo убрать после реализации входных параметров
+    private val depth: Int = 999
 
     private val _loadAccidentListState = MutableLiveData<LcenState<List<Accident>>>(LcenState.None)
     val loadAccidentListState: LiveData<LcenState<List<Accident>>>
         get() = _loadAccidentListState
 
     init {
-        loadData()
         buildLocationRequest()
     }
 
     fun loadData() {
-        loadAccidentList()
-    }
-
-    private fun loadAccidentList() {
         safeSubscribe {
             getAccidentUseCase.getAccidentList(depth = depth)
                 .toLcenEventObservable { it }
@@ -70,16 +64,16 @@ class MapViewModel @ViewModelInject constructor(
         locationCallback = object : LocationCallback() {
 
             override fun onLocationResult(locationResult: LocationResult) {
-                    if (isBindCam) {
-                        val pos = CameraUpdateFactory
-                            .newLatLng(
-                                LatLng(
-                                    locationResult.lastLocation.latitude,
-                                    locationResult.lastLocation.longitude
-                                )
+                if (isBindCam) {
+                    val pos = CameraUpdateFactory
+                        .newLatLng(
+                            LatLng(
+                                locationResult.lastLocation.latitude,
+                                locationResult.lastLocation.longitude
                             )
-                        gMap.animateCamera(pos)
-                    }
+                        )
+                    gMap.animateCamera(pos)
+                }
             }
         }
     }
