@@ -1,14 +1,22 @@
 package motocitizen.domain.model.accident
 
 import android.os.Build
+import android.os.Parcelable
 import android.text.Html
 import android.text.Spanned
 import com.google.type.LatLng
+import kotlinx.android.parcel.Parcelize
 import motocitizen.domain.utils.distanceString
 import motocitizen.domain.utils.getIntervalFromNowInText
 import java.text.SimpleDateFormat
 import java.util.*
 
+private const val MESSAGE_FORMAT = "<b>%s</b>"
+private const val TITLE_FORMAT = "%s%s(%s)%n%s%n%s"
+private const val DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ"
+private const val TIME_FORMAT = "HH:mm"
+
+@Parcelize
 data class Accident(
     val id: String,// Идентификатор аварии
     val created: String,
@@ -21,13 +29,7 @@ data class Accident(
     var conflict: Boolean = false,
     var messages: Int,
     var hardness: AccidentHardness
-) {
-    companion object {
-        const val MESSAGE_FORMAT = "<b>%s</b>"
-        const val TITLE_FORMAT = "%s%s(%s)%n%s%n%s"
-        const val DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ"
-        const val TIME_FORMAT = "HH:mm"
-    }
+) : Parcelable {
 
     private var sdf: SimpleDateFormat = SimpleDateFormat(DATE_TIME_PATTERN, Locale.getDefault())
     private var time: SimpleDateFormat = SimpleDateFormat(TIME_FORMAT, Locale.getDefault())
@@ -61,18 +63,17 @@ data class Accident(
     }
 
     //todo remove html
-    fun formatMessagesText(accident: Accident): String {
+    private fun formatMessagesText(accident: Accident): String {
         return if (accident.messages == 0) ""
 //                val read = StoreMessages.getLast(accident.id)
 //                return if (accident.messages > read)
 //                    String.format("<font color=#C62828><b>(%s)</b></font>", accident.messagesCount)
         else {
-
             String.format(MESSAGE_FORMAT, accident.messages)
         }
     }
 
-    fun isAccident(): Boolean {
+    private fun isAccident(): Boolean {
         return accidentsWithCrashes.contains(type)
     }
 

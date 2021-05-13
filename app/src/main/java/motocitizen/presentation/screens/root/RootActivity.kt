@@ -31,22 +31,18 @@ import motocitizen.presentation.base.setupWithNavController
 import motocitizen.presentation.base.viewmodel.VMActivity
 import motocitizen.presentation.base.viewmodel.commands.VMCommand
 
-
-//import motocitizen.presentation.screens.accident.AccidentFragmentArgs
+private const val REQST_CODE = 100
 
 @AndroidEntryPoint
 class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
-
-    private val REQST_CODE = 100
     private var currentNavController: LiveData<NavController>? = null
 
-    private val destinationChangedListener = OnDestinationChangedListener { _, destination, _ ->
-        bottom_navigation.isVisibleWithAnimation =
-            bottom_navigation.menu.size() > 1 && destination.id in listOf(
-                R.id.homeFragment,
-                R.id.mapFragment,
-            )
-    }
+    private val destinationChangedListener =
+        OnDestinationChangedListener { _, destination, arguments ->
+            bottom_navigation.isVisibleWithAnimation =
+                destination.id == R.id.homeFragment
+                        || (destination.id == R.id.mapFragment && arguments == null)
+        }
 
     private fun checkLocationPermission() {
         val permissionStatus = ContextCompat.checkSelfPermission(

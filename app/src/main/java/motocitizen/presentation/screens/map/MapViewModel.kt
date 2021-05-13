@@ -31,6 +31,8 @@ class MapViewModel @ViewModelInject constructor(
     }
 
     var isBindCam = true
+    var accident: Accident? = null
+
     lateinit var locationRequest: LocationRequest
     lateinit var locationCallback: LocationCallback
 
@@ -46,14 +48,24 @@ class MapViewModel @ViewModelInject constructor(
     }
 
     fun loadData() {
-        safeSubscribe {
-            getAccidentUseCase.getAccidentList(depth = depth)
-                .toLcenEventObservable { it }
-                .subscribe(
-                    _loadAccidentListState::postValue,
-                    ::handleError
-                )
+        if (accident == null) {
+            safeSubscribe {
+                getAccidentUseCase.getAccidentList(depth = depth)
+                    .toLcenEventObservable { it }
+                    .subscribe(
+                        _loadAccidentListState::postValue,
+                        ::handleError
+                    )
+            }
+        } else {
+            val list = mutableListOf<Accident>()
+            list.add(accident!!)
+            _loadAccidentListState.postValue(LcenState.Content(list))
         }
+    }
+
+    fun onAfterInit(accident: Accident) {
+        this.accident = accident
     }
 
     fun buildLocationRequest() {
@@ -68,7 +80,7 @@ class MapViewModel @ViewModelInject constructor(
         locationCallback = object : LocationCallback() {
 
             override fun onLocationResult(locationResult: LocationResult) {
-                if (isBindCam) {
+                if (isBindCam && accident == null) {
                     val pos = CameraUpdateFactory
                         .newLatLng(
                             LatLng(
@@ -84,7 +96,7 @@ class MapViewModel @ViewModelInject constructor(
 
     fun toDetails(accidentId: String) {
         navController.navigate(
-            MapFragmentDirections.actionMapFragmentToAccidentDetailsFragment(accidentId)
+            MapFragmentDirections.actionMapFragmentToAccidentDetailsFragment(accidentId, false)
         )
     }
 }

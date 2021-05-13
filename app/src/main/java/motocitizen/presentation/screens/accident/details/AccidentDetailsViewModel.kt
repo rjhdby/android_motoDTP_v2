@@ -3,6 +3,7 @@ package motocitizen.presentation.screens.accident.details
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavController
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
 import motocitizen.domain.model.accident.Accident
@@ -11,6 +12,7 @@ import motocitizen.presentation.base.viewmodel.BaseViewModel
 import motocitizen.presentation.base.viewmodel.requireValue
 
 class AccidentDetailsViewModel @ViewModelInject constructor(
+    private val navController: NavController,
     private val getAccidentUseCase: AccidentUseCase
 ) : BaseViewModel() {
     private val _loadAccident = MutableLiveData<LcenState<Accident>>(
@@ -37,7 +39,7 @@ class AccidentDetailsViewModel @ViewModelInject constructor(
             setConflict()
     }
 
-    fun getAccident(): Accident?{
+    fun getAccident(): Accident? {
         return loadAccident.requireValue().asContentOrNull()
     }
 
@@ -61,5 +63,11 @@ class AccidentDetailsViewModel @ViewModelInject constructor(
                     this::handleError
                 )
         }
+    }
+
+    fun toMap() {
+        navController.navigate(
+            AccidentDetailsFragmentDirections.actionAccidentDetailsFragmentToMapFragment(getAccident()!!)
+        )
     }
 }

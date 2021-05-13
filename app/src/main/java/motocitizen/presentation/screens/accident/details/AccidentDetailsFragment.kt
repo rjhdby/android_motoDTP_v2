@@ -54,6 +54,8 @@ class AccidentDetailsFragment :
         val id = item.itemId
         if (id == R.id.action_conflict) {
             viewModel.changeConflict()
+        } else if (id == R.id.action_to_map) {
+            viewModel.toMap()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -68,6 +70,7 @@ class AccidentDetailsFragment :
                 item.title = getString(R.string.set_conflict)
             }
         }
+        menu.findItem(R.id.action_to_map).setVisible(args.mapEnable)
         return super.onPrepareOptionsMenu(menu)
     }
 
