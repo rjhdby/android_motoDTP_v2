@@ -25,22 +25,25 @@ import motocitizen.main.R
 import motocitizen.presentation.base.viewmodel.VMFragment
 import motocitizen.presentation.screens.root.RootActivity
 import timber.log.Timber
+import java.util.*
+
+//todo Вынести в общий object для обоих карт
+private const val MSC_CENTER_LAT = 55.75375094653797
+private const val MSC_CENTER_LON = 37.62135415470559
+private const val MAP_MIN_ZOOM: Float = 1f
 
 @AndroidEntryPoint
 class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyCallback,
     OnMarkerClickListener, OnMyLocationButtonClickListener, OnCameraMoveStartedListener {
 
     override val viewModel: MapViewModel by viewModels()
+
     private lateinit var googleMap: GoogleMap
+
     private var lastKnownLocation: Location? = null
-
     private val defaultLocation = LatLng(MSC_CENTER_LAT, MSC_CENTER_LON)
-
-    companion object {
-        const val MSC_CENTER_LAT = 55.75375094653797
-        const val MSC_CENTER_LON = 37.62135415470559
-        private const val MAP_MIN_ZOOM: Float = 1f
-    }
+    private val markers = HashMap<String, String>()
+    private var selected: String = ""
 
     override fun initUi(savedInstanceState: Bundle?) {
         (childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment).getMapAsync(
@@ -64,7 +67,10 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
 
     private fun renderContent(list: List<Accident>) {
         if (::googleMap.isInitialized) {
-            showAccidentsMarkers(list)
+            googleMap.clear()
+            for (accident in list) {
+                markers[googleMap.accidentMarker(accident).id] = accident.id
+            }
         }
     }
 
@@ -73,7 +79,6 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
         googleMap = gMap
         googleMap.setMinZoomPreference(MAP_MIN_ZOOM)
         setLastLocation()
-
         if (App.isLocPermission) {
             googleMap.isMyLocationEnabled = true
             setMapListeners()
@@ -92,16 +97,15 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
         googleMap.setOnCameraMoveStartedListener(this)
     }
 
-    private fun showAccidentsMarkers(list: List<Accident>) {
-        googleMap.clear()
-        for (accident in list) {
-            googleMap.accidentMarker(accident)
-        }
-    }
-
-    override fun onMarkerClick(p0: Marker): Boolean {
+    override fun onMarkerClick(marker: Marker): Boolean {
         viewModel.isBindCam = false
-        return false
+        if (selected == marker.id && markers.containsKey(marker.id)) {
+            viewModel.toDetails(markers[marker.id]!!)
+        } else {
+            marker.showInfoWindow()
+            selected = marker.id
+        }
+        return true
     }
 
     override fun onMyLocationButtonClick(): Boolean {
@@ -125,12 +129,10 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
         try {
             if (App.isLocPermission && (requireActivity() as RootActivity).checkGpsEnable()) {
                 val locationResult = viewModel.fusedLocationProviderClient.lastLocation
-
                 locationResult.addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
                         lastKnownLocation = task.result
                         if (lastKnownLocation != null) {
-
                             googleMap.moveCamera(
                                 CameraUpdateFactory.newLatLngZoom(
                                     LatLng(

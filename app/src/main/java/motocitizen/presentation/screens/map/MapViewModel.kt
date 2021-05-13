@@ -3,6 +3,7 @@ package motocitizen.presentation.screens.map
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -18,8 +19,11 @@ import motocitizen.presentation.base.viewmodel.BaseViewModel
 
 class MapViewModel @ViewModelInject constructor(
     private val getAccidentUseCase: AccidentUseCase,
+    private val navController: NavController,
     var fusedLocationProviderClient: FusedLocationProviderClient
 ) : BaseViewModel() {
+
+    //todo Вынести в общий object для обоих карт
     companion object {
         const val LOC_REQUEST_INTERVAL = 500L
         const val LOC_REQUEST_FAST_INTERVAL = 250L
@@ -76,5 +80,11 @@ class MapViewModel @ViewModelInject constructor(
                 }
             }
         }
+    }
+
+    fun toDetails(accidentId: String) {
+        navController.navigate(
+            MapFragmentDirections.actionMapFragmentToAccidentDetailsFragment(accidentId)
+        )
     }
 }
