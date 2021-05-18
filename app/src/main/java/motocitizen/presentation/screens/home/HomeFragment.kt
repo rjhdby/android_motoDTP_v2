@@ -96,7 +96,6 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
     }
 
     private fun renderContent(list: List<Accident>) {
-
         lastLocation.observe(this) {
             if ((requireActivity() as RootActivity).checkGpsEnable() && App.isLocPermission) {
                 accidentEpoxyController.setData(list)

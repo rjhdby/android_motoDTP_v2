@@ -7,4 +7,5 @@ sealed class SharedPrefsKey(val name: String) :
     object AccidentPushData : SharedPrefsKey("AccidentPushData")
     object AuthData : SharedPrefsKey("AuthData")
     object ClientCertificateAlias : SharedPrefsKey("ClientCertificateAlias")
+    object AuthToken : SharedPrefsKey("AuthToken")
 }

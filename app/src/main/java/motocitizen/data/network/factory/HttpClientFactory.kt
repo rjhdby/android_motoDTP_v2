@@ -1,5 +1,6 @@
 package motocitizen.data.network.factory
 
+import motocitizen.app.App
 import motocitizen.data.network.error.ErrorInterceptor
 import motocitizen.main.BuildConfig
 import okhttp3.Interceptor
@@ -59,7 +60,7 @@ object HttpClientFactory {
                 .header(PLATFORM, ANDROID)
                 .header(PLATFORM_VERSION, android.os.Build.VERSION.RELEASE.toString())
                 //todo подставлять реальный токен
-                .header(TOKEN, "xxx")
+                .header(TOKEN, App.authToken!!)
                 .build()
             chain.proceed(requestWithUserAgent)
         }

@@ -5,6 +5,8 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import motocitizen.data.network.user.User
+import motocitizen.data.storage.keyvalue.SharedPrefsKey
+import motocitizen.data.storage.keyvalue.SharedPrefsStorageImpl
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
 import motocitizen.domain.usecases.GetUserUseCase
@@ -13,6 +15,7 @@ import motocitizen.presentation.base.viewmodel.commands.VMCommand
 
 class RootViewModel @ViewModelInject constructor(
     private val getUser: GetUserUseCase,
+    private val sharedPrefsStorageImpl: SharedPrefsStorageImpl
 ) : BaseViewModel() {
 
     companion object {
@@ -29,11 +32,10 @@ class RootViewModel @ViewModelInject constructor(
     fun onAfterInit(locManager: LocationManager) {
         checkClientCertificate()
         // todo Со старого проекта, вероятно не понадобится.
-        loadUser()
         locationManager = locManager
     }
 
-    private fun loadUser() {
+    fun loadUser() {
         safeSubscribe {
             getUser(skipCache = true)
                 .toLcenEventObservable { it }
@@ -42,6 +44,16 @@ class RootViewModel @ViewModelInject constructor(
                     ::handleError
                 )
         }
+    }
+
+    fun checkToken(): Boolean {
+        if (sharedPrefsStorageImpl.getString(SharedPrefsKey.AuthToken, null) != null) {
+            return true
+        }
+        return false
+    }
+    fun getToken():String?{
+        return sharedPrefsStorageImpl.getString(SharedPrefsKey.AuthToken, null)
     }
 
     private fun checkClientCertificate() {

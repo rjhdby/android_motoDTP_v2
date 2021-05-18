@@ -1,6 +1,7 @@
 package motocitizen.data.repos
 
 import io.reactivex.Single
+import motocitizen.app.App
 import motocitizen.data.converters.LoginConverter
 import motocitizen.data.network.user.User
 import motocitizen.data.network.user.UserApi
@@ -17,7 +18,7 @@ class UserDataRepo(
         return Single.defer {
             val user = userStorage.user
             if (skipCache || user == null) {
-                api.getUser()
+                api.getUser(App.authToken!!)
                     .map { LoginConverter.toUser(it) }
                     .doOnSuccess { userStorage.user = it }
             } else {

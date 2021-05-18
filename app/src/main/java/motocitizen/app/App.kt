@@ -14,6 +14,7 @@ class App : Application() {
     companion object {
         const val SEARCH_DELAY_MILLISECONDS = 1000L
         var isLocPermission = false
+        var authToken:String? = null
     }
 
     override fun onCreate() {
