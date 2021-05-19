@@ -12,8 +12,7 @@ sealed class LcenState<out T : Any> :
     object None : LcenState<Nothing>()
     object Loading : LcenState<Nothing>()
     data class Content<C : Any>(val value: C) : LcenState<C>()
-    data class Error(val value: Throwable) : LcenState<Nothing>() {
-    }
+    data class Error(val value: Throwable) : LcenState<Nothing>()
 
     override fun asContent(): T {
         return (this as Content<T>).value

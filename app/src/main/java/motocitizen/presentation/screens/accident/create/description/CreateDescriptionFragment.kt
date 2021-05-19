@@ -31,7 +31,7 @@ class CreateDescriptionFragment :
         viewModel.onAfterInit(args.type, args.hardness, args.address)
     }
 
-    fun toHome(accident: Accident) {
+    private fun toHome(accident: Accident) {
         val navController = findNavController()
         navController.popBackStack(R.id.createMapFragment, false)
         val root = activity as RootActivity

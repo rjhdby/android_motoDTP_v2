@@ -18,7 +18,7 @@ class SplashActivity : VMActivity<SplashViewModel>() {
 
     override val layoutResource: Int = R.layout.splash
 
-    lateinit var frameAnimation: Animatable
+    private lateinit var frameAnimation: Animatable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

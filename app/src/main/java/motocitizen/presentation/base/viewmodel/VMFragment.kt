@@ -1,7 +1,6 @@
 package motocitizen.presentation.base.viewmodel
 
 import android.os.Bundle
-import android.util.Log
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.LiveData
@@ -9,6 +8,7 @@ import androidx.lifecycle.Observer
 import motocitizen.presentation.base.BaseFragment
 import motocitizen.presentation.base.viewmodel.commands.CommandsLiveData
 import motocitizen.presentation.base.viewmodel.commands.VMCommand
+import timber.log.Timber
 
 abstract class VMFragment<VM : BaseViewModel>(
     @LayoutRes contentLayoutId: Int
@@ -22,7 +22,7 @@ abstract class VMFragment<VM : BaseViewModel>(
             onCommandReceived(it)
         }
         viewModel.showError.subscribeCommand {
-            Log.e("Motocitizen error", "${it.message}")
+            Timber.e("$it.message")
         }
         initViewModel()
     }

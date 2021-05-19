@@ -70,7 +70,7 @@ class AccidentDetailsFragment :
                 item.title = getString(R.string.set_conflict)
             }
         }
-        menu.findItem(R.id.action_to_map).setVisible(args.mapEnable)
+        menu.findItem(R.id.action_to_map).isVisible = args.mapEnable
         return super.onPrepareOptionsMenu(menu)
     }
 

@@ -3,7 +3,7 @@ package motocitizen.presentation.screens.auth.vk
 import android.webkit.JavascriptInterface
 import org.jsoup.Jsoup
 
-class JsInterface(val putToken: (String) -> Unit, val openActivity: () -> Unit) {
+class JsInterface(val putToken: (String) -> Unit, private val openActivity: () -> Unit) {
 
     @JavascriptInterface
     fun processHTML(html: String?) {

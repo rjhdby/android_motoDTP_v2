@@ -6,8 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import motocitizen.data.network.user.User
 import motocitizen.data.repos.AuthDataRepo
-import motocitizen.data.storage.keyvalue.SharedPrefsKey
-import motocitizen.data.storage.keyvalue.SharedPrefsStorageImpl
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
 import motocitizen.domain.usecases.GetUserUseCase
@@ -20,7 +18,6 @@ class RootViewModel @ViewModelInject constructor(
 ) : BaseViewModel() {
 
     companion object {
-        const val LOC_MIN_TIME_UPDATE = 1000L
         const val LOC_MIN_DISTANCE = 1F
     }
 
