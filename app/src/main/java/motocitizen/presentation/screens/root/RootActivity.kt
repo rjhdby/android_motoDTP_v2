@@ -98,9 +98,9 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         if (savedInstanceState == null) {
             initBottomNavigation()
         } // Else, need to wait for onRestoreInstanceState
-        if (!viewModel.checkToken()) {
+        if (viewModel.getToken() == null) {
             openActivity(AuthActivity::class.java, true)
-        }else{
+        } else {
             App.authToken = viewModel.getToken()
             viewModel.loadUser()
         }

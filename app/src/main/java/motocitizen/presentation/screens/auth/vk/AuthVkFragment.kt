@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_vk_auth.*
+import motocitizen.main.BuildConfig
 import motocitizen.main.R
 import motocitizen.presentation.base.viewmodel.VMFragment
 import motocitizen.presentation.screens.auth.AuthActivity
@@ -12,8 +13,9 @@ import motocitizen.presentation.screens.root.RootActivity
 
 @AndroidEntryPoint
 class AuthVkFragment : VMFragment<AuthVkViewModel>(R.layout.fragment_vk_auth) {
-    val VK_AUTH_URL =
-        "https://oauth.vk.com/authorize?client_id=6355438&display=mobile&redirect_uri=http://188.166.126.84:8080/v1/user/register/vk&response_type=code&v=5.130"
+    private val VK_AUTH_URL =
+        "https://oauth.vk.com/authorize?client_id=6355438&display=mobile&redirect_uri=${BuildConfig.SERVER_URL}/v1/user/register/vk&response_type=code&v=5.130"
+    private val JS_INTERFACE_NAME = "HTMLOUT"
 
     override val viewModel: AuthVkViewModel by viewModels()
 
@@ -33,7 +35,7 @@ class AuthVkFragment : VMFragment<AuthVkViewModel>(R.layout.fragment_vk_auth) {
 
         auth_vk_webView.apply {
             addJavascriptInterface(
-                jsInterface, "HTMLOUT"
+                jsInterface, JS_INTERFACE_NAME
             )
             webViewClient = VkAuthWebViewClient()
             settings.javaScriptEnabled = true

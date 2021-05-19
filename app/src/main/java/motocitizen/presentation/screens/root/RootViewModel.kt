@@ -5,6 +5,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import motocitizen.data.network.user.User
+import motocitizen.data.repos.AuthDataRepo
 import motocitizen.data.storage.keyvalue.SharedPrefsKey
 import motocitizen.data.storage.keyvalue.SharedPrefsStorageImpl
 import motocitizen.domain.lcenstate.LcenState
@@ -15,7 +16,7 @@ import motocitizen.presentation.base.viewmodel.commands.VMCommand
 
 class RootViewModel @ViewModelInject constructor(
     private val getUser: GetUserUseCase,
-    private val sharedPrefsStorageImpl: SharedPrefsStorageImpl
+    private val authDataRepo: AuthDataRepo
 ) : BaseViewModel() {
 
     companion object {
@@ -46,14 +47,8 @@ class RootViewModel @ViewModelInject constructor(
         }
     }
 
-    fun checkToken(): Boolean {
-        if (sharedPrefsStorageImpl.getString(SharedPrefsKey.AuthToken, null) != null) {
-            return true
-        }
-        return false
-    }
-    fun getToken():String?{
-        return sharedPrefsStorageImpl.getString(SharedPrefsKey.AuthToken, null)
+    fun getToken(): String? {
+        return authDataRepo.getToken()
     }
 
     private fun checkClientCertificate() {
