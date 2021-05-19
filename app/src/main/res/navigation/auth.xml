@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/auth"
+    app:startDestination="@id/authFragment">
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="motocitizen.presentation.screens.auth.rootAuth.AuthTypeFragment"
+        android:label="AuthFragment" >
+        <action
+            android:id="@+id/action_authFragment_to_authVkFragment"
+            app:destination="@id/authVkFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/authVkFragment"
+        android:name="motocitizen.presentation.screens.auth.vk.AuthVkFragment"
+        android:label="AuthVkFragment" >
+        <action
+            android:id="@+id/action_authVkFragment_to_authFragment"
+            app:destination="@id/authFragment" />
+    </fragment>
+</navigation>

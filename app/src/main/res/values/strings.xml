@@ -128,4 +128,6 @@
     <string name="drop_conflict">Снять конфликт</string>
     <string name="skeleton">skeleton</string>
     <string name="medicine"> (%1$s)</string>
+    <string name="vk">vk</string>
+    <string name="chose_auth_type">Выберете способ авторизации:</string>
 </resources>

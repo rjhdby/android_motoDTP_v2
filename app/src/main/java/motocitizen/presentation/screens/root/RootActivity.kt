@@ -32,6 +32,7 @@ import motocitizen.presentation.base.isVisibleWithAnimation
 import motocitizen.presentation.base.setupWithNavController
 import motocitizen.presentation.base.viewmodel.VMActivity
 import motocitizen.presentation.base.viewmodel.commands.VMCommand
+import motocitizen.presentation.screens.auth.AuthActivity
 import timber.log.Timber
 
 private const val REQST_CODE = 100
@@ -97,6 +98,12 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         if (savedInstanceState == null) {
             initBottomNavigation()
         } // Else, need to wait for onRestoreInstanceState
+        if (viewModel.getToken() == null) {
+            openActivity(AuthActivity::class.java, true)
+        } else {
+            App.authToken = viewModel.getToken()
+            viewModel.loadUser()
+        }
     }
 
     override fun onNewIntent(intent: Intent?) {

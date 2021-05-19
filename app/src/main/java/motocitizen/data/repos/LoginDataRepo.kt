@@ -16,7 +16,6 @@ class LoginDataRepo @Inject constructor(
     private val loginApi: LoginApi,
     private val sharedPrefsStorage: SharedPrefsStorage,
     private val objectTransformer: ObjectTransformer,
-
     ) : LoginRepo {
 
     override fun login(data: SignIn): Completable {
