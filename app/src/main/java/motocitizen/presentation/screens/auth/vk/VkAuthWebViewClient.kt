@@ -6,10 +6,11 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import motocitizen.main.BuildConfig
 
+private const val AUTH_TOKEN_PREFIX = "${BuildConfig.SERVER_URL}/v1/user/register/vk?code="
+private const val JS =
+    "javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');"
+
 class VkAuthWebViewClient : WebViewClient() {
-    private val AUTH_TOKEN_PREFIX = "${BuildConfig.SERVER_URL}/v1/user/register/vk?code="
-    private val JS =
-        "javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');"
 
     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)

@@ -11,11 +11,12 @@ import motocitizen.presentation.base.viewmodel.VMFragment
 import motocitizen.presentation.screens.auth.AuthActivity
 import motocitizen.presentation.screens.root.RootActivity
 
+private const val VK_AUTH_URL =
+    "https://oauth.vk.com/authorize?client_id=6355438&display=mobile&redirect_uri=${BuildConfig.SERVER_URL}/v1/user/register/vk&response_type=code&v=5.130"
+private const val JS_INTERFACE_NAME = "HTMLOUT"
+
 @AndroidEntryPoint
 class AuthVkFragment : VMFragment<AuthVkViewModel>(R.layout.fragment_vk_auth) {
-    private val VK_AUTH_URL =
-        "https://oauth.vk.com/authorize?client_id=6355438&display=mobile&redirect_uri=${BuildConfig.SERVER_URL}/v1/user/register/vk&response_type=code&v=5.130"
-    private val JS_INTERFACE_NAME = "HTMLOUT"
 
     override val viewModel: AuthVkViewModel by viewModels()
 
