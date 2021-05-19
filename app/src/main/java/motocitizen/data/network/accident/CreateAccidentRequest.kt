@@ -6,7 +6,7 @@ import motocitizen.domain.model.accident.Address
 
 data class CreateAccidentRequest(
     val type: AccidentType,
-    val hardness: AccidentHardness,
+    val hardness: AccidentHardness?,
     val location: Address,
     val description: String,
 )

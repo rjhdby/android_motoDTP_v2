@@ -25,7 +25,7 @@ class AccidentUseCase @Inject constructor(
 
     fun createAccident(
         type: AccidentType,
-        hardness: AccidentHardness,
+        hardness: AccidentHardness?,
         location: Address,
         description: String,
     ) = accidentRepo.createAccident(

@@ -11,7 +11,7 @@ data class AccidentResponse(
     var resolved: String? = null,
     var verified: Boolean,
     var hidden: Boolean,
-    var hardness: AccidentHardness,
+    var hardness: AccidentHardness?,
     var creator :String,
     var location: Address,
     var description: String,

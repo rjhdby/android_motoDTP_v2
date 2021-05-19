@@ -25,10 +25,11 @@ class CreateDescriptionViewModel @ViewModelInject constructor(
         get() = _newAccident
 
     lateinit var type: AccidentType
-    lateinit var hardness: AccidentHardness
     lateinit var address: Address
 
-    fun onAfterInit(type: AccidentType, hardness: AccidentHardness, address: Address) {
+    var hardness: AccidentHardness? = null
+
+    fun onAfterInit(type: AccidentType, hardness: AccidentHardness?, address: Address) {
         this.type = type
         this.hardness = hardness
         this.address = address

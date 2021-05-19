@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -15,7 +14,6 @@ import motocitizen.domain.lcenstate.isContent
 import motocitizen.domain.lcenstate.isError
 import motocitizen.domain.lcenstate.isLoading
 import motocitizen.domain.model.accident.Accident
-import motocitizen.domain.model.accident.AccidentHardness
 import motocitizen.domain.utils.distanceString
 import motocitizen.main.R
 import motocitizen.presentation.base.viewmodel.VMFragment
@@ -80,9 +78,11 @@ class AccidentDetailsFragment :
     }
 
     private fun renderContent(accident: Accident) {
-        acc_details_medicine.visibility =
-            if (accident.hardness == AccidentHardness.UNKNOWN) View.GONE else View.VISIBLE
-        acc_details_medicine.text = getString(R.string.medicine, accident.hardness.text)
+        if (accident.hardness != null) {
+            acc_details_medicine.text = getString(R.string.medicine, accident.hardness.text)
+        } else {
+            acc_details_medicine.isVisible = false
+        }
         acc_details_general_address.text = accident.location.address
         acc_details_general_description.text = accident.description
         acc_details_general_type.text = accident.type.text
