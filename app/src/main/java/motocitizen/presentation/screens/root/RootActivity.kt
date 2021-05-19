@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
@@ -35,7 +36,7 @@ import motocitizen.presentation.base.viewmodel.commands.VMCommand
 import motocitizen.presentation.screens.auth.AuthActivity
 import timber.log.Timber
 
-private const val REQST_CODE = 100
+private const val REQUEST_CODE = 100
 
 @AndroidEntryPoint
 class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
@@ -60,15 +61,38 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
             if (Build.VERSION.SDK_INT >= 23) {
                 requestPermissions(
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    REQST_CODE
+                    REQUEST_CODE
                 )
             } else {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    REQST_CODE
+                    REQUEST_CODE
                 )
             }
+        }
+    }
+
+    fun updateLastLocation(onSuccessCallback: (Location?) -> Unit) {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        try {
+            val locationResult = viewModel.fusedLocationProviderClient.lastLocation
+            locationResult.addOnCompleteListener(this) { task ->
+                task.addOnSuccessListener {
+                    onSuccessCallback(it)
+                }
+            }
+        } catch (e: Exception) {
+            Timber.d(e)
         }
     }
 
@@ -78,7 +102,7 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         grantResults: IntArray
     ) {
         when (requestCode) {
-            REQST_CODE -> {
+            REQUEST_CODE -> {
                 if ((grantResults.isNotEmpty() &&
                             grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 ) {
