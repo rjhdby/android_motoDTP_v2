@@ -49,7 +49,7 @@ object AccidentConverter {
 
     fun toCreateAccidentRequest(
         type: AccidentType,
-        hardness: AccidentHardness,
+        hardness: AccidentHardness?,
         location: Address,
         description: String,
     ) =

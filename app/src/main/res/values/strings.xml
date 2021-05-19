@@ -135,4 +135,9 @@
     <string name="search_img">search_img</string>
     <string name="logo_img">logo_img</string>
     <string name="animation">animation</string>
+    <string name="hardness_unknown">неизвестно</string>
+    <string name="creation_time">14:34</string>
+    <string name="one_km">1км</string>
+    <string name="address">Адрес</string>
+    <string name="acc_type_other">Прочее</string>
 </resources>

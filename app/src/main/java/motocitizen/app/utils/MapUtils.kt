@@ -5,7 +5,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import motocitizen.domain.model.accident.Accident
-import motocitizen.domain.model.accident.AccidentHardness
 import motocitizen.utils.MS_IN_HOUR
 import java.util.*
 
@@ -29,7 +28,7 @@ private fun calculateAlpha(accident: Accident): Float {
 
 private fun markerTitle(accident: Accident): String {
     val medicine =
-        if (accident.hardness === AccidentHardness.NO) "" else ", " + accident.hardness.text
+        if (accident.hardness == null) "" else ", ${accident.hardness.text}"
     val interval = accident.getTimeAfterCreation()
     return "${accident.type.text}$medicine, $interval назад"
 }

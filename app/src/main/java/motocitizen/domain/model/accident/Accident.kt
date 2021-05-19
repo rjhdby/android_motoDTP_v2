@@ -20,15 +20,15 @@ private const val TIME_FORMAT = "HH:mm"
 data class Accident(
     val id: String,// Идентификатор аварии
     val created: String,
-    var type: AccidentType,
-    var resolved: String? = null,
-    var verified: Boolean,
-    var hidden: Boolean,
-    var location: Address,
-    var description: String,
-    var conflict: Boolean = false,
-    var messages: Int,
-    var hardness: AccidentHardness
+    val type: AccidentType,
+    val resolved: String? = null,
+    val verified: Boolean,
+    val hidden: Boolean,
+    val location: Address,
+    val description: String,
+    val conflict: Boolean = false,
+    val messages: Int,
+    val hardness: AccidentHardness?
 ) : Parcelable {
 
     private var sdf: SimpleDateFormat = SimpleDateFormat(DATE_TIME_PATTERN, Locale.getDefault())
@@ -78,12 +78,10 @@ data class Accident(
     }
 
     fun title(): String {
-        val damage =
-            if (hardness == AccidentHardness.UNKNOWN || !isAccident()) "" else ", " + hardness.text
         return String.format(
             TITLE_FORMAT,
             type.text,
-            damage,
+            if (hardness == null) "" else ", ${hardness.text}",
             distanceString(),
             location.address,
             description

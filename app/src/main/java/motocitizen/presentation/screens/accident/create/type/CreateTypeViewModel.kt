@@ -13,7 +13,7 @@ class CreateTypeViewModel @ViewModelInject constructor(
 
     lateinit var address: Address
 
-    fun onAfterInit(address: Address){
+    fun onAfterInit(address: Address) {
         this.address = address
     }
 
@@ -26,7 +26,8 @@ class CreateTypeViewModel @ViewModelInject constructor(
             navController.navigate(
                 CreateTypeFragmentDirections.actionCreateTypeFragmentToCreateDescriptionFragment(
                     type,
-                    AccidentHardness.NO,
+                    //todo #69 Переделать когда Custom Enum supports null values
+                    AccidentHardness.NULL,
                     address
                 )
             )

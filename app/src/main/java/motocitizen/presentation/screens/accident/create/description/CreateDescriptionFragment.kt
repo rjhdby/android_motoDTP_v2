@@ -7,12 +7,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_create_final.*
-import kotlinx.android.synthetic.main.fragment_create_final.tool_bar
 import motocitizen.app.utils.showKeyboard
 import motocitizen.domain.lcenstate.isContent
 import motocitizen.domain.lcenstate.isError
 import motocitizen.domain.lcenstate.isLoading
 import motocitizen.domain.model.accident.Accident
+import motocitizen.domain.model.accident.AccidentHardness
 import motocitizen.main.R
 import motocitizen.presentation.base.onTextChanged
 import motocitizen.presentation.base.viewmodel.VMFragment
@@ -28,7 +28,12 @@ class CreateDescriptionFragment :
     private val args: CreateDescriptionFragmentArgs by navArgs()
 
     override fun initViewModel() {
-        viewModel.onAfterInit(args.type, args.hardness, args.address)
+        viewModel.onAfterInit(
+            args.type,
+            //todo #69 Переделать когда Custom Enum supports null values
+            if (args.hardness != AccidentHardness.NULL) args.hardness else null,
+            args.address
+        )
     }
 
     private fun toHome(accident: Accident) {

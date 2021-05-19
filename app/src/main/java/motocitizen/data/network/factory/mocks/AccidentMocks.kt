@@ -8,7 +8,6 @@ const val newAccident = """
   "resolved": "2021-04-15T10:32:36.000+00:00",
   "verified": true,
   "hidden": true,
-  "hardness": "UNKNOWN",
   "creator": "string",
   "location": {
     "lat": 54.2,
@@ -29,7 +28,6 @@ const val conflictAccident = """
   "resolved": "2021-04-15T10:32:36.000+00:00",
   "verified": true,
   "hidden": true,
-  "hardness": "UNKNOWN",
   "creator": "string",
   "location": {
     "lat": 54.2,
@@ -50,7 +48,6 @@ const val noConflictAccident = """
   "resolved": "2021-04-15T10:32:36.000+00:00",
   "verified": true,
   "hidden": true,
-  "hardness": "UNKNOWN",
   "creator": "string",
   "location": {
     "lat": 54.2,
@@ -71,7 +68,6 @@ const val accidentFirst = """
     "resolved": "2021-04-01T13:51:42.000+00:00",
     "verified": true,
     "hidden": true,
-    "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
       "lat": 55.568,
@@ -111,7 +107,6 @@ const val accidentThrid = """
     "type": "STEAL",
     "verified": false,
     "hidden": false,
-    "hardness": "UNKNOWN",
     "creator": "607b289b63d52731fca27989",
     "location": {
       "lat": 55.2028,
@@ -133,7 +128,6 @@ const val getAccidentList = """
     "resolved": "2021-04-01T13:51:42.000+00:00",
     "verified": true,
     "hidden": true,
-    "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
       "lat": 55.598,
@@ -167,7 +161,6 @@ const val getAccidentList = """
     "type": "STEAL",
     "verified": false,
     "hidden": false,
-    "hardness": "UNKNOWN",
     "creator": "607b289b63d52731fca27989",
     "location": {
       "lat": 55.2028,
@@ -273,7 +266,6 @@ const val getAccidentList = """
     "type": "OTHER",
     "verified": false,
     "hidden": false,
-    "hardness": "UNKNOWN",
     "creator": "607b289b63d52731fca27989",
     "location": {
       "lat": 55.75228,
@@ -291,7 +283,6 @@ const val getAccidentList = """
     "resolved": "2021-04-01T13:51:42.000+00:00",
     "verified": true,
     "hidden": true,
-    "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
       "lat": 56.6228,
@@ -309,7 +300,6 @@ const val getAccidentList = """
     "resolved": "2021-04-01T13:51:42.000+00:00",
     "verified": true,
     "hidden": true,
-    "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
       "lat": 55.7228,
@@ -326,7 +316,6 @@ const val getAccidentList = """
     "type": "OTHER",
     "verified": false,
     "hidden": false,
-    "hardness": "UNKNOWN",
     "creator": "607b289b63d52731fca27989",
     "location": {
       "lat": 55.87,
@@ -344,7 +333,6 @@ const val getAccidentList = """
     "resolved": "2021-04-01T13:51:42.000+00:00",
     "verified": true,
     "hidden": true,
-    "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
       "lat": 55.8,
@@ -362,7 +350,6 @@ const val getAccidentList = """
     "resolved": "2021-04-01T13:51:42.000+00:00",
     "verified": true,
     "hidden": true,
-    "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
       "lat": 55.8,
@@ -379,7 +366,6 @@ const val getAccidentList = """
     "type": "OTHER",
     "verified": false,
     "hidden": false,
-    "hardness": "UNKNOWN",
     "creator": "607b289b63d52731fca27989",
     "location": {
       "lat": 55.69,
@@ -396,7 +382,6 @@ const val getAccidentList = """
     "resolved": "2021-04-01T13:51:42.000+00:00",
     "verified": true,
     "hidden": true,
-    "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
       "lat": 56.70,
@@ -414,7 +399,6 @@ const val getAccidentList = """
     "resolved": "2021-04-01T13:51:42.000+00:00",
     "verified": true,
     "hidden": true,
-    "hardness": "UNKNOWN",
     "creator": "string",
     "location": {
       "lat": 56.80,

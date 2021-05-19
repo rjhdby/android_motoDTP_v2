@@ -5,5 +5,6 @@ enum class AccidentHardness constructor(val text: String) {
     NO("жив, цел, орёл!"),
     LIGHT("вроде цел"),
     HEAVY("вроде жив"),
-    LETHAL("летальный");
+    LETHAL("летальный"),
+    NULL("отсутствует"); //todo #69 Переделать когда Custom Enum supports null values
 }
