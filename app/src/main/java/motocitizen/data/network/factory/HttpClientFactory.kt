@@ -35,7 +35,7 @@ object HttpClientFactory {
                 addInterceptor(getUserAgentInterceptor())
                 addInterceptor(getLoggingInterceptor())
                 addInterceptor(ErrorInterceptor())
-                if (BuildConfig.FLAVOR.equals("local")) {
+                if (BuildConfig.FLAVOR == "local") {
                     addInterceptor(MockInterceptor())
                 }
                 //addInterceptor(interceptor)

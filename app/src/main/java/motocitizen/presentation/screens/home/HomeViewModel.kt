@@ -19,7 +19,6 @@ class HomeViewModel @ViewModelInject constructor(
 ) : BaseViewModel() {
 
     private val liveState = MutableLiveData(createInitialViewState())
-    private var state: HomeViewState by liveState.delegate()
 
     private val _loadAccidentListState = MutableLiveData<LcenState<List<Accident>>>(LcenState.None)
     val loadAccidentListState: LiveData<LcenState<List<Accident>>>

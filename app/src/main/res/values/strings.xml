@@ -130,4 +130,9 @@
     <string name="medicine"> (%1$s)</string>
     <string name="vk">vk</string>
     <string name="chose_auth_type">Выберете способ авторизации:</string>
+    <string name="short_arrow_left_img">short_arrow_left_img</string>
+    <string name="rectangle_text">rectangle_text</string>
+    <string name="search_img">search_img</string>
+    <string name="logo_img">logo_img</string>
+    <string name="animation">animation</string>
 </resources>

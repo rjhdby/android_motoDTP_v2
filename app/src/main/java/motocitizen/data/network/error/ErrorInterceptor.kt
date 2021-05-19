@@ -1,6 +1,5 @@
 package motocitizen.data.network.error
 
-import android.util.Log
 import motocitizen.domain.exceptions.NetworkException
 import motocitizen.domain.exceptions.ServerException
 import motocitizen.domain.exceptions.TimeoutException
@@ -8,6 +7,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import org.json.JSONException
 import org.json.JSONObject
+import timber.log.Timber
 import java.io.IOException
 import java.net.SocketTimeoutException
 
@@ -17,7 +17,7 @@ class ErrorInterceptor : Interceptor {
         val response = try {
             chain.proceed(chain.request())
         } catch (th: Throwable) {
-            Log.e("OkHttp Exception", th.localizedMessage)
+            Timber.e("OkHttp Exception: $th.localizedMessage")
             when (th) {
                 is SocketTimeoutException -> throw TimeoutException()
                 is IOException -> throw NetworkException()
@@ -29,7 +29,7 @@ class ErrorInterceptor : Interceptor {
 
         val responseBody: String? = response.body?.string()
         try {
-            Log.e("ErrorInterceptor", "Server response: $responseBody")
+            Timber.e("Server response: $responseBody")
             val jsonResponse = JSONObject(responseBody)
             if (jsonResponse.has("result")) {
                 val result = jsonResponse.getJSONObject("result")

@@ -317,7 +317,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@android:drawable/ic_menu_search"
-                    android:contentDescription="search" />
+                    android:contentDescription="@string/search_img" />
             </LinearLayout>
 
         </LinearLayout>
