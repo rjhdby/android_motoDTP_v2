@@ -22,9 +22,9 @@
             android:layout_gravity="top"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
+            android:contentDescription="@string/skeleton"
             android:scaleType="fitXY"
-            android:src="@drawable/skeleton_accident_members"
-            android:contentDescription="@string/skeleton" />
+            android:src="@drawable/skeleton_accident_members" />
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
@@ -87,7 +87,7 @@
                     android:id="@+id/acc_details_medicine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/hardness_unknown"/>
+                    android:text="@string/hardness_unknown" />
 
                 <TextView
                     android:id="@+id/acc_details_general_owner"
@@ -143,68 +143,20 @@
             android:layout_height="1dp"
             android:background="#000000" />
 
-        <RadioGroup
-            android:id="@+id/details_tabs_group"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/accident_tab"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:gravity="top"
-            android:orientation="horizontal">
+            android:layout_height="36dp"
+            android:layout_marginTop="4dp"
+            app:tabGravity="start"
+            app:tabIndicatorFullWidth="false"
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@style/TabWidget" />
 
-            <RadioButton
-                android:id="@+id/details_tab_people"
-                style="@style/statusText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/tab"
-                android:button="@color/white"
-                android:checked="true"
-                android:gravity="center_horizontal"
-                android:tag="details_people_content"
-                android:text="@string/tab_onway" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="fill_parent"
-                android:background="#00000000" />
-
-            <RadioButton
-                android:id="@+id/details_tab_messages"
-                style="@style/statusText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/tab"
-                android:button="@color/white"
-                android:checked="false"
-                android:gravity="center_horizontal"
-                android:tag="details_messages_content"
-                android:text="@string/tab_messages" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="fill_parent"
-                android:background="#00000000" />
-
-            <RadioButton
-                android:id="@+id/details_tab_history"
-                style="@style/statusText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/tab"
-                android:button="@color/white"
-                android:checked="false"
-                android:gravity="center_horizontal"
-                android:tag="details_log_content"
-                android:text="@string/tab_log" />
-        </RadioGroup>
-
-        <FrameLayout
-            android:id="@+id/details_tab_content"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/accident_view_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
+
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

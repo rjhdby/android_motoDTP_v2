@@ -15,6 +15,7 @@ class AccidentDetailsViewModel @ViewModelInject constructor(
     private val navController: NavController,
     private val getAccidentUseCase: AccidentUseCase
 ) : BaseViewModel() {
+
     private val _loadAccident = MutableLiveData<LcenState<Accident>>(
         LcenState.None
     )
