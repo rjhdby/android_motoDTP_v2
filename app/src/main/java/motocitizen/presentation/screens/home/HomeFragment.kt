@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.type.LatLng
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
-import motocitizen.app.App
 import motocitizen.data.utils.lastLocation
 import motocitizen.domain.lcenstate.isContent
 import motocitizen.domain.lcenstate.isError
@@ -27,7 +26,7 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
 
     override fun onResume() {
         super.onResume()
-        loadAccidents()
+        loadAccidentList()
     }
 
     override fun initUi(savedInstanceState: Bundle?) {
@@ -45,7 +44,7 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
             }
         }
         swipe_to_refresh.setOnRefreshListener {
-            loadAccidents()
+            loadAccidentList()
             swipe_to_refresh.isRefreshing = false
         }
     }
@@ -57,16 +56,14 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
             view_panel.isVisible = it.isContent()
             it.asContentOrNull()?.let(::renderContent)
         }
-        loadAccidents()
+        loadAccidentList()
     }
 
     private fun renderContent(list: List<Accident>) {
-        if ((requireActivity() as RootActivity).checkGpsEnable() && App.isLocPermission) {
             accidentEpoxyController.setData(list)
-        }
     }
 
-    private fun loadAccidents() {
+    private fun loadAccidentList() {
         rootActivity.updateLastLocation {
             if (it != null) {
                 lastLocation = LatLng.newBuilder()
@@ -78,8 +75,6 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
                     lastLocation!!.longitude
                 )
             }
-
-
         }
     }
 }
