@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_accident_details.*
 import motocitizen.domain.lcenstate.isContent
@@ -17,6 +18,8 @@ import motocitizen.domain.model.accident.Accident
 import motocitizen.domain.utils.distanceString
 import motocitizen.main.R
 import motocitizen.presentation.base.viewmodel.VMFragment
+import motocitizen.presentation.screens.accident.details.tabs.AccidentDetailAdapter
+import motocitizen.presentation.screens.accident.details.tabs.AccidentDetailTabType
 
 @AndroidEntryPoint
 class AccidentDetailsFragment :
@@ -32,10 +35,33 @@ class AccidentDetailsFragment :
             view_panel.isVisible = it.isContent()
             it.asContentOrNull()?.let(::renderContent)
         }
+        val types = mutableListOf<AccidentDetailTabType>()
+        accident_tab.addTab(accident_tab.newTab().setText(R.string.tab_messages))
+        types.add(AccidentDetailTabType.Detail)
+
+        accident_view_pager.adapter = AccidentDetailAdapter(
+            requireActivity().supportFragmentManager,
+            types,
+            args.accidentId
+        )
     }
 
     override fun initUi(savedInstanceState: Bundle?) {
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
+        accident_view_pager.addOnPageChangeListener(
+            TabLayout.TabLayoutOnPageChangeListener(
+                accident_tab
+            )
+        )
+        accident_tab.tabGravity = TabLayout.GRAVITY_FILL
+        accident_tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                accident_view_pager.currentItem = tab.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

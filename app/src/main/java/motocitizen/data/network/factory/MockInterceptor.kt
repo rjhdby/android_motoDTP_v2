@@ -63,6 +63,7 @@ class MockInterceptor : Interceptor {
                     uri.endsWith("/checkVersion?version=1.2") -> getCheckVersionNormalDeprecated
                     uri.endsWith("/checkVersion?version=1.3") -> getCheckVersionNormalUnsupported
                     uri.contains("/user/") -> getUser
+                    uri.contains("/message/1") -> getMessageList
                     else -> empty
                 }
             }
