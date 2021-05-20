@@ -4,6 +4,7 @@ import android.location.LocationManager
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.location.FusedLocationProviderClient
 import motocitizen.data.network.user.User
 import motocitizen.data.repos.AuthDataRepo
 import motocitizen.domain.lcenstate.LcenState
@@ -14,7 +15,8 @@ import motocitizen.presentation.base.viewmodel.commands.VMCommand
 
 class RootViewModel @ViewModelInject constructor(
     private val getUser: GetUserUseCase,
-    private val authDataRepo: AuthDataRepo
+    private val authDataRepo: AuthDataRepo,
+    var fusedLocationProviderClient: FusedLocationProviderClient
 ) : BaseViewModel() {
 
     companion object {

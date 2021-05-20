@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
@@ -35,12 +36,12 @@ import motocitizen.presentation.base.viewmodel.commands.VMCommand
 import motocitizen.presentation.screens.auth.AuthActivity
 import timber.log.Timber
 
-private const val REQST_CODE = 100
+private const val REQUEST_CODE = 100
 
 @AndroidEntryPoint
 class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
     private var currentNavController: LiveData<NavController>? = null
-
+    private lateinit var alertDialogNoLocation: AlertDialog
     private val destinationChangedListener =
         OnDestinationChangedListener { _, destination, arguments ->
             bottom_navigation.isVisibleWithAnimation =
@@ -60,15 +61,42 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
             if (Build.VERSION.SDK_INT >= 23) {
                 requestPermissions(
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    REQST_CODE
+                    REQUEST_CODE
                 )
             } else {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    REQST_CODE
+                    REQUEST_CODE
                 )
             }
+        }
+    }
+
+    fun updateLastLocation(onSuccessCallback: (Location?) -> Unit) {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        try {
+            val locationResult = viewModel.fusedLocationProviderClient.lastLocation
+            locationResult.addOnCompleteListener(this) { task ->
+                task.addOnSuccessListener {
+                    if (checkGpsEnable()) {
+                        onSuccessCallback(it)
+                    } else {
+                        showNoLocationAlertDialog()
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Timber.e(e)
         }
     }
 
@@ -78,7 +106,7 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         grantResults: IntArray
     ) {
         when (requestCode) {
-            REQST_CODE -> {
+            REQUEST_CODE -> {
                 if ((grantResults.isNotEmpty() &&
                             grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 ) {
@@ -161,6 +189,7 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
 
     @SuppressLint("RestrictedApi")
     private fun initViews() {
+        buildAlertMessageNoGps()
         /*val bottomNavigationMenuView: BottomNavigationMenuView =
             bottom_navigation.getChildAt(0) as BottomNavigationMenuView
         val accidentItemView: BottomNavigationItemView =
@@ -176,7 +205,7 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         super.onResume()
         checkLocationPermission()
         if (!checkGpsEnable()) {
-            buildAlertMessageNoGps()
+            showNoLocationAlertDialog()
         }
     }
 
@@ -190,8 +219,13 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
             .setNegativeButton(
                 R.string.cancel
             ) { dialog, _ -> dialog.cancel() }
-        val alert: AlertDialog = builder.create()
-        alert.show()
+        alertDialogNoLocation = builder.create()
+    }
+
+    fun showNoLocationAlertDialog() {
+        if (!alertDialogNoLocation.isShowing) {
+            alertDialogNoLocation.show()
+        }
     }
 
     override fun initViewModel() {

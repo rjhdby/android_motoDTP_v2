@@ -3,7 +3,6 @@ package motocitizen.data.utils
 import android.location.Address
 import android.location.Location
 import android.location.LocationManager
-import androidx.lifecycle.MutableLiveData
 import com.google.type.LatLng
 
 typealias Meter = Long
@@ -11,7 +10,7 @@ typealias Kilometer = Float
 
 const val EQUATOR = 20038
 const val METERS_IN_KILOMETER = 1000
-var lastLocation = MutableLiveData<LatLng>()
+var lastLocation: LatLng? = null
 
 //fun Location.toLatLng(): LatLng = LatLng(latitude, longitude)
 
@@ -37,7 +36,7 @@ fun LatLng.distanceString(): String {
 fun Meter.toKilometers(): Kilometer = (this / 10).toFloat() / 100
 
 fun LatLng.metersFromUser(): Meter =
-    (distanceTo(lastLocation.value!!) * METERS_IN_KILOMETER).toLong()
+    (distanceTo(lastLocation!!) * METERS_IN_KILOMETER).toLong()
 
 fun Address.buildAddressString(): String {
     return StringBuilder()
