@@ -1,6 +1,5 @@
 package motocitizen.presentation.screens.home
 
-import android.location.Location
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -24,13 +23,11 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
 
     override val viewModel: HomeViewModel by viewModels()
     private var accidentEpoxyController = AccidentEpoxyController()
-    private var lastKnownLocation: Location? = null
     lateinit var rootActivity: RootActivity
 
     override fun onResume() {
         super.onResume()
         loadAccidents()
-
     }
 
     override fun initUi(savedInstanceState: Bundle?) {
@@ -49,43 +46,40 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
         }
         swipe_to_refresh.setOnRefreshListener {
             loadAccidents()
-            viewModel.loadAccidentList(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude)
             swipe_to_refresh.isRefreshing = false
         }
     }
 
     override fun initViewModel() {
-        loadAccidents()
         viewModel.loadAccidentListState.observe {
             show_progress.isVisible = it.isLoading()
             error_view.isVisible = it.isError()
             view_panel.isVisible = it.isContent()
             it.asContentOrNull()?.let(::renderContent)
         }
+        loadAccidents()
     }
 
     private fun renderContent(list: List<Accident>) {
-        lastLocation.observe(this) {
-            if ((requireActivity() as RootActivity).checkGpsEnable() && App.isLocPermission) {
-                accidentEpoxyController.setData(list)
-            }
+        if ((requireActivity() as RootActivity).checkGpsEnable() && App.isLocPermission) {
+            accidentEpoxyController.setData(list)
         }
     }
 
     private fun loadAccidents() {
         rootActivity.updateLastLocation {
-            viewModel.loadAccidentList(
-                it!!.latitude,
-                it.longitude
-            )
-            lastKnownLocation = it
-            if (lastKnownLocation != null) {
-                val latLng: LatLng = LatLng.newBuilder()
-                    .setLongitude(lastKnownLocation!!.longitude)
-                    .setLatitude(lastKnownLocation!!.latitude)
+            if (it != null) {
+                lastLocation = LatLng.newBuilder()
+                    .setLongitude(it.longitude)
+                    .setLatitude(it.latitude)
                     .build()
-                lastLocation.value = latLng
+                viewModel.loadAccidentList(
+                    lastLocation!!.latitude,
+                    lastLocation!!.longitude
+                )
             }
+
+
         }
     }
 }

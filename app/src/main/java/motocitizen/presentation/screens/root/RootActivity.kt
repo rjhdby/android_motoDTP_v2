@@ -41,7 +41,7 @@ private const val REQUEST_CODE = 100
 @AndroidEntryPoint
 class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
     private var currentNavController: LiveData<NavController>? = null
-
+    private lateinit var alertDialogNoLocation: AlertDialog
     private val destinationChangedListener =
         OnDestinationChangedListener { _, destination, arguments ->
             bottom_navigation.isVisibleWithAnimation =
@@ -88,11 +88,15 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
             val locationResult = viewModel.fusedLocationProviderClient.lastLocation
             locationResult.addOnCompleteListener(this) { task ->
                 task.addOnSuccessListener {
-                    onSuccessCallback(it)
+                    if (checkGpsEnable()) {
+                        onSuccessCallback(it)
+                    } else {
+                        showNoLocationAlertDialog()
+                    }
                 }
             }
         } catch (e: Exception) {
-            Timber.d(e)
+            Timber.e(e)
         }
     }
 
@@ -185,6 +189,7 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
 
     @SuppressLint("RestrictedApi")
     private fun initViews() {
+        buildAlertMessageNoGps()
         /*val bottomNavigationMenuView: BottomNavigationMenuView =
             bottom_navigation.getChildAt(0) as BottomNavigationMenuView
         val accidentItemView: BottomNavigationItemView =
@@ -200,7 +205,7 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         super.onResume()
         checkLocationPermission()
         if (!checkGpsEnable()) {
-            buildAlertMessageNoGps()
+            showNoLocationAlertDialog()
         }
     }
 
@@ -214,8 +219,13 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
             .setNegativeButton(
                 R.string.cancel
             ) { dialog, _ -> dialog.cancel() }
-        val alert: AlertDialog = builder.create()
-        alert.show()
+        alertDialogNoLocation = builder.create()
+    }
+
+    fun showNoLocationAlertDialog() {
+        if (!alertDialogNoLocation.isShowing) {
+            alertDialogNoLocation.show()
+        }
     }
 
     override fun initViewModel() {

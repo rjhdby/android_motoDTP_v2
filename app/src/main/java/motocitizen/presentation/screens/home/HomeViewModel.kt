@@ -23,7 +23,6 @@ class HomeViewModel @ViewModelInject constructor(
 
     fun loadAccidentList(lat: Double, lon: Double) {
         safeSubscribe {
-            //todo Подставить реальные данные
             getAccidentUseCase.getAccidentList(
                 999,
                 lat = lat,
