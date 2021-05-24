@@ -5,4 +5,5 @@ import motocitizen.domain.model.message.Message
 
 interface MessageRepo {
     fun getMessages(accidentId: String): Single<List<Message>>
+    fun createMessage(accidentId: String, text: String): Single<Message>
 }

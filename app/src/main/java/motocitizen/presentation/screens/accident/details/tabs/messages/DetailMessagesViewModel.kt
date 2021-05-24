@@ -19,6 +19,10 @@ class DetailMessagesViewModel @ViewModelInject constructor(
     val loadMessageListState: LiveData<LcenState<List<Message>>>
         get() = _loadMessageListState
 
+    private val _newMessageListState = MutableLiveData<LcenState<Message>>(LcenState.None)
+    val newMessageListState: LiveData<LcenState<Message>>
+        get() = _newMessageListState
+
     fun onAfterInit(accidentId: String) {
         this.accidentId = accidentId
     }
@@ -33,6 +37,17 @@ class DetailMessagesViewModel @ViewModelInject constructor(
                 .toLcenEventObservable { it }
                 .subscribe(
                     _loadMessageListState::postValue,
+                    ::handleError
+                )
+        }
+    }
+
+    fun createMessage(text: String) {
+        safeSubscribe {
+            messageUseCase.createMessage(accidentId, text)
+                .toLcenEventObservable { it }
+                .subscribe(
+                    _newMessageListState::postValue,
                     ::handleError
                 )
         }
