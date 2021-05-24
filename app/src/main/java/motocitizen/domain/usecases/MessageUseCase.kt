@@ -4,7 +4,8 @@ import motocitizen.domain.repos.MessageRepo
 import javax.inject.Inject
 
 class MessageUseCase @Inject constructor(
-    private val messageRepo: MessageRepo,
+    private val repo: MessageRepo,
 ) {
-    fun getMessageList(accidentId: String) = messageRepo.getMessages(accidentId)
+    fun getMessageList(accidentId: String) = repo.getMessages(accidentId)
+    fun createMessage(accidentId: String, text: String) = repo.createMessage(accidentId, text)
 }

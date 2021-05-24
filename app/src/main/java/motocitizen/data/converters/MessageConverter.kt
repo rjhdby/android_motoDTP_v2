@@ -19,4 +19,19 @@ object MessageConverter {
             )
         }
     }
+
+    fun toMessage(response: MessageResponse): Message {
+        val result = getNotNull(response)
+        return result.let {
+            Message(
+                id = it.id,
+                author = it.author,
+                topic = it.topic,
+                created = it.created,
+                updated = it.updated,
+                hidden = it.hidden,
+                text = it.text,
+            )
+        }
+    }
 }
