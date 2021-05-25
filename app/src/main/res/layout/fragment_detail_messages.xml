@@ -21,6 +21,7 @@
         android:inputType="textMultiLine"
         android:maxLines="3"
         android:scrollHorizontally="false"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/new_message_send"
         app:layout_constraintStart_toStartOf="parent">
@@ -34,6 +35,7 @@
         android:contentDescription="@string/request_send_message"
         android:enabled="false"
         android:minWidth="60dp"
+        android:visibility="gone"
         android:src="@android:drawable/ic_menu_send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
