@@ -7,7 +7,7 @@ import motocitizen.presentation.base.viewmodel.BaseViewModel
 class AuthVkViewModel @ViewModelInject constructor(
     private val authDataRepo: AuthDataRepo
 ) : BaseViewModel() {
-    fun addToken(token: String?) {
+    fun saveToken(token: String?) {
         authDataRepo.saveToken(token)
     }
 }

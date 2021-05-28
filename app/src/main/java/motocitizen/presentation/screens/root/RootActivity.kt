@@ -13,6 +13,7 @@ import android.provider.Settings
 import android.security.KeyChain
 import android.security.KeyChainAliasCallback
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -34,6 +35,7 @@ import motocitizen.presentation.base.setupWithNavController
 import motocitizen.presentation.base.viewmodel.VMActivity
 import motocitizen.presentation.base.viewmodel.commands.VMCommand
 import motocitizen.presentation.screens.auth.AuthActivity
+import motocitizen.presentation.screens.settings.root.SettingsActivity
 import timber.log.Timber
 
 private const val REQUEST_CODE = 100
@@ -190,6 +192,7 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
     @SuppressLint("RestrictedApi")
     private fun initViews() {
         buildAlertMessageNoGps()
+        initToolbar()
         /*val bottomNavigationMenuView: BottomNavigationMenuView =
             bottom_navigation.getChildAt(0) as BottomNavigationMenuView
         val accidentItemView: BottomNavigationItemView =
@@ -228,13 +231,20 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         }
     }
 
+    private fun initToolbar() {
+        setSupportActionBar(root_toolbar)
+    }
+
     override fun initViewModel() {
         super.initViewModel()
         val locationManager =
             this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         viewModel.checkUserState.observe { checkRestrictionsState ->
             checkRestrictionsState.asErrorOrNull()?.let { renderError(it) }
-            checkRestrictionsState.asContentOrNull()?.let { renderContent(it) }
+            checkRestrictionsState.asContentOrNull()?.let {
+                renderContent(it)
+                initUser(it)
+            }
         }
         viewModel.onAfterInit(locationManager)
     }
@@ -325,5 +335,23 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
             )
             .commitNow()
 */
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+            }
+        }
+        return false
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_root, menu)
+        return true
+    }
+
+    fun initUser(user: User) {
+        App.user = user
     }
 }
