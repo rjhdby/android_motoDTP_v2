@@ -47,7 +47,7 @@ android {
             buildConfigField "String", SERVER_URL, '"https://ya.ru"'
         }
         develop {
-            buildConfigField "String", SERVER_URL, '"http://188.166.126.84:8080"'
+            buildConfigField "String", SERVER_URL, '"https://188.166.126.84:433"'
         }
         prod {
             buildConfigField "String", SERVER_URL, '"https://moto.dtp.ru/api"'
