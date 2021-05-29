@@ -16,4 +16,10 @@ class MessageDataRepo @Inject constructor(
             .map { MessageConverter.toMessageList(it) }
             .schedulersIoToMain()
     }
+
+    override fun createMessage(accidentId: String, text: String): Single<Message> {
+        return api.createMessage(accidentId, text)
+            .map { MessageConverter.toMessage(it) }
+            .schedulersIoToMain()
+    }
 }

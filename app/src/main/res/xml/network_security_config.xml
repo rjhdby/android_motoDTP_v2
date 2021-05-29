@@ -1,6 +1,17 @@
+<!--
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">188.166.126.84</domain>
     </domain-config>
+</network-security-config>
+-->
+<!--todo #26 Игнорируем самоподписанный сертификат-->
+<network-security-config>
+<domain-config>
+    <domain includeSubdomains="true">188.166.126.84</domain>
+    <trust-anchors>
+        <certificates src="@raw/backend_test" />
+    </trust-anchors>
+</domain-config>
 </network-security-config>
