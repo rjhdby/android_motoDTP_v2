@@ -9,6 +9,7 @@ import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
 import kotlinx.android.synthetic.main.item_message.view.*
 import motocitizen.domain.model.message.Message
+import motocitizen.domain.utils.asTime
 import motocitizen.main.R
 import motocitizen.presentation.base.inflateViewAsRoot
 
@@ -27,9 +28,8 @@ class MessageView @JvmOverloads constructor(
 
     @AfterPropsSet
     fun postBindSetup() {
-        message_author.text = message.author
-        //todo Реализовать форматирование когда это будет сделано на бэке https://github.com/rjhdby/motoDtpBackend/issues/21
-        message_date.text = message.created
+        message_author.text = message.authorNick
+        message_date.text = message.created.asTime()
         message_text.text = message.text
     }
 
