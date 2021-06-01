@@ -54,6 +54,9 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
     }
 
     override fun initViewModel() {
+        viewModel.userState.observe {
+            it.asContentOrNull()?.let { viewModel.loadData() }
+        }
         viewModel.loadAccidentListState.observe {
             show_progress.isVisible = it.isLoading()
             error_view.isVisible = it.isError()
@@ -67,7 +70,7 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadData()
+        viewModel.loadUser()
     }
 
     private fun renderContent(list: List<Accident>) {

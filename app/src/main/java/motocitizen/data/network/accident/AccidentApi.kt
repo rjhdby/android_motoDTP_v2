@@ -1,6 +1,7 @@
 package motocitizen.data.network.accident
 
 import io.reactivex.Single
+import okhttp3.ResponseBody
 import retrofit2.http.*
 
 interface AccidentApi {
@@ -14,7 +15,7 @@ interface AccidentApi {
     ): Single<List<AccidentResponse>>
 
     @POST("accident/")
-    fun createAccident(@Body request: CreateAccidentRequest): Single<AccidentResponse>
+    fun createAccident(@Body request: CreateAccidentRequest): Single<ResponseBody>
 
     @GET("accident/{id}")
     fun getAccident(@Path("id") id: String): Single<AccidentResponse>

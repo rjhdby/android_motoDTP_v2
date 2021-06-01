@@ -29,6 +29,7 @@ class AccidentDetailsFragment :
     private val args: AccidentDetailsFragmentArgs by navArgs()
 
     override fun initViewModel() {
+        viewModel.onAfterInit(args.accidentId, args.userId)
         viewModel.loadAccident.observe {
             show_progress.isVisible = it.isLoading()
             error_view.isVisible = it.isError()
@@ -100,7 +101,7 @@ class AccidentDetailsFragment :
 
     override fun onResume() {
         super.onResume()
-        viewModel.getAccidentInfo(args.accidentId)
+        viewModel.getAccidentInfo()
     }
 
     private fun renderContent(accident: Accident) {

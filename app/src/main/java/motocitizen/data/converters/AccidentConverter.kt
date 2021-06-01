@@ -9,7 +9,7 @@ import motocitizen.domain.model.accident.AccidentType
 import motocitizen.domain.model.accident.Address
 
 object AccidentConverter {
-    fun toAccidentList(response: List<AccidentResponse>): List<Accident> {
+    fun toAccidentList(userId: String, response: List<AccidentResponse>): List<Accident> {
         val result = getNotNull(response)
         return result.map { accident ->
             Accident(
@@ -20,15 +20,18 @@ object AccidentConverter {
                 verified = accident.verified,
                 hidden = accident.hidden,
                 hardness = accident.hardness,
+                creator = accident.creator,
+                creatorNick = accident.creatorNick,
                 location = accident.location,
                 description = accident.description,
                 conflict = accident.conflict,
+                isOwner = accident.creator == userId,
                 messages = accident.messages
             )
         }
     }
 
-    fun toAccident(response: AccidentResponse): Accident {
+    fun toAccident(userId: String, response: AccidentResponse): Accident {
         val result = getNotNull(response)
         return result.let {
             Accident(
@@ -39,10 +42,13 @@ object AccidentConverter {
                 verified = it.verified,
                 hidden = it.hidden,
                 hardness = it.hardness,
+                creator = it.creator,
+                creatorNick = it.creatorNick,
                 location = it.location,
                 description = it.description,
                 conflict = it.conflict,
-                messages = it.messages
+                isOwner = it.creator == userId,
+                messages = it.messages,
             )
         }
     }

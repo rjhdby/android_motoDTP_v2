@@ -28,6 +28,9 @@ data class Accident(
     val description: String,
     val conflict: Boolean = false,
     val messages: Int,
+    val creator: String,
+    val creatorNick: String,
+    val isOwner: Boolean,
     val hardness: AccidentHardness?
 ) : Parcelable {
 
@@ -46,11 +49,6 @@ data class Accident(
         AccidentType.MOTO_PEDESTRIAN,
         AccidentType.SOLO
     )
-
-    //TODO реализовать логику, является ли текущий юзер создателем инцидента
-    fun isOwner(): Boolean {
-        return true
-    }
 
     fun messagesText(): Spanned {
         val text = formatMessagesText(this)
@@ -71,10 +69,6 @@ data class Accident(
         else {
             String.format(MESSAGE_FORMAT, accident.messages)
         }
-    }
-
-    private fun isAccident(): Boolean {
-        return accidentsWithCrashes.contains(type)
     }
 
     fun title(): String {
