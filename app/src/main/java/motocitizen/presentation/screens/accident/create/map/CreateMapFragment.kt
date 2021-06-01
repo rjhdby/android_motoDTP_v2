@@ -60,11 +60,23 @@ class CreateMapFragment : VMFragment<CreateMapViewModel>(R.layout.fragment_creat
         )
         saveButton.setOnClickListener {
             val camera = googleMap.cameraPosition
-//todo Добавить опеределение адреса
-//            builder.location = AccidentLocation(MyLocationManager.getAddress(latLng), latLng)
-//            changeFrameTo(TYPE)
-//            EmptyAddressDialog(this, builder.location.address, this::addressDialogCallback)
-            viewModel.navigateToType(Address(camera.target.latitude, camera.target.longitude, ""))
+            viewModel.navigateToType(
+                Address(
+                    camera.target.latitude,
+                    camera.target.longitude,
+                    address.text.toString()
+                )
+            )
+        }
+        searchButton.setOnClickListener {
+            val camera = googleMap.cameraPosition
+            viewModel.searchAddress(camera.target.latitude, camera.target.longitude)
+        }
+
+        viewModel.loadAddress.observe { it ->
+            it.asContentOrNull()?.let {
+                address.setText(it.string())
+            }
         }
     }
 
