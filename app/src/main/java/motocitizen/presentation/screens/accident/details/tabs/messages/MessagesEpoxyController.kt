@@ -6,7 +6,7 @@ import motocitizen.domain.model.message.Message
 import motocitizen.main.R
 import motocitizen.presentation.widgets.*
 
-private const val LOADING_BOTTOM_MARGIN_DP = 12
+private const val LOADING_BOTTOM_MARGIN_DP = 6
 
 internal class MessagesEpoxyController(
     private val itemClickListener: (Message) -> Unit,
@@ -37,6 +37,10 @@ internal class MessagesEpoxyController(
                 id("phase$index")
                 message(message)
                 clickListener { itemClickListener.invoke(message) }
+            }
+            space {
+                id("item_space$index")
+                height(LOADING_BOTTOM_MARGIN_DP)
             }
         }
     }

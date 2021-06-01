@@ -5,22 +5,23 @@ import org.joda.time.DateTimeZone
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
 
-private val ISO_DATE_TIME_FORMATTER: DateTimeFormatter =
-    DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
+private const val TIME_FORMAT = "HH:mm"
 
-private val FULL_DATE_TIME_FORMATTER: DateTimeFormatter =
-    DateTimeFormat.forPattern("HH:mm:ss, dd MMMM YYYY")
+fun DateTime.fromUts(): DateTime = this.plusMillis(getOffset())
 
-private val EVENT_DATE_FORMATTER: DateTimeFormatter =
-    DateTimeFormat.forPattern("yyyy-MM-dd")
+fun DateTime.asTime(): String = this.toString(TIME_FORMAT)
 
-private val TIME_ONLY_FORMATTER: DateTimeFormatter = DateTimeFormat.forPattern("HH:mm")
-
-private val DATE_PREDICT_FORMATTER: DateTimeFormatter = DateTimeFormat.forPattern("HH:mm dd MMMM")
+private val DATE_TIME_FORMATTER: DateTimeFormatter =
+    DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
 
 fun getOffset(): Int {
     val tz = DateTimeZone.getDefault()
     val instant = DateTime.now().millis
     return tz.getOffset(instant)
+}
+
+@Throws(IllegalArgumentException::class)
+fun String.formatAsISODateTime(): DateTime {
+    return DATE_TIME_FORMATTER.parseDateTime(this)
 }
 
