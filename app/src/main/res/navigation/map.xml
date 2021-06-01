@@ -22,6 +22,9 @@
             android:name="accidentId"
             app:argType="string" />
         <argument
+            android:name="userId"
+            app:argType="string" />
+        <argument
             android:name="mapEnable"
             app:argType="boolean" />
     </fragment>

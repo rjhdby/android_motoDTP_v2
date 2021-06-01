@@ -10,7 +10,7 @@ class AccidentEpoxyController : TypedEpoxyController<List<Accident>>() {
 
     override fun buildModels(accidentList: List<Accident>) {
         accidentList.forEachIndexed { index, accident ->
-            if (accident.isOwner()) {
+            if (accident.isOwner) {
                 if (accident.hidden) {
                     OwnedHiddenRowModel_().id(index).messages(accident.messagesText())
                         .date(accident.getTimeAfterCreation())

@@ -22,9 +22,17 @@ class AccidentDetailsViewModel @ViewModelInject constructor(
     val loadAccident: LiveData<LcenState<Accident>>
         get() = _loadAccident
 
-    fun getAccidentInfo(accidentId: String) {
+    lateinit var accidentId: String
+    lateinit var userId: String
+
+    fun onAfterInit(accidentId: String, userId: String){
+        this.accidentId = accidentId
+        this.userId = userId
+    }
+
+    fun getAccidentInfo() {
         safeSubscribe {
-            getAccidentUseCase.getAccident(accidentId)
+            getAccidentUseCase.getAccident(userId, accidentId)
                 .toLcenEventObservable { it }
                 .subscribe(
                     _loadAccident::postValue,
@@ -46,7 +54,7 @@ class AccidentDetailsViewModel @ViewModelInject constructor(
 
     private fun setConflict() {
         safeSubscribe {
-            getAccidentUseCase.setConflict(loadAccident.requireValue().asContentOrNull()?.id!!)
+            getAccidentUseCase.setConflict(userId, loadAccident.requireValue().asContentOrNull()?.id!!)
                 .toLcenEventObservable { it }
                 .subscribe(
                     _loadAccident::postValue,
@@ -57,7 +65,7 @@ class AccidentDetailsViewModel @ViewModelInject constructor(
 
     private fun dropConflict() {
         safeSubscribe {
-            getAccidentUseCase.dropConflict(loadAccident.requireValue().asContentOrNull()?.id!!)
+            getAccidentUseCase.dropConflict(userId, loadAccident.requireValue().asContentOrNull()?.id!!)
                 .toLcenEventObservable { it }
                 .subscribe(
                     _loadAccident::postValue,

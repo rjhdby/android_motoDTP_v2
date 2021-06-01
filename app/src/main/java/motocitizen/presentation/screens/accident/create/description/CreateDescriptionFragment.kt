@@ -11,7 +11,6 @@ import motocitizen.app.utils.showKeyboard
 import motocitizen.domain.lcenstate.isContent
 import motocitizen.domain.lcenstate.isError
 import motocitizen.domain.lcenstate.isLoading
-import motocitizen.domain.model.accident.Accident
 import motocitizen.domain.model.accident.AccidentHardness
 import motocitizen.main.R
 import motocitizen.presentation.base.onTextChanged
@@ -36,7 +35,7 @@ class CreateDescriptionFragment :
         )
     }
 
-    private fun toHome(accident: Accident) {
+    private fun toHome() {
         val navController = findNavController()
         navController.popBackStack(R.id.createMapFragment, false)
         val root = activity as RootActivity
@@ -67,7 +66,7 @@ class CreateDescriptionFragment :
             error_view.isVisible = it.isError()
             result.isVisible = it.isContent()
             panel.isVisible = !it.isContent()
-            it.asContentOrNull()?.let(::toHome)
+            it.asContentOrNull()?.let { toHome() }
         }
     }
 

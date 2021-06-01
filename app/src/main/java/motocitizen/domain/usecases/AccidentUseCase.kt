@@ -14,6 +14,7 @@ class AccidentUseCase @Inject constructor(
         lat: Double? = null,
         lon: Double? = null,
         radius: Int? = null,
+        userId: String,
         lastFetch: Int? = null,
     ) = accidentRepo.getAccidentList(
         depth = depth,
@@ -21,6 +22,7 @@ class AccidentUseCase @Inject constructor(
         lon = lon,
         radius = radius,
         lastFetch = lastFetch,
+        userId = userId,
     )
 
     fun createAccident(
@@ -35,9 +37,9 @@ class AccidentUseCase @Inject constructor(
         description = description,
     )
 
-    fun getAccident(id: String) = accidentRepo.getAccident(id)
+    fun getAccident(userId: String, id: String) = accidentRepo.getAccident(userId, id)
 
-    fun setConflict(id: String) = accidentRepo.setConflict(id)
+    fun setConflict(userId: String, id: String) = accidentRepo.setConflict(userId, id)
 
-    fun dropConflict(id: String) = accidentRepo.dropConflict(id)
+    fun dropConflict(userId: String, id: String) = accidentRepo.dropConflict(userId, id)
 }

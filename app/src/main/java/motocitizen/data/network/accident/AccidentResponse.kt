@@ -13,6 +13,7 @@ data class AccidentResponse(
     var hidden: Boolean,
     var hardness: AccidentHardness?,
     var creator :String,
+    val creatorNick: String,
     var location: Address,
     var description: String,
     var conflict: Boolean = false,
