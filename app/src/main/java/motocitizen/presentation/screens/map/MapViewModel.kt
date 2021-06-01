@@ -11,15 +11,18 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import motocitizen.data.network.user.User
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
 import motocitizen.domain.model.accident.Accident
 import motocitizen.domain.usecases.AccidentUseCase
+import motocitizen.domain.usecases.GetUserUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 
 class MapViewModel @ViewModelInject constructor(
     private val getAccidentUseCase: AccidentUseCase,
     private val navController: NavController,
+    private val getUser: GetUserUseCase,
     var fusedLocationProviderClient: FusedLocationProviderClient
 ) : BaseViewModel() {
 
@@ -35,6 +38,7 @@ class MapViewModel @ViewModelInject constructor(
 
     lateinit var locationRequest: LocationRequest
     lateinit var locationCallback: LocationCallback
+    lateinit var user: User
 
     //todo убрать после реализации входных параметров
     private val depth: Int = 999
@@ -50,7 +54,10 @@ class MapViewModel @ViewModelInject constructor(
     fun loadData() {
         if (accident == null) {
             safeSubscribe {
-                getAccidentUseCase.getAccidentList(depth = depth)
+                getAccidentUseCase.getAccidentList(
+                    depth = depth,
+                    userId = userState.value!!.asContent().id
+                )
                     .toLcenEventObservable { it }
                     .subscribe(
                         _loadAccidentListState::postValue,
@@ -96,7 +103,26 @@ class MapViewModel @ViewModelInject constructor(
 
     fun toDetails(accidentId: String) {
         navController.navigate(
-            MapFragmentDirections.actionMapFragmentToAccidentDetailsFragment(accidentId, false)
+            MapFragmentDirections.actionMapFragmentToAccidentDetailsFragment(
+                accidentId,
+                userState.value!!.asContent().id,
+                false
+            )
         )
+    }
+
+    private val _userState = MutableLiveData<LcenState<User>>(LcenState.None)
+    val userState: LiveData<LcenState<User>>
+        get() = _userState
+
+    fun loadUser() {
+        safeSubscribe {
+            getUser(skipCache = false)
+                .toLcenEventObservable { it }
+                .subscribe(
+                    _userState::postValue,
+                    ::handleError
+                )
+        }
     }
 }

@@ -6,22 +6,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
-import motocitizen.domain.model.accident.Accident
 import motocitizen.domain.model.accident.AccidentHardness
 import motocitizen.domain.model.accident.AccidentType
 import motocitizen.domain.model.accident.Address
 import motocitizen.domain.usecases.AccidentUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
+import okhttp3.ResponseBody
 
 class CreateDescriptionViewModel @ViewModelInject constructor(
     private val navController: NavController,
     private val accidentUseCase: AccidentUseCase,
 ) : BaseViewModel() {
 
-    private val _newAccident = MutableLiveData<LcenState<Accident>>(
+    private val _newAccident = MutableLiveData<LcenState<ResponseBody>>(
         LcenState.None
     )
-    val newAccident: LiveData<LcenState<Accident>>
+    val newAccident: LiveData<LcenState<ResponseBody>>
         get() = _newAccident
 
     lateinit var type: AccidentType

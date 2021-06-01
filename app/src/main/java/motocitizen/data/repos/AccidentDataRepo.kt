@@ -9,6 +9,7 @@ import motocitizen.domain.model.accident.AccidentType
 import motocitizen.domain.model.accident.Address
 import motocitizen.domain.repos.AccidentRepo
 import motocitizen.domain.utils.schedulersIoToMain
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 class AccidentDataRepo @Inject constructor(
@@ -19,10 +20,11 @@ class AccidentDataRepo @Inject constructor(
         lat: Double?,
         lon: Double?,
         radius: Int?,
+        userId: String,
         lastFetch: Int?
     ): Single<List<Accident>> {
         return api.getAccidentList(depth, lat, lon, radius, lastFetch)
-            .map { AccidentConverter.toAccidentList(it) }
+            .map { AccidentConverter.toAccidentList(userId, it) }
             .schedulersIoToMain()
     }
 
@@ -31,7 +33,7 @@ class AccidentDataRepo @Inject constructor(
         hardness: AccidentHardness?,
         location: Address,
         description: String
-    ): Single<Accident> {
+    ): Single<ResponseBody> {
         return api.createAccident(
             AccidentConverter.toCreateAccidentRequest(
                 type,
@@ -40,25 +42,24 @@ class AccidentDataRepo @Inject constructor(
                 description
             )
         )
-            .map { AccidentConverter.toAccident(it) }
             .schedulersIoToMain()
     }
 
-    override fun getAccident(id: String): Single<Accident> {
+    override fun getAccident(userId: String, id: String): Single<Accident> {
         return api.getAccident(id)
-            .map { AccidentConverter.toAccident(it) }
+            .map { AccidentConverter.toAccident(userId, it) }
             .schedulersIoToMain()
     }
 
-    override fun setConflict(id: String): Single<Accident> {
+    override fun setConflict(userId: String, id: String): Single<Accident> {
         return api.setConflict(id)
-            .map { AccidentConverter.toAccident(it) }
+            .map { AccidentConverter.toAccident(userId, it) }
             .schedulersIoToMain()
     }
 
-    override fun dropConflict(id: String): Single<Accident> {
+    override fun dropConflict(userId: String, id: String): Single<Accident> {
         return api.dropConflict(id)
-            .map { AccidentConverter.toAccident(it) }
+            .map { AccidentConverter.toAccident(userId, it) }
             .schedulersIoToMain()
     }
 }

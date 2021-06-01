@@ -26,7 +26,7 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
 
     override fun onResume() {
         super.onResume()
-        loadAccidentList()
+        viewModel.loadUser()
     }
 
     override fun initUi(savedInstanceState: Bundle?) {
@@ -50,17 +50,21 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
     }
 
     override fun initViewModel() {
+        viewModel.userState.observe {
+            it.asContentOrNull()?.let {
+                loadAccidentList()
+            }
+        }
         viewModel.loadAccidentListState.observe {
             show_progress.isVisible = it.isLoading()
             error_view.isVisible = it.isError()
             view_panel.isVisible = it.isContent()
             it.asContentOrNull()?.let(::renderContent)
         }
-        loadAccidentList()
     }
 
     private fun renderContent(list: List<Accident>) {
-            accidentEpoxyController.setData(list)
+        accidentEpoxyController.setData(list)
     }
 
     private fun loadAccidentList() {
