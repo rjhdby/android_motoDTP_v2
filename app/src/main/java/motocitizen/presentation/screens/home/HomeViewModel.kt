@@ -42,14 +42,13 @@ class HomeViewModel @ViewModelInject constructor(
     }
 
     fun loadAccidentList(lat: Double, lon: Double) {
-        val depth = settingsDataRepo.getDepth().toInt()
-        val radius = settingsDataRepo.getDistance().toInt()
         safeSubscribe {
             getAccidentUseCase.getAccidentList(
                 lat = lat,
                 lon = lon,
-                radius = radius,
-                depth = depth
+                radius = settingsDataRepo.getDistance().toInt(),
+                depth = settingsDataRepo.getDepth().toInt(),
+                userId = userState.value!!.asContent().id
             )
                 .toLcenEventObservable { it }
                 .subscribe(
