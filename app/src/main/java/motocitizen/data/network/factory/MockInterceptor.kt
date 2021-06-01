@@ -64,6 +64,7 @@ class MockInterceptor : Interceptor {
                     uri.endsWith("/checkVersion?version=1.3") -> getCheckVersionNormalUnsupported
                     uri.contains("/user/") -> getUser
                     uri.contains("/message/1") -> getMessageList
+                    uri.contains("/nomination/") -> nomination
                     else -> empty
                 }
             }
@@ -81,3 +82,7 @@ class MockInterceptor : Interceptor {
             .build()
     }
 }
+
+const val nomination = """
+    Красная площадь д.1
+"""
