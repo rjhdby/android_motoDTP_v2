@@ -128,7 +128,7 @@ class SettingsFragment : PreferenceFragmentCompat(),
     private fun updateDeepSummary() {
         val stringBuilder = StringBuilder().append(getString(R.string.show_no_older)).append(
             viewModel.getDeep()
-        ).append(getString(R.string.Hour))
+        ).append(getString(R.string.hour))
         deep.summary = stringBuilder
     }
 
