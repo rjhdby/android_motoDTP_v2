@@ -16,7 +16,6 @@ class App : Application() {
         const val SEARCH_DELAY_MILLISECONDS = 1000L
         var isLocPermission = false
         var authToken: String? = null
-        lateinit var user: User
     }
 
     override fun onCreate() {

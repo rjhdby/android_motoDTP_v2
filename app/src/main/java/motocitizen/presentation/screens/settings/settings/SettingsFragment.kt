@@ -12,13 +12,13 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.dialog_base.*
-import motocitizen.app.App
-import motocitizen.domain.model.user.UserRole
 import motocitizen.main.R
 
-const val MAX_DEEP_HORS = 24
+//const val DEEP_MAX_HORS = 24
 const val DEEP_MAX_LENGTH = 5
 const val RADIUS_MAX_LENGTH = 5
+const val RADIUS_MIN = 1
+const val DEEP_MIN = 1
 
 @AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat(),
@@ -36,6 +36,8 @@ class SettingsFragment : PreferenceFragmentCompat(),
         setPreferencesFromResource(R.xml.prefference, rootKey)
         initPreference()
         updateUI()
+        initViewModel()
+        viewModel.loadUser()
         preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
     }
 
@@ -47,9 +49,9 @@ class SettingsFragment : PreferenceFragmentCompat(),
 
     private fun initExitBtn() {
         exit = findPreference(getString(R.string.settings_exit_btn))!!
-        exit.summary = App.user.nick
+        exit.summary
         exit.setOnPreferenceClickListener {
-//            TODO Реадизовать выход из сессии
+            //todo #67 Реализовать возможность выхода из сессии
             true
         }
     }
@@ -61,26 +63,34 @@ class SettingsFragment : PreferenceFragmentCompat(),
                 val inputLengthFilter = InputFilter.LengthFilter(RADIUS_MAX_LENGTH)
                 distanceEditText.filters = arrayOf(inputLengthFilter)
                 distanceEditText.inputType = InputType.TYPE_CLASS_NUMBER
+                distanceEditText.addTextChangedListener {
+                    if (it != null && it.isNotEmpty())
+                        if (it.toString()
+                                .toInt() < RADIUS_MIN
+                        ) {
+                            showToast(R.string.min_radius)
+                            distanceEditText.setText(DEEP_MIN.toString())
+                        }
+                }
             }
         }
     }
 
     private fun innitDeepPreference() {
-        deep = findPreference(getString(R.string.settings_deep_key))!!
+        deep = findPreference(getString(R.string.settings_depth_key))!!
         deep.apply {
             setOnBindEditTextListener { deepEditText ->
                 val inputLengthFilter = InputFilter.LengthFilter(DEEP_MAX_LENGTH)
                 deepEditText.inputType = InputType.TYPE_CLASS_NUMBER
                 deepEditText.filters = arrayOf(inputLengthFilter)
                 deepEditText.addTextChangedListener {
-                    if (it != null && it.isNotEmpty()) {
+                    if (it != null && it.isNotEmpty())
                         if (it.toString()
-                                .toInt() > MAX_DEEP_HORS && (App.user.role == UserRole.USER || App.user.role == UserRole.READ_ONLY)
+                                .toInt() < DEEP_MIN
                         ) {
-                            showToast(R.string.max_deep_time)
-                            deepEditText.setText(MAX_DEEP_HORS.toString())
+                            showToast(R.string.min_deep_time)
+                            deepEditText.setText(DEEP_MIN.toString())
                         }
-                    }
                 }
             }
         }
@@ -101,7 +111,7 @@ class SettingsFragment : PreferenceFragmentCompat(),
                     viewModel.setTempDistance()
                 }
             }
-            getString(R.string.settings_deep_key) -> {
+            getString(R.string.settings_depth_key) -> {
                 if (viewModel.getDeep().isEmpty()) {
                     viewModel.setTempDeep()
                 }
@@ -118,7 +128,7 @@ class SettingsFragment : PreferenceFragmentCompat(),
     private fun updateDeepSummary() {
         val stringBuilder = StringBuilder().append(getString(R.string.show_no_older)).append(
             viewModel.getDeep()
-        ).append(getString(R.string.H))
+        ).append(getString(R.string.Hour))
         deep.summary = stringBuilder
     }
 
@@ -133,10 +143,18 @@ class SettingsFragment : PreferenceFragmentCompat(),
             getString(R.string.settings_distance_key) -> {
                 viewModel.updateTempDistance()
             }
-            getString(R.string.settings_deep_key) -> {
+            getString(R.string.settings_depth_key) -> {
                 viewModel.updateTempDeep()
             }
         }
         super.onDisplayPreferenceDialog(preference)
+    }
+
+    fun initViewModel() {
+        viewModel.checkUserState.observe(this) { checkRestrictionsState ->
+            checkRestrictionsState.asContentOrNull()?.let {
+                exit.summary = it.nick
+            }
+        }
     }
 }

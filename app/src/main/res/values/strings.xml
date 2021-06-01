@@ -144,12 +144,16 @@
     <string name="search_deep">Глубина поиска:</string>
     <string name="account">Учетная запись</string>
     <string name="settings_exit_btn">settings_exit_btn</string>
-    <string name="settings">Натройки</string>
+    <string name="settings">Настройки</string>
     <string name="settings_distance_key">mc.distance.show</string>
-    <string name="settings_deep_key">hours.ago</string>
+    <string name="settings_depth_key">hours.deep</string>
     <string name="max_deep_time">Значение не может быть больше 24</string>
+    <string name="min_deep_time">Значение не может быть меньше 1</string>
+    <string name="min_radius">Значение не может быть меньше 1</string>
     <string name="show_no_older">Показать не старше\u0020</string>
-    <string name="H">" ч."</string>
+    <string name="Hour">" ч."</string>
     <string name="show_no_further">Показывать не далее\u0020</string>
     <string name="kilometer">\u0020км.</string>
+    <string name="radius_default_value">200</string>
+    <string name="depth_default_value">24</string>
 </resources>

@@ -192,7 +192,7 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
     @SuppressLint("RestrictedApi")
     private fun initViews() {
         buildAlertMessageNoGps()
-        initToolbar()
+        setSupportActionBar(root_toolbar)
         /*val bottomNavigationMenuView: BottomNavigationMenuView =
             bottom_navigation.getChildAt(0) as BottomNavigationMenuView
         val accidentItemView: BottomNavigationItemView =
@@ -231,10 +231,6 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
         }
     }
 
-    private fun initToolbar() {
-        setSupportActionBar(root_toolbar)
-    }
-
     override fun initViewModel() {
         super.initViewModel()
         val locationManager =
@@ -243,7 +239,6 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
             checkRestrictionsState.asErrorOrNull()?.let { renderError(it) }
             checkRestrictionsState.asContentOrNull()?.let {
                 renderContent(it)
-                initUser(it)
             }
         }
         viewModel.onAfterInit(locationManager)
@@ -349,9 +344,5 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_root, menu)
         return true
-    }
-
-    fun initUser(user: User) {
-        App.user = user
     }
 }

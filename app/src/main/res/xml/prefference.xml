@@ -4,10 +4,10 @@
     <PreferenceCategory
         android:key="@string/config_title_notify_category"
         android:title="@string/config_title_notify_category">
-        <EditTextPreference
-            android:defaultValue="200"
+        <motocitizen.presentation.screens.settings.IntEditTextPreference
+            android:defaultValue="@string/radius_default_value"
             android:dialogTitle="@string/settings_distance"
-            android:inputType="number"
+            android:inputType="numberSigned"
             android:key="@string/settings_distance_key"
             android:maxLength="5"
             android:summary="@string/settings_distance"
@@ -15,11 +15,11 @@
             android:title="@string/settings_distance" />
     </PreferenceCategory>
 
-    <EditTextPreference
-        android:defaultValue="24"
+    <motocitizen.presentation.screens.settings.IntEditTextPreference
+        android:defaultValue="@string/depth_default_value"
         android:dialogTitle="@string/settings_hours_ago"
         android:inputType="number"
-        android:key="@string/settings_deep_key"
+        android:key="@string/settings_depth_key"
         android:maxLength="3"
         android:tag="hours.ago"
         android:title="@string/settings_hours_ago" />
