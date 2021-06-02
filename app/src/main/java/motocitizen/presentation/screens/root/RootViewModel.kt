@@ -24,6 +24,7 @@ class RootViewModel @ViewModelInject constructor(
     }
 
     private val _checkRestrictionsState = MutableLiveData<LcenState<User>>(LcenState.None)
+
     val checkUserState: LiveData<LcenState<User>>
         get() = _checkRestrictionsState
 

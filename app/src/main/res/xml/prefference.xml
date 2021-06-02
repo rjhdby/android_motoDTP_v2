@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="@string/config_title_notify_category"
+        android:title="@string/config_title_notify_category">
+        <EditTextPreference
+            android:defaultValue="@string/radius_default_value"
+            android:dialogTitle="@string/settings_distance"
+            android:inputType="numberSigned"
+            android:key="@string/settings_distance_key"
+            android:maxLength="5"
+            android:summary="@string/settings_distance"
+            android:tag="mc.distance.show"
+            android:title="@string/settings_distance" />
+    </PreferenceCategory>
+
+    <EditTextPreference
+        android:defaultValue="@string/depth_default_value"
+        android:dialogTitle="@string/settings_hours_ago"
+        android:inputType="number"
+        android:key="@string/settings_depth_key"
+        android:maxLength="3"
+        android:tag="hours.ago"
+        android:title="@string/settings_hours_ago" />
+    <PreferenceCategory
+        android:key="@string/account"
+        android:title="@string/account">
+        <Preference
+            android:id="@+id/app_exit_btn"
+            android:key="@string/settings_exit_btn"
+            android:title="@string/small_menu_exit" />
+    </PreferenceCategory>
+</PreferenceScreen>

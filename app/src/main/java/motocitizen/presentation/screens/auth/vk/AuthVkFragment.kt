@@ -31,7 +31,7 @@ class AuthVkFragment : VMFragment<AuthVkViewModel>(R.layout.fragment_vk_auth) {
     @SuppressLint("SetJavaScriptEnabled")
     private fun configureVkWebView() {
         val jsInterface = JsInterface(
-            viewModel::addToken
+            viewModel::saveToken
         ) { (requireActivity() as AuthActivity).openActivity(RootActivity::class.java, true) }
 
         auth_vk_webView.apply {

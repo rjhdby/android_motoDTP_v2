@@ -4,6 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
+import motocitizen.data.repos.SettingsDataRepo
 import motocitizen.data.network.user.User
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
@@ -16,6 +17,7 @@ class HomeViewModel @ViewModelInject constructor(
     private val navController: NavController,
     private val getUser: GetUserUseCase,
     private val getAccidentUseCase: AccidentUseCase,
+    private val settingsDataRepo: SettingsDataRepo
 ) : BaseViewModel() {
 
     lateinit var user: User
@@ -42,10 +44,11 @@ class HomeViewModel @ViewModelInject constructor(
     fun loadAccidentList(lat: Double, lon: Double) {
         safeSubscribe {
             getAccidentUseCase.getAccidentList(
-                999,
                 lat = lat,
                 lon = lon,
-                userId = userState.value!!.asContent().id,
+                radius = settingsDataRepo.getDistance().toInt(),
+                depth = settingsDataRepo.getDepth().toInt(),
+                userId = userState.value!!.asContent().id
             )
                 .toLcenEventObservable { it }
                 .subscribe(

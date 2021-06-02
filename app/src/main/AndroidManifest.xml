@@ -57,7 +57,11 @@
         <activity
             android:name="motocitizen.presentation.screens.root.RootActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="motocitizen.presentation.screens.settings.root.SettingsActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <service
             android:name="motocitizen.app.push.FirebasePushService"
