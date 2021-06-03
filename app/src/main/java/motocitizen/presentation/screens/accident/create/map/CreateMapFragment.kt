@@ -18,7 +18,6 @@ import motocitizen.app.utils.DEFAULT_ZOOM
 import motocitizen.domain.model.accident.Address
 import motocitizen.main.R
 import motocitizen.presentation.base.viewmodel.VMFragment
-import motocitizen.presentation.screens.root.RootActivity
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -45,16 +44,7 @@ class CreateMapFragment : VMFragment<CreateMapViewModel>(R.layout.fragment_creat
     override fun initViewModel() {
     }
 
-    private fun toHome() {
-        val root = activity as RootActivity
-        root.toHome()
-    }
-
     override fun initUi(savedInstanceState: Bundle?) {
-        tool_bar.setTitle(getString(R.string.where))
-        tool_bar.run {
-            onLeftIconClick = { toHome() }
-        }
         (childFragmentManager.findFragmentById(R.id.create_map_container) as SupportMapFragment).getMapAsync(
             this
         )

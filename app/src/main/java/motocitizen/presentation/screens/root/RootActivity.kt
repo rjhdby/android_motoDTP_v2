@@ -45,10 +45,18 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
     private var currentNavController: LiveData<NavController>? = null
     private lateinit var alertDialogNoLocation: AlertDialog
     private val destinationChangedListener =
-        OnDestinationChangedListener { _, destination, arguments ->
+        OnDestinationChangedListener { controller, destination, arguments ->
             bottom_navigation.isVisibleWithAnimation =
                 destination.id == R.id.homeFragment
                         || (destination.id == R.id.mapFragment && arguments == null)
+            when (controller.graph.id) {
+                R.id.create_accident -> {
+                    supportActionBar!!.hide()
+                }
+                else -> {
+                    supportActionBar!!.show()
+                }
+            }
         }
 
     private fun checkLocationPermission() {
@@ -193,6 +201,7 @@ class RootActivity : VMActivity<RootViewModel>(), KeyChainAliasCallback {
     private fun initViews() {
         buildAlertMessageNoGps()
         setSupportActionBar(root_toolbar)
+
         /*val bottomNavigationMenuView: BottomNavigationMenuView =
             bottom_navigation.getChildAt(0) as BottomNavigationMenuView
         val accidentItemView: BottomNavigationItemView =

@@ -46,18 +46,6 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary" />
-
-        </com.google.android.material.appbar.AppBarLayout>
-
         <LinearLayout
             android:id="@+id/acc_details_general"
             android:layout_width="match_parent"
