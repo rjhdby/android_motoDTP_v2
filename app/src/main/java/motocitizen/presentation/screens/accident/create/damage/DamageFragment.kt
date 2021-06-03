@@ -5,7 +5,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_create_people.*
-import kotlinx.android.synthetic.main.fragment_create_people.tool_bar
 import motocitizen.domain.model.accident.AccidentHardness
 import motocitizen.main.R
 import motocitizen.presentation.base.viewmodel.VMFragment

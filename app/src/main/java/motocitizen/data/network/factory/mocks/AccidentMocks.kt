@@ -9,6 +9,7 @@ const val newAccident = """
   "verified": true,
   "hidden": true,
   "creator": "string",
+  "creatorNick": "123",
   "location": {
     "lat": 54.2,
     "lon": 37.1,
@@ -29,6 +30,7 @@ const val conflictAccident = """
   "verified": true,
   "hidden": true,
   "creator": "string",
+  "creatorNick": "123",  
   "location": {
     "lat": 54.2,
     "lon": 37.1,
@@ -49,6 +51,7 @@ const val noConflictAccident = """
   "verified": true,
   "hidden": true,
   "creator": "string",
+  "creatorNick": "123",  
   "location": {
     "lat": 54.2,
     "lon": 37.1,
@@ -69,6 +72,7 @@ const val accidentFirst = """
     "verified": true,
     "hidden": true,
     "creator": "string",
+    "creatorNick": "123",
     "location": {
       "lat": 55.568,
       "lon": 37.8488,
@@ -81,7 +85,7 @@ const val accidentFirst = """
 """
 
 const val accidentSecond = """
-  {
+{
     "id": "2",
     "created": "2021-04-17T18:29:09.000+00:00",
     "type": "MOTO_PEDESTRIAN",
@@ -89,6 +93,7 @@ const val accidentSecond = """
     "hidden": false,
     "hardness": "LIGHT",
     "creator": "607b289b63d52731fca27989",
+    "creatorNick": "123",    
     "location": {
       "lat": 45.06739,
       "lon": 38.931,
@@ -97,7 +102,7 @@ const val accidentSecond = """
     "description": "Упал, очнулся - гипс",
     "conflict": true,
     "messages": 0
-  }
+}
 """
 
 const val accidentThrid = """
@@ -108,6 +113,7 @@ const val accidentThrid = """
     "verified": false,
     "hidden": false,
     "creator": "607b289b63d52731fca27989",
+    "creatorNick": "123",    
     "location": {
       "lat": 55.2028,
       "lon": 37.3100001,
@@ -129,6 +135,7 @@ const val getAccidentList = """
     "verified": true,
     "hidden": true,
     "creator": "string",
+    "creatorNick": "123",
     "location": {
       "lat": 55.598,
       "lon": 37.8488,
@@ -146,6 +153,7 @@ const val getAccidentList = """
     "hidden": false,
     "hardness": "LIGHT",
     "creator": "607b289b63d52731fca27989",
+    "creatorNick": "123",    
     "location": {
       "lat": 45.06739,
       "lon": 38.938,
@@ -162,6 +170,7 @@ const val getAccidentList = """
     "verified": false,
     "hidden": false,
     "creator": "607b289b63d52731fca27989",
+    "creatorNick": "123",    
     "location": {
       "lat": 55.2028,
       "lon": 37.3100001,
@@ -180,6 +189,7 @@ const val getAccidentList = """
     "hidden": true,
     "hardness": "UNKNOWN",
     "creator": "string",
+    "creatorNick": "123",
     "location": {
       "lat": 55.57,
       "lon": 37.3580001,
@@ -198,6 +208,7 @@ const val getAccidentList = """
     "hidden": true,
     "hardness": "NO",
     "creator": "string",
+    "creatorNick": "123",
     "location": {
       "lat": 55.584028,
       "lon": 38.38280001,
@@ -215,6 +226,7 @@ const val getAccidentList = """
     "hidden": false,
     "hardness": "LIGHT",
     "creator": "607b289b63d52731fca27989",
+    "creatorNick": "123",
     "location": {
       "lat": 45.066,
       "lon": 38.53586,
@@ -233,6 +245,7 @@ const val getAccidentList = """
     "hidden": true,
     "hardness": "HEAVY",
     "creator": "string",
+    "creatorNick": "123",
     "location": {
       "lat": 55.65028,
       "lon": 37.4582201,
@@ -251,6 +264,7 @@ const val getAccidentList = """
     "hidden": true,
     "hardness": "LETHAL",
     "creator": "string",
+    "creatorNick": "123",
     "location": {
       "lat": 55.665128,
       "lon": 37.4592201,
@@ -267,6 +281,7 @@ const val getAccidentList = """
     "verified": false,
     "hidden": false,
     "creator": "607b289b63d52731fca27989",
+    "creatorNick": "123",
     "location": {
       "lat": 55.75228,
       "lon": 37.4599201,
@@ -284,6 +299,7 @@ const val getAccidentList = """
     "verified": true,
     "hidden": true,
     "creator": "string",
+    "creatorNick": "123",
     "location": {
       "lat": 56.6228,
       "lon": 37.4609201,
@@ -301,6 +317,7 @@ const val getAccidentList = """
     "verified": true,
     "hidden": true,
     "creator": "string",
+    "creatorNick": "123",
     "location": {
       "lat": 55.7228,
       "lon": 37.4709201,
@@ -317,6 +334,7 @@ const val getAccidentList = """
     "verified": false,
     "hidden": false,
     "creator": "607b289b63d52731fca27989",
+    "creatorNick": "123",
     "location": {
       "lat": 55.87,
       "lon": 37.4719201,
@@ -334,6 +352,7 @@ const val getAccidentList = """
     "verified": true,
     "hidden": true,
     "creator": "string",
+    "creatorNick": "123",
     "location": {
       "lat": 55.8,
       "lon": 37.64819201,
@@ -351,6 +370,7 @@ const val getAccidentList = """
     "verified": true,
     "hidden": true,
     "creator": "string",
+    "creatorNick": "123",
     "location": {
       "lat": 55.8,
       "lon": 37.75813201,
@@ -367,6 +387,7 @@ const val getAccidentList = """
     "verified": false,
     "hidden": false,
     "creator": "607b289b63d52731fca27989",
+    "creatorNick": "123",
     "location": {
       "lat": 55.69,
       "lon": 37.5913201,
@@ -383,6 +404,7 @@ const val getAccidentList = """
     "verified": true,
     "hidden": true,
     "creator": "string",
+    "creatorNick": "123",
     "location": {
       "lat": 56.70,
       "lon": 37.6213201,
@@ -400,6 +422,7 @@ const val getAccidentList = """
     "verified": true,
     "hidden": true,
     "creator": "string",
+    "creatorNick": "123",
     "location": {
       "lat": 56.80,
       "lon": 37.94132,

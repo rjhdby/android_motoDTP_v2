@@ -3,8 +3,6 @@ package motocitizen.domain.utils
 import motocitizen.data.utils.distanceString
 import motocitizen.domain.model.accident.Accident
 
-typealias Id = Int
-
 //fun Id.name() = Content.volunteerName(this)
 //
 //fun Accident.getAccidentTextToCopy(): String {

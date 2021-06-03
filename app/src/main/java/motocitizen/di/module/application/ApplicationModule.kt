@@ -11,7 +11,6 @@ import dagger.hilt.components.SingletonComponent
 import motocitizen.app.device.DeviceManager
 import motocitizen.app.notification.NotificationProvider
 import motocitizen.app.push.FirebasePushManager
-import motocitizen.data.providers.UserDataProviderImpl
 import motocitizen.data.repos.AppDataRepo
 import motocitizen.data.storage.ObjectDataTransformer
 import motocitizen.data.storage.SessionMemory
@@ -19,7 +18,6 @@ import motocitizen.data.storage.keyvalue.SharedPrefsStorage
 import motocitizen.data.storage.keyvalue.SharedPrefsStorageImpl
 import motocitizen.data.storage.user.UserMemoryStorage
 import motocitizen.data.storage.user.UserStorage
-import motocitizen.domain.providers.UserDataProvider
 import motocitizen.domain.repos.AppRepo
 import motocitizen.domain.storage.ObjectTransformer
 import motocitizen.domain.usecases.PushUseCase
@@ -32,11 +30,6 @@ object ApplicationModule {
     @Provides
     @Singleton
     fun provideObjectTransformer(): ObjectTransformer = ObjectDataTransformer()
-
-    @Provides
-    @Singleton
-    fun provideUserInfoProvider(): UserDataProvider =
-        UserDataProviderImpl()
 
     @Provides
     @Singleton

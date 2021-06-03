@@ -11,7 +11,6 @@ import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.TrustManager
@@ -112,7 +111,7 @@ object HttpClientFactory {
                     })
 
                     // Install the all-trusting trust manager
-                    val sslContext = SSLContext.getInstance("TLSv1.2");
+                    val sslContext = SSLContext.getInstance("TLSv1.2")
                     sslContext.init(null, trustAllCerts, SecureRandom())
                     // Create an ssl socket factory with our all-trusting manager
                     val sslSocketFactory = sslContext.socketFactory
@@ -120,7 +119,7 @@ object HttpClientFactory {
                     val builder = OkHttpClient.Builder()
                     builder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
                     // builder.hostnameVerifier { _, _ -> true }
-                    builder.hostnameVerifier(hostnameVerifier = HostnameVerifier { _, _ -> true })
+                    builder.hostnameVerifier(hostnameVerifier = { _, _ -> true })
                     builder.connectTimeout(CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
                     builder.readTimeout(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
                     builder.writeTimeout(WRITE_TIMEOUT_SECONDS, TimeUnit.SECONDS)

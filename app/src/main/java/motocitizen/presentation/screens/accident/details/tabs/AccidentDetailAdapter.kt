@@ -8,7 +8,7 @@ import motocitizen.presentation.screens.accident.details.tabs.messages.DetailMes
 
 internal class AccidentDetailAdapter(
     fm: FragmentManager,
-    var typeDetails: List<AccidentDetailTabType>,
+    private var typeDetails: List<AccidentDetailTabType>,
     var accidentId: String,
 ) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 

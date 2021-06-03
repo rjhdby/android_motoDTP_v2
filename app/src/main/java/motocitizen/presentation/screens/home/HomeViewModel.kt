@@ -4,8 +4,8 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
-import motocitizen.data.repos.SettingsDataRepo
 import motocitizen.data.network.user.User
+import motocitizen.data.repos.SettingsDataRepo
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
 import motocitizen.domain.model.accident.Accident
