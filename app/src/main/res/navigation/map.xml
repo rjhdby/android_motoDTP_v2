@@ -17,7 +17,7 @@
         android:id="@+id/accidentDetailsFragment"
         android:name="motocitizen.presentation.screens.accident.details.AccidentDetailsFragment"
         android:label="AccidentDetailsFragment"
-        tools:layout="@layout/activity_accident_details">
+        tools:layout="@layout/fragment_accident_details">
         <argument
             android:name="accidentId"
             app:argType="string" />

@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_accident_details.*
+import kotlinx.android.synthetic.main.fragment_accident_details.*
 import motocitizen.domain.lcenstate.isContent
 import motocitizen.domain.lcenstate.isError
 import motocitizen.domain.lcenstate.isLoading
@@ -23,7 +22,7 @@ import motocitizen.presentation.screens.accident.details.tabs.AccidentDetailTabT
 
 @AndroidEntryPoint
 class AccidentDetailsFragment :
-    VMFragment<AccidentDetailsViewModel>(R.layout.activity_accident_details) {
+    VMFragment<AccidentDetailsViewModel>(R.layout.fragment_accident_details) {
     override val viewModel: AccidentDetailsViewModel by viewModels()
 
     private val args: AccidentDetailsFragmentArgs by navArgs()
@@ -48,7 +47,6 @@ class AccidentDetailsFragment :
     }
 
     override fun initUi(savedInstanceState: Bundle?) {
-        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         accident_view_pager.addOnPageChangeListener(
             TabLayout.TabLayoutOnPageChangeListener(
                 accident_tab
