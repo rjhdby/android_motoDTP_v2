@@ -3,7 +3,6 @@ package motocitizen.app
 import android.app.Application
 import android.util.Log
 import dagger.hilt.android.HiltAndroidApp
-import motocitizen.data.network.user.User
 import motocitizen.main.BuildConfig
 import net.danlew.android.joda.JodaTimeAndroid
 import timber.log.Timber

@@ -53,7 +53,7 @@ open class BaseDialog : DialogFragment() {
     private val positive by lazy { arguments?.getInt(POSITIVE) }
     private val negative by lazy { arguments?.getInt(NEGATIVE) }
 
-    var onButtonClicked: ((DialogButton) -> Unit)? = null
+    private var onButtonClicked: ((DialogButton) -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

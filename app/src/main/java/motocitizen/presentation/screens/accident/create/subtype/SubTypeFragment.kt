@@ -5,7 +5,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_sub_type.*
-import kotlinx.android.synthetic.main.fragment_sub_type.tool_bar
 import motocitizen.domain.model.accident.AccidentType
 import motocitizen.main.R
 import motocitizen.presentation.base.viewmodel.VMFragment

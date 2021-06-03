@@ -1,12 +1,8 @@
 package motocitizen.utils
 
-import android.app.Activity
-import android.app.Fragment
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.view.View
-import com.google.android.gms.maps.model.LatLng
 
 /*
 fun Context.copyToClipBoard(text: String) {
@@ -23,35 +19,3 @@ fun Context.makeDial(number: String) = try {
 } catch (e: Exception) {
     e.printStackTrace()
 }
-/*
-fun Activity.goTo(target: Screens, bundle: Map<String, Any>) {
-    val intentBundle = Bundle()
-    bundle.forEach {
-        when (it.value) {
-            is Int    -> intentBundle.putInt(it.key, it.value as Int)
-            is String -> intentBundle.putString(it.key, it.value as String)
-        }
-    }
-    val intent = Intent(this, target.activity)
-    intent.putExtras(intentBundle)
-    startActivity(intent)
-}
-
-fun Activity.goTo(target: Screens) = startActivity(Intent(this, target.activity))
-
-fun Fragment.goTo(target: Screens) = activity.goTo(target)
-*/
-fun Activity.toExternalMap(latLng: LatLng) {
-    val uri = "geo:${latLng.latitude},${latLng.longitude}"
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-    startActivity(intent)
-}
-
-fun Activity.changeFragmentTo(containerView: Int, fragment: Fragment) = fragmentManager
-    .beginTransaction()
-    .replace(containerView, fragment)
-    .commit()
-
-fun <T : View> Fragment.bindView(id: Int) = lazy { activity.findViewById<T>(id) }
-
-fun <T : View> Activity.bindView(id: Int) = lazy { findViewById<T>(id) }
