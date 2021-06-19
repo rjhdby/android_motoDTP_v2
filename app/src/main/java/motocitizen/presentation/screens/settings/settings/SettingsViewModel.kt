@@ -1,9 +1,11 @@
 package motocitizen.presentation.screens.settings.settings
 
+import android.webkit.CookieManager
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import motocitizen.data.network.user.User
+import motocitizen.data.repos.AuthDataRepo
 import motocitizen.data.repos.SettingsDataRepo
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
@@ -12,7 +14,8 @@ import motocitizen.presentation.base.viewmodel.BaseViewModel
 
 class SettingsViewModel @ViewModelInject constructor(
     private val settingsDataRepo: SettingsDataRepo,
-    private val getUser: GetUserUseCase
+    private val getUser: GetUserUseCase,
+    private val authDataRepo: AuthDataRepo
 ) : BaseViewModel() {
     private lateinit var tempDepth: String
     private lateinit var tempDistance: String
@@ -54,5 +57,15 @@ class SettingsViewModel @ViewModelInject constructor(
                     ::handleError
                 )
         }
+    }
+
+    fun logOut() {
+        clearCookies()
+        authDataRepo.clearToken()
+    }
+
+    private fun clearCookies() {
+        CookieManager.getInstance().removeAllCookies(null)
+        CookieManager.getInstance().flush()
     }
 }

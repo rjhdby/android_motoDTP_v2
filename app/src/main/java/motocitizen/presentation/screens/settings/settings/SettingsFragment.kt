@@ -1,5 +1,6 @@
 package motocitizen.presentation.screens.settings.settings
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputFilter
@@ -13,6 +14,7 @@ import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.dialog_base.*
 import motocitizen.main.R
+import motocitizen.presentation.screens.auth.AuthActivity
 
 const val DEPTH_MAX_LENGTH = 5
 const val RADIUS_MAX_LENGTH = 5
@@ -51,7 +53,11 @@ class SettingsFragment : PreferenceFragmentCompat(),
         exit = findPreference(getString(R.string.settings_exit_btn))!!
         exit.summary
         exit.setOnPreferenceClickListener {
-            //todo #67 Реализовать возможность выхода из сессии
+            viewModel.logOut()
+            val intent = Intent(requireContext(), AuthActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            requireActivity().finish()
             true
         }
     }
