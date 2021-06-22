@@ -15,4 +15,8 @@ class AuthDataRepo @Inject constructor(
     override fun getToken(): String? {
         return sharedPrefsStorageImpl.getString(SharedPrefsKey.AuthToken, null)
     }
+
+    override fun clearToken() {
+        sharedPrefsStorageImpl.putString(SharedPrefsKey.AuthToken, null)
+    }
 }
