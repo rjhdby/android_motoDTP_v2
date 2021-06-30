@@ -30,7 +30,7 @@ private fun markerTitle(accident: Accident): String {
     val medicine =
         if (accident.hardness == null) "" else ", ${accident.hardness.text}"
     val interval = accident.getTimeAfterCreation()
-    return "${accident.type.text}$medicine, $interval назад"
+    return "${accident.type.text}$medicine, $interval"
 }
 
 private fun makeMarker(accident: Accident) = MarkerOptions()
