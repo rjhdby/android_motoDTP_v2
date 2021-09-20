@@ -19,8 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_rectangle_text"
-            android:contentDescription="@string/rectangle_text" />
+            android:src="@drawable/ic_rectangle_text" />
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
@@ -38,8 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_rectangle_text"
-            android:contentDescription="@string/rectangle_text" />
+            android:src="@drawable/ic_rectangle_text" />
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
