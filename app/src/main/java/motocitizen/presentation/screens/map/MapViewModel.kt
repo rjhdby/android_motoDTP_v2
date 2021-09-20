@@ -104,9 +104,9 @@ class MapViewModel @ViewModelInject constructor(
     fun toDetails(accidentId: String) {
         navController.navigate(
             MapFragmentDirections.actionMapFragmentToAccidentDetailsFragment(
-                accidentId,
-                userState.value!!.asContent().id,
-                false
+                accidentId = accidentId,
+                user = userState.value!!.asContent(),
+                mapEnable = false
             )
         )
     }
