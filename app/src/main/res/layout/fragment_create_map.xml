@@ -21,7 +21,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:contentDescription="@string/map_provider_category"
             android:src="@drawable/target" />
     </FrameLayout>
 
@@ -52,7 +51,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_search"
-            android:contentDescription="@string/search_img" />
+            android:src="@android:drawable/ic_menu_search" />
     </LinearLayout>
 </LinearLayout>

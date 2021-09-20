@@ -18,8 +18,7 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/blue"
-        tools:ignore="ContentDescription" />
+        app:tint="@color/blue" />
 
     <TextView
         android:id="@+id/text_error_title"
