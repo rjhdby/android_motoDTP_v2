@@ -22,10 +22,10 @@ class AccidentDetailsViewModel @ViewModelInject constructor(
     val loadAccident: LiveData<LcenState<Accident>>
         get() = _loadAccident
 
-    lateinit var accidentId: String
-    lateinit var userId: String
+    private lateinit var accidentId: String
+    private lateinit var userId: String
 
-    fun onAfterInit(accidentId: String, userId: String){
+    fun onAfterInit(accidentId: String, userId: String) {
         this.accidentId = accidentId
         this.userId = userId
     }
@@ -48,13 +48,23 @@ class AccidentDetailsViewModel @ViewModelInject constructor(
             setConflict()
     }
 
+    fun resolveReopen() {
+        if (loadAccident.requireValue().asContentOrNull()?.hidden!!)
+            reopen()
+        else
+            resolve()
+    }
+
     fun getAccident(): Accident? {
         return loadAccident.requireValue().asContentOrNull()
     }
 
     private fun setConflict() {
         safeSubscribe {
-            getAccidentUseCase.setConflict(userId, loadAccident.requireValue().asContentOrNull()?.id!!)
+            getAccidentUseCase.setConflict(
+                userId,
+                loadAccident.requireValue().asContentOrNull()?.id!!
+            )
                 .toLcenEventObservable { it }
                 .subscribe(
                     _loadAccident::postValue,
@@ -65,7 +75,38 @@ class AccidentDetailsViewModel @ViewModelInject constructor(
 
     private fun dropConflict() {
         safeSubscribe {
-            getAccidentUseCase.dropConflict(userId, loadAccident.requireValue().asContentOrNull()?.id!!)
+            getAccidentUseCase.dropConflict(
+                userId,
+                loadAccident.requireValue().asContentOrNull()?.id!!
+            )
+                .toLcenEventObservable { it }
+                .subscribe(
+                    _loadAccident::postValue,
+                    this::handleError
+                )
+        }
+    }
+
+    private fun reopen() {
+        safeSubscribe {
+            getAccidentUseCase.reopen(
+                userId,
+                loadAccident.requireValue().asContentOrNull()?.id!!
+            )
+                .toLcenEventObservable { it }
+                .subscribe(
+                    _loadAccident::postValue,
+                    this::handleError
+                )
+        }
+    }
+
+    private fun resolve() {
+        safeSubscribe {
+            getAccidentUseCase.resolve(
+                userId,
+                loadAccident.requireValue().asContentOrNull()?.id!!
+            )
                 .toLcenEventObservable { it }
                 .subscribe(
                     _loadAccident::postValue,

@@ -47,6 +47,12 @@ class MockInterceptor : Interceptor {
                     uri.endsWith("conflict/cancel") -> {
                         noConflictAccident
                     }
+                    uri.endsWith("reopen") -> {
+                        reopenAccident
+                    }
+                    uri.endsWith("resolve") -> {
+                        resolveAccident
+                    }
                     // todo Код от проекта - донора
                     uri.endsWith("/pushToken/update") -> {
                         pushTokenUpdate

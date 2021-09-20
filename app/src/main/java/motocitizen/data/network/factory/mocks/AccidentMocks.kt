@@ -63,6 +63,47 @@ const val noConflictAccident = """
 }
 """
 
+const val resolveAccident = """
+{
+  "id": "1",
+  "created": "2021-04-15T10:32:36.000+00:00",
+  "type": "OTHER",
+  "resolved": "2021-04-15T10:32:36.000+00:00",
+  "verified": true,
+  "hidden": true,
+  "creator": "string",
+  "creatorNick": "123",  
+  "location": {
+    "lat": 54.2,
+    "lon": 37.1,
+    "address": "Площадь Ленина"
+  },
+  "description": "Бывает...",
+  "conflict": false,
+  "messages": 0
+}
+"""
+
+const val reopenAccident = """
+{
+  "id": "1",
+  "created": "2021-04-15T10:32:36.000+00:00",
+  "type": "OTHER",
+  "verified": true,
+  "hidden": false,
+  "creator": "string",
+  "creatorNick": "123",  
+  "location": {
+    "lat": 54.2,
+    "lon": 37.1,
+    "address": "Площадь Ленина"
+  },
+  "description": "Бывает...",
+  "conflict": false,
+  "messages": 0
+}
+"""
+
 const val accidentFirst = """
   {
     "id": "1",

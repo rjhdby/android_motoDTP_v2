@@ -126,6 +126,8 @@
     <string name="conflict">Конфликт</string>
     <string name="set_conflict">Установить конфликт</string>
     <string name="drop_conflict">Снять конфликт</string>
+    <string name="close">Закрыть</string>
+    <string name="reopen">Переоткрыть</string>
     <string name="skeleton">skeleton</string>
     <string name="medicine"> (%1$s)</string>
     <string name="vk">vk</string>

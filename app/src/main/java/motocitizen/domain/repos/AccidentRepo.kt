@@ -25,8 +25,8 @@ interface AccidentRepo {
     ): Single<ResponseBody>
 
     fun getAccident(userId: String, id: String): Single<Accident>
-
     fun setConflict(userId: String, id: String): Single<Accident>
-
     fun dropConflict(userId: String,id: String): Single<Accident>
+    fun resolve(userId: String,id: String): Single<Accident>
+    fun reopen(userId: String,id: String): Single<Accident>
 }
