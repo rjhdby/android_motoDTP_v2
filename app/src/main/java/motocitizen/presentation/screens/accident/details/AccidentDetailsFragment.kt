@@ -75,30 +75,44 @@ class AccidentDetailsFragment :
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        if (id == R.id.action_conflict) {
-            viewModel.changeConflict()
-        } else if (id == R.id.action_to_map) {
-            viewModel.toMap()
+        when (item.itemId) {
+            R.id.action_conflict -> {
+                viewModel.changeConflict()
+            }
+            R.id.action_resolve -> {
+                viewModel.resolveReopen()
+            }
+            R.id.action_to_map -> {
+                viewModel.toMap()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
-        val item = menu.findItem(R.id.action_conflict)
-        val accident = viewModel.getAccident()
-        item.setVisible(args.user.role >= UserRole.ADMIN)
-        if (args.user.role >= UserRole.ADMIN) {
-            if (accident != null) {
+        viewModel.getAccident()?.let { accident ->
+            val conflictItem = menu.findItem(R.id.action_conflict)
+            if (args.user.role >= UserRole.ADMIN) {
                 if (accident.conflict) {
-                    item.title = getString(R.string.drop_conflict)
+                    conflictItem.title = getString(R.string.drop_conflict)
                 } else {
-                    item.title = getString(R.string.set_conflict)
+                    conflictItem.title = getString(R.string.set_conflict)
                 }
+                conflictItem.isVisible = true
+            } else {
+                conflictItem.isVisible = false
             }
-            item.setVisible(true)
-        } else {
-            item.setVisible(false)
+            val resolveItem = menu.findItem(R.id.action_resolve)
+            if (args.user.role >= UserRole.MODERATOR) {
+                if (accident.hidden) {
+                    resolveItem.title = getString(R.string.reopen)
+                } else {
+                    resolveItem.title = getString(R.string.close)
+                }
+                resolveItem.isVisible = true
+            } else {
+                resolveItem.isVisible = false
+            }
         }
         menu.findItem(R.id.action_to_map).isVisible = args.mapEnable
         return super.onPrepareOptionsMenu(menu)

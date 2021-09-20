@@ -25,4 +25,10 @@ interface AccidentApi {
 
     @PUT("accident/{id}/conflict/cancel")
     fun dropConflict(@Path("id") id: String): Single<AccidentResponse>
+
+    @PUT("accident/{id}/resolve")
+    fun resolve(@Path("id") id: String): Single<AccidentResponse>
+
+    @PUT("accident/{id}/reopen")
+    fun reopen(@Path("id") id: String): Single<AccidentResponse>
 }

@@ -4,9 +4,14 @@
     <item
         android:id="@+id/action_to_map"
         android:icon="@android:drawable/ic_menu_mapmode"
-        app:showAsAction="always"
-        android:title="@string/tab_map"/>
+        android:title="@string/tab_map"
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_conflict"
-        android:title="@string/conflict"/>
+        android:title="@string/conflict"
+        android:visible="false" />
+    <item
+        android:id="@+id/action_resolve"
+        android:title="@string/close"
+        android:visible="false" />
 </menu>
