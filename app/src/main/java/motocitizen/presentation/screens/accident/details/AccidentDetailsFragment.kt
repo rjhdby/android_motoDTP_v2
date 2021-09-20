@@ -14,6 +14,7 @@ import motocitizen.domain.lcenstate.isContent
 import motocitizen.domain.lcenstate.isError
 import motocitizen.domain.lcenstate.isLoading
 import motocitizen.domain.model.accident.Accident
+import motocitizen.domain.model.user.UserRole
 import motocitizen.domain.utils.distanceString
 import motocitizen.main.R
 import motocitizen.presentation.base.viewmodel.VMFragment
@@ -28,7 +29,7 @@ class AccidentDetailsFragment :
     private val args: AccidentDetailsFragmentArgs by navArgs()
 
     override fun initViewModel() {
-        viewModel.onAfterInit(args.accidentId, args.userId)
+        viewModel.onAfterInit(args.accidentId, args.user.id)
         viewModel.loadAccident.observe {
             show_progress.isVisible = it.isLoading()
             error_view.isVisible = it.isError()
@@ -86,12 +87,18 @@ class AccidentDetailsFragment :
     override fun onPrepareOptionsMenu(menu: Menu) {
         val item = menu.findItem(R.id.action_conflict)
         val accident = viewModel.getAccident()
-        if (accident != null) {
-            if (accident.conflict) {
-                item.title = getString(R.string.drop_conflict)
-            } else {
-                item.title = getString(R.string.set_conflict)
+        item.setVisible(args.user.role >= UserRole.ADMIN)
+        if (args.user.role >= UserRole.ADMIN) {
+            if (accident != null) {
+                if (accident.conflict) {
+                    item.title = getString(R.string.drop_conflict)
+                } else {
+                    item.title = getString(R.string.set_conflict)
+                }
             }
+            item.setVisible(true)
+        } else {
+            item.setVisible(false)
         }
         menu.findItem(R.id.action_to_map).isVisible = args.mapEnable
         return super.onPrepareOptionsMenu(menu)

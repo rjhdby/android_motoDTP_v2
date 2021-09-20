@@ -61,9 +61,9 @@ class HomeViewModel @ViewModelInject constructor(
     fun onItemPressed(item: Accident) {
         navController.navigate(
             HomeFragmentDirections.actionHomeFragmentToAccidentDetailsFragment(
-                item.id,
-                userState.value!!.asContent().id,
-                true
+                accidentId = item.id,
+                user = userState.value!!.asContent(),
+                mapEnable = true
             )
         )
     }
