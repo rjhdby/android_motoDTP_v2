@@ -92,16 +92,11 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
             googleMap.isMyLocationEnabled = true
             setMapListeners()
             viewModel.buildLocationCallBack(googleMap)
-            startLocationUpdates()
         }
     }
 
     override fun onPause() {
         super.onPause()
-        stopLocationUpdates()
-    }
-
-    private fun stopLocationUpdates() {
         viewModel.fusedLocationProviderClient.removeLocationUpdates(viewModel.locationCallback)
     }
 
