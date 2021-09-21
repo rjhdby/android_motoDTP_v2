@@ -1,14 +1,16 @@
 package motocitizen.presentation.screens.splash
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 import timber.log.Timber
 import java.net.InetAddress
+import javax.inject.Inject
 
 const val VPN_HOST = "ya.ru"
 
-class SplashViewModel @ViewModelInject constructor(
+@HiltViewModel
+class SplashViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     enum class ErrorType {

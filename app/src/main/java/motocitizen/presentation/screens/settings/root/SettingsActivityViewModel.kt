@@ -1,7 +1,8 @@
 package motocitizen.presentation.screens.settings.root
 
-import androidx.hilt.lifecycle.ViewModelInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import motocitizen.presentation.base.viewmodel.BaseViewModel
+import javax.inject.Inject
 
-class SettingsActivityViewModel @ViewModelInject constructor(
-) : BaseViewModel()
+@HiltViewModel
+class SettingsActivityViewModel @Inject constructor() : BaseViewModel()

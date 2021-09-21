@@ -1,9 +1,8 @@
 package motocitizen.presentation.screens.home
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavController
+import dagger.hilt.android.lifecycle.HiltViewModel
 import motocitizen.data.network.user.User
 import motocitizen.data.repos.SettingsDataRepo
 import motocitizen.domain.lcenstate.LcenState
@@ -12,15 +11,14 @@ import motocitizen.domain.model.accident.Accident
 import motocitizen.domain.usecases.AccidentUseCase
 import motocitizen.domain.usecases.GetUserUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
+import javax.inject.Inject
 
-class HomeViewModel @ViewModelInject constructor(
-    private val navController: NavController,
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val getUser: GetUserUseCase,
     private val getAccidentUseCase: AccidentUseCase,
     private val settingsDataRepo: SettingsDataRepo
 ) : BaseViewModel() {
-
-    lateinit var user: User
 
     private val _loadAccidentListState = MutableLiveData<LcenState<List<Accident>>>(LcenState.None)
     val loadAccidentListState: LiveData<LcenState<List<Accident>>>
@@ -56,15 +54,5 @@ class HomeViewModel @ViewModelInject constructor(
                     ::handleError
                 )
         }
-    }
-
-    fun onItemPressed(item: Accident) {
-        navController.navigate(
-            HomeFragmentDirections.actionHomeFragmentToAccidentDetailsFragment(
-                accidentId = item.id,
-                user = userState.value!!.asContent(),
-                mapEnable = true
-            )
-        )
     }
 }

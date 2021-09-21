@@ -1,9 +1,8 @@
 package motocitizen.presentation.screens.accident.create.description
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavController
+import dagger.hilt.android.lifecycle.HiltViewModel
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
 import motocitizen.domain.model.accident.AccidentHardness
@@ -12,9 +11,10 @@ import motocitizen.domain.model.accident.Address
 import motocitizen.domain.usecases.AccidentUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 import okhttp3.ResponseBody
+import javax.inject.Inject
 
-class CreateDescriptionViewModel @ViewModelInject constructor(
-    private val navController: NavController,
+@HiltViewModel
+class CreateDescriptionViewModel @Inject constructor(
     private val accidentUseCase: AccidentUseCase,
 ) : BaseViewModel() {
 
@@ -33,10 +33,6 @@ class CreateDescriptionViewModel @ViewModelInject constructor(
         this.type = type
         this.hardness = hardness
         this.address = address
-    }
-
-    fun navigateUp() {
-        navController.navigateUp()
     }
 
     fun create(description: String) {

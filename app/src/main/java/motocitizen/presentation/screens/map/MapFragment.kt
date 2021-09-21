@@ -5,6 +5,7 @@ import android.location.Location
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -24,6 +25,7 @@ import motocitizen.domain.lcenstate.isLoading
 import motocitizen.domain.model.accident.Accident
 import motocitizen.main.R
 import motocitizen.presentation.base.viewmodel.VMFragment
+import motocitizen.presentation.base.viewmodel.commands.VMCommand
 import motocitizen.presentation.screens.root.RootActivity
 import timber.log.Timber
 import java.util.*
@@ -36,6 +38,8 @@ private const val MAP_MIN_ZOOM: Float = 1f
 @AndroidEntryPoint
 class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyCallback,
     OnMarkerClickListener, OnMyLocationButtonClickListener, OnCameraMoveStartedListener {
+
+    private val navController by lazy { findNavController() }
 
     override val viewModel: MapViewModel by viewModels()
     private val args: MapFragmentArgs by navArgs()
@@ -178,6 +182,20 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
             } catch (e: SecurityException) {
                 Timber.e(e)
             }
+        }
+    }
+
+    override fun onCommandReceived(command: VMCommand) {
+        super.onCommandReceived(command)
+        when (command) {
+            is ToDetails -> navController.navigate(
+                MapFragmentDirections.actionMapFragmentToAccidentDetailsFragment(
+                    accidentId = command.accidentId,
+                    user = command.user,
+                    mapEnable = command.mapEnable
+                )
+            )
+
         }
     }
 }
