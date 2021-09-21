@@ -75,7 +75,9 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
     override fun onResume() {
         super.onResume()
         viewModel.loadUser()
-        if (viewModel.requestingLocationUpdates) startLocationUpdates()
+        if (viewModel.requestingLocationUpdates) {
+            startLocationUpdates()
+        }
     }
 
     private fun renderContent(list: List<Accident>) {

@@ -2,6 +2,7 @@ package motocitizen.presentation.screens.accident.create.map
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateMapViewModel @Inject constructor(
-    private val nominationUseCase: NominationUseCase
+    private val nominationUseCase: NominationUseCase,
+    val fusedLocationProviderClient: FusedLocationProviderClient
 ) : BaseViewModel() {
 
     var isBindCam = true
