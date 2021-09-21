@@ -22,6 +22,9 @@ const val MINIMAL_TEXT_SIZE = 6
 @AndroidEntryPoint
 class CreateDescriptionFragment :
     VMFragment<CreateDescriptionViewModel>(R.layout.fragment_create_final) {
+
+    private val navController by lazy { findNavController() }
+
     override val viewModel: CreateDescriptionViewModel by viewModels()
 
     private val args: CreateDescriptionFragmentArgs by navArgs()
@@ -45,7 +48,7 @@ class CreateDescriptionFragment :
     override fun initUi(savedInstanceState: Bundle?) {
         tool_bar.setTitle(getString(R.string.details))
         tool_bar.run {
-            onLeftIconClick = viewModel::navigateUp
+            onLeftIconClick = { navController.navigateUp() }
         }
 
         create_final_text.onTextChanged { input ->

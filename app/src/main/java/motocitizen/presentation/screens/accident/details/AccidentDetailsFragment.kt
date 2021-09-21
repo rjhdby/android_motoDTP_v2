@@ -6,6 +6,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,12 +19,16 @@ import motocitizen.domain.model.user.UserRole
 import motocitizen.domain.utils.distanceString
 import motocitizen.main.R
 import motocitizen.presentation.base.viewmodel.VMFragment
+import motocitizen.presentation.base.viewmodel.commands.VMCommand
 import motocitizen.presentation.screens.accident.details.tabs.AccidentDetailAdapter
 import motocitizen.presentation.screens.accident.details.tabs.AccidentDetailTabType
 
 @AndroidEntryPoint
 class AccidentDetailsFragment :
     VMFragment<AccidentDetailsViewModel>(R.layout.fragment_accident_details) {
+
+    private val navController by lazy { findNavController() }
+
     override val viewModel: AccidentDetailsViewModel by viewModels()
 
     private val args: AccidentDetailsFragmentArgs by navArgs()
@@ -138,5 +143,16 @@ class AccidentDetailsFragment :
 //      acc_details_general_status.visibility = if (accident.status == AccidentStatus.ACTIVE) View.GONE else View.VISIBLE
 //      acc_details_general_status.text = accident.status.text
 //      acc_details_general_owner.text = accident.owner.name()
+    }
+
+    override fun onCommandReceived(command: VMCommand) {
+        super.onCommandReceived(command)
+        when (command) {
+            is ToMap -> navController.navigate(
+                AccidentDetailsFragmentDirections.actionAccidentDetailsFragmentToMapFragment(
+                    command.accident
+                )
+            )
+        }
     }
 }

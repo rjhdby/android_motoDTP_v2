@@ -1,9 +1,7 @@
 package motocitizen.presentation.screens.map
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -11,6 +9,7 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import dagger.hilt.android.lifecycle.HiltViewModel
 import motocitizen.data.network.user.User
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
@@ -18,10 +17,12 @@ import motocitizen.domain.model.accident.Accident
 import motocitizen.domain.usecases.AccidentUseCase
 import motocitizen.domain.usecases.GetUserUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
+import motocitizen.presentation.base.viewmodel.commands.VMCommand
+import javax.inject.Inject
 
-class MapViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MapViewModel @Inject constructor(
     private val getAccidentUseCase: AccidentUseCase,
-    private val navController: NavController,
     private val getUser: GetUserUseCase,
     val fusedLocationProviderClient: FusedLocationProviderClient
 ) : BaseViewModel() {
@@ -75,7 +76,7 @@ class MapViewModel @ViewModelInject constructor(
         this.accident = accident
     }
 
-    fun buildLocationRequest() {
+    private fun buildLocationRequest() {
         locationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = LOC_REQUEST_INTERVAL
@@ -102,8 +103,8 @@ class MapViewModel @ViewModelInject constructor(
     }
 
     fun toDetails(accidentId: String) {
-        navController.navigate(
-            MapFragmentDirections.actionMapFragmentToAccidentDetailsFragment(
+        commands.onNext(
+            ToDetails(
                 accidentId = accidentId,
                 user = userState.value!!.asContent(),
                 mapEnable = false
@@ -126,3 +127,6 @@ class MapViewModel @ViewModelInject constructor(
         }
     }
 }
+
+data class ToDetails(val accidentId: String, val user: User, val mapEnable: Boolean) :
+    VMCommand

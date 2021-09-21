@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -26,6 +29,8 @@ class CreateMapFragment : VMFragment<CreateMapViewModel>(R.layout.fragment_creat
     private var lastKnownLocation: Location? = null
     private val defaultLocation = LatLng(0.0, 0.0)
 
+    private val navController by lazy { findNavController() }
+
     override val viewModel: CreateMapViewModel by viewModels()
 
     companion object {
@@ -41,11 +46,13 @@ class CreateMapFragment : VMFragment<CreateMapViewModel>(R.layout.fragment_creat
         )
         saveButton.setOnClickListener {
             val camera = googleMap.cameraPosition
-            viewModel.navigateToType(
-                Address(
-                    camera.target.latitude,
-                    camera.target.longitude,
-                    address.text.toString()
+            navController.navigate(
+                CreateMapFragmentDirections.actionCreateMapFragmentToCreateTypeFragment(
+                    Address(
+                        camera.target.latitude,
+                        camera.target.longitude,
+                        address.text.toString()
+                    )
                 )
             )
         }
@@ -121,11 +128,6 @@ class CreateMapFragment : VMFragment<CreateMapViewModel>(R.layout.fragment_creat
         } catch (e: SecurityException) {
             Timber.e(e)
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        viewModel.fusedLocationProviderClient.removeLocationUpdates(viewModel.locationCallback)
     }
 
     private fun setMapListeners() {

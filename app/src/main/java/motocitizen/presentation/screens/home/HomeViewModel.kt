@@ -1,70 +1,63 @@
 package motocitizen.presentation.screens.home
 
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavController
-import motocitizen.data.network.user.User
+import dagger.hilt.android.lifecycle.HiltViewModel
 import motocitizen.data.repos.SettingsDataRepo
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
-import motocitizen.domain.model.accident.Accident
 import motocitizen.domain.usecases.AccidentUseCase
 import motocitizen.domain.usecases.GetUserUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
+import motocitizen.presentation.base.viewmodel.delegate
+import motocitizen.presentation.base.viewmodel.mapDistinct
+import javax.inject.Inject
 
-class HomeViewModel @ViewModelInject constructor(
-    private val navController: NavController,
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val getUser: GetUserUseCase,
     private val getAccidentUseCase: AccidentUseCase,
     private val settingsDataRepo: SettingsDataRepo
 ) : BaseViewModel() {
 
-    lateinit var user: User
+    private val liveState = MutableLiveData(createInitialViewState())
 
-    private val _loadAccidentListState = MutableLiveData<LcenState<List<Accident>>>(LcenState.None)
-    val loadAccidentListState: LiveData<LcenState<List<Accident>>>
-        get() = _loadAccidentListState
+    private var state: HomeViewState by liveState.delegate()
 
-    private val _userState = MutableLiveData<LcenState<User>>(LcenState.None)
-    val userState: LiveData<LcenState<User>>
-        get() = _userState
+    val loadUserState = liveState.mapDistinct { it.user }
+    val loadAccidentListState = liveState.mapDistinct { it.accidentList }
 
     fun loadUser() {
         safeSubscribe {
             getUser(skipCache = false)
                 .toLcenEventObservable { it }
                 .subscribe(
-                    _userState::postValue,
+                    { state = state.copy(user = it) },
                     ::handleError
                 )
         }
     }
 
-    fun loadAccidentList(lat: Double, lon: Double) {
+    private fun createInitialViewState(): HomeViewState {
+        return HomeViewState(
+            accidentList = LcenState.None,
+            user = LcenState.None,
+        )
+    }
+
+    fun getAccidentList(lat: Double, lon: Double) {
         safeSubscribe {
             getAccidentUseCase.getAccidentList(
                 lat = lat,
                 lon = lon,
                 radius = settingsDataRepo.getDistance().toInt(),
                 depth = settingsDataRepo.getDepth().toInt(),
-                userId = userState.value!!.asContent().id
+                userId = state.user.asContent().id
             )
                 .toLcenEventObservable { it }
                 .subscribe(
-                    _loadAccidentListState::postValue,
+                    { state = state.copy(accidentList = it) },
                     ::handleError
                 )
         }
-    }
-
-    fun onItemPressed(item: Accident) {
-        navController.navigate(
-            HomeFragmentDirections.actionHomeFragmentToAccidentDetailsFragment(
-                accidentId = item.id,
-                user = userState.value!!.asContent(),
-                mapEnable = true
-            )
-        )
     }
 }

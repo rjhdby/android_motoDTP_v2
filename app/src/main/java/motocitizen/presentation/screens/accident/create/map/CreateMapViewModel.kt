@@ -1,28 +1,25 @@
 package motocitizen.presentation.screens.accident.create.map
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavController
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import dagger.hilt.android.lifecycle.HiltViewModel
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
-import motocitizen.domain.model.accident.Address
 import motocitizen.domain.usecases.NominationUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 import motocitizen.presentation.screens.map.MapViewModel
 import okhttp3.ResponseBody
+import javax.inject.Inject
 
-class CreateMapViewModel @ViewModelInject constructor(
-    private val navController: NavController,
-    private val nominationUseCase: NominationUseCase,
-    val fusedLocationProviderClient: FusedLocationProviderClient
+@HiltViewModel
+class CreateMapViewModel @Inject constructor(
+    private val nominationUseCase: NominationUseCase
 ) : BaseViewModel() {
 
     var isBindCam = true
@@ -36,11 +33,6 @@ class CreateMapViewModel @ViewModelInject constructor(
     val loadAddress: LiveData<LcenState<ResponseBody>>
         get() = _loadAddress
 
-    fun navigateToType(address: Address) {
-        navController.navigate(
-            CreateMapFragmentDirections.actionCreateMapFragmentToCreateTypeFragment(address)
-        )
-    }
 
     init {
         buildLocationRequest()

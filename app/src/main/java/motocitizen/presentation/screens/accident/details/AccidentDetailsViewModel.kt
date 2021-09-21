@@ -1,18 +1,19 @@
 package motocitizen.presentation.screens.accident.details
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavController
+import dagger.hilt.android.lifecycle.HiltViewModel
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
 import motocitizen.domain.model.accident.Accident
 import motocitizen.domain.usecases.AccidentUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
+import motocitizen.presentation.base.viewmodel.commands.VMCommand
 import motocitizen.presentation.base.viewmodel.requireValue
+import javax.inject.Inject
 
-class AccidentDetailsViewModel @ViewModelInject constructor(
-    private val navController: NavController,
+@HiltViewModel
+class AccidentDetailsViewModel @Inject constructor(
     private val getAccidentUseCase: AccidentUseCase
 ) : BaseViewModel() {
 
@@ -116,8 +117,8 @@ class AccidentDetailsViewModel @ViewModelInject constructor(
     }
 
     fun toMap() {
-        navController.navigate(
-            AccidentDetailsFragmentDirections.actionAccidentDetailsFragmentToMapFragment(getAccident()!!)
-        )
+        commands.onNext(ToMap(getAccident()!!))
     }
 }
+
+data class ToMap(val accident: Accident?) : VMCommand

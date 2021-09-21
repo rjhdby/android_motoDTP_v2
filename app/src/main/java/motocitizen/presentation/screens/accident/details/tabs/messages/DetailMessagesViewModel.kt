@@ -1,8 +1,8 @@
 package motocitizen.presentation.screens.accident.details.tabs.messages
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import motocitizen.data.network.user.User
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
@@ -10,8 +10,10 @@ import motocitizen.domain.model.message.Message
 import motocitizen.domain.usecases.GetUserUseCase
 import motocitizen.domain.usecases.MessageUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
+import javax.inject.Inject
 
-class DetailMessagesViewModel @ViewModelInject constructor(
+@HiltViewModel
+class DetailMessagesViewModel @Inject constructor(
     private val getUser: GetUserUseCase,
     private val messageUseCase: MessageUseCase
 ) : BaseViewModel() {

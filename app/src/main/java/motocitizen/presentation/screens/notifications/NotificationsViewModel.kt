@@ -1,7 +1,8 @@
 package motocitizen.presentation.screens.notifications
 
-import androidx.hilt.lifecycle.ViewModelInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import motocitizen.presentation.base.viewmodel.BaseViewModel
+import javax.inject.Inject
 
-class NotificationsViewModel @ViewModelInject constructor(
-) : BaseViewModel()
+@HiltViewModel
+class NotificationsViewModel @Inject constructor() : BaseViewModel()
