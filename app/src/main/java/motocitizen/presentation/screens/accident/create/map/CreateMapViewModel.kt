@@ -4,6 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -20,12 +21,14 @@ import okhttp3.ResponseBody
 
 class CreateMapViewModel @ViewModelInject constructor(
     private val navController: NavController,
-    private val nominationUseCase: NominationUseCase
+    private val nominationUseCase: NominationUseCase,
+    val fusedLocationProviderClient: FusedLocationProviderClient
 ) : BaseViewModel() {
 
     var isBindCam = true
     lateinit var locationRequest: LocationRequest
     lateinit var locationCallback: LocationCallback
+    var requestingLocationUpdates = false
 
     private val _loadAddress = MutableLiveData<LcenState<ResponseBody>>(
         LcenState.None
@@ -43,7 +46,7 @@ class CreateMapViewModel @ViewModelInject constructor(
         buildLocationRequest()
     }
 
-    fun buildLocationRequest() {
+    private fun buildLocationRequest() {
         locationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = MapViewModel.LOC_REQUEST_INTERVAL

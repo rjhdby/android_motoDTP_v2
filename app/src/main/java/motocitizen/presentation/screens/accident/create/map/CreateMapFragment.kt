@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -24,7 +22,6 @@ import timber.log.Timber
 class CreateMapFragment : VMFragment<CreateMapViewModel>(R.layout.fragment_create_map),
     OnMapReadyCallback,
     GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnCameraMoveStartedListener {
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var googleMap: GoogleMap
     private var lastKnownLocation: Location? = null
     private val defaultLocation = LatLng(0.0, 0.0)
@@ -33,12 +30,6 @@ class CreateMapFragment : VMFragment<CreateMapViewModel>(R.layout.fragment_creat
 
     companion object {
         private const val MAP_MIN_ZOOM: Float = 1f
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        fusedLocationProviderClient = LocationServices
-            .getFusedLocationProviderClient(requireActivity())
     }
 
     override fun initViewModel() {
@@ -80,18 +71,29 @@ class CreateMapFragment : VMFragment<CreateMapViewModel>(R.layout.fragment_creat
             googleMap.isMyLocationEnabled = true
             setMapListeners()
             viewModel.buildLocationCallBack(googleMap)
-            fusedLocationProviderClient.requestLocationUpdates(
-                viewModel.locationRequest,
-                viewModel.locationCallback,
-                requireActivity().mainLooper
-            )
+            startLocationUpdates()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (viewModel.requestingLocationUpdates) startLocationUpdates()
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun startLocationUpdates() {
+        viewModel.fusedLocationProviderClient.requestLocationUpdates(
+            viewModel.locationRequest,
+            viewModel.locationCallback,
+            requireActivity().mainLooper
+        )
+        viewModel.requestingLocationUpdates = true
     }
 
     private fun setLastLocation() {
         try {
             if (App.isLocPermission) {
-                val locationResult = fusedLocationProviderClient.lastLocation
+                val locationResult = viewModel.fusedLocationProviderClient.lastLocation
 
                 locationResult.addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
@@ -119,6 +121,15 @@ class CreateMapFragment : VMFragment<CreateMapViewModel>(R.layout.fragment_creat
         } catch (e: SecurityException) {
             Timber.e(e)
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopLocationUpdates()
+    }
+
+    private fun stopLocationUpdates() {
+        viewModel.fusedLocationProviderClient.removeLocationUpdates(viewModel.locationCallback)
     }
 
     private fun setMapListeners() {
