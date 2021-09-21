@@ -3,7 +3,7 @@ package motocitizen.di.module.application
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.components.ViewModelComponent
 import motocitizen.data.network.main.UserApiFactory
 import motocitizen.data.network.user.UserApi
 import motocitizen.data.repos.UserDataRepo
@@ -12,7 +12,7 @@ import motocitizen.domain.repos.UserRepo
 import motocitizen.domain.usecases.GetUserUseCase
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(ViewModelComponent::class)
 object UserModule {
 
     @Provides

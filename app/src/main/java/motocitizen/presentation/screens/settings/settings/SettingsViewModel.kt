@@ -1,9 +1,9 @@
 package motocitizen.presentation.screens.settings.settings
 
 import android.webkit.CookieManager
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import motocitizen.data.network.user.User
 import motocitizen.data.repos.AuthDataRepo
 import motocitizen.data.repos.SettingsDataRepo
@@ -11,8 +11,10 @@ import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
 import motocitizen.domain.usecases.GetUserUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
+import javax.inject.Inject
 
-class SettingsViewModel @ViewModelInject constructor(
+@HiltViewModel
+class SettingsViewModel @Inject constructor(
     private val settingsDataRepo: SettingsDataRepo,
     private val getUser: GetUserUseCase,
     private val authDataRepo: AuthDataRepo

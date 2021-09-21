@@ -4,9 +4,9 @@ import com.airbnb.epoxy.TypedEpoxyController
 import motocitizen.domain.model.accident.Accident
 import motocitizen.ui.rows.accident.*
 
-class AccidentEpoxyController : TypedEpoxyController<List<Accident>>() {
-
-    var clickListener: ((Accident) -> Unit)? = null
+class AccidentEpoxyController(
+    private var clickListener: ((Accident) -> Unit)? = null
+) : TypedEpoxyController<List<Accident>>() {
 
     override fun buildModels(accidentList: List<Accident>) {
         accidentList.forEachIndexed { index, accident ->
