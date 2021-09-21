@@ -31,7 +31,7 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
                 navController.navigate(
                     HomeFragmentDirections.actionHomeFragmentToAccidentDetailsFragment(
                         accidentId = it.id,
-                        user = viewModel.userState.value!!.asContentOrNull()!!,
+                        user = viewModel.loadUserState.value!!.asContentOrNull()!!,
                         mapEnable = true
                     )
                 )
@@ -66,7 +66,7 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
     }
 
     override fun initViewModel() {
-        viewModel.userState.observe {
+        viewModel.loadUserState.observe {
             it.asContentOrNull()?.let {
                 loadAccidentList()
             }
@@ -90,7 +90,7 @@ class HomeFragment : VMFragment<HomeViewModel>(R.layout.fragment_home) {
                     .setLongitude(it.longitude)
                     .setLatitude(it.latitude)
                     .build()
-                viewModel.loadAccidentList(
+                viewModel.getAccidentList(
                     lastLocation!!.latitude,
                     lastLocation!!.longitude
                 )
