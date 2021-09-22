@@ -1,6 +1,5 @@
 package motocitizen.presentation.screens.accident.create.map
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -14,8 +13,9 @@ import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
 import motocitizen.domain.usecases.NominationUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
+import motocitizen.presentation.base.viewmodel.delegate
+import motocitizen.presentation.base.viewmodel.mapDistinct
 import motocitizen.presentation.screens.map.MapViewModel
-import okhttp3.ResponseBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,17 +24,19 @@ class CreateMapViewModel @Inject constructor(
     val fusedLocationProviderClient: FusedLocationProviderClient
 ) : BaseViewModel() {
 
-    var isBindCam = true
+    private val liveState = MutableLiveData(createInitialViewState())
+    private var state: CreateMapViewState by liveState.delegate()
+
     lateinit var locationRequest: LocationRequest
     lateinit var locationCallback: LocationCallback
+
+    var isBindCam = true
     var requestingLocationUpdates = false
+    val loadAddressState = liveState.mapDistinct { it.loadAddress }
 
-    private val _loadAddress = MutableLiveData<LcenState<ResponseBody>>(
-        LcenState.None
-    )
-    val loadAddress: LiveData<LcenState<ResponseBody>>
-        get() = _loadAddress
-
+    private fun createInitialViewState(): CreateMapViewState {
+        return CreateMapViewState(loadAddress = LcenState.None)
+    }
 
     init {
         buildLocationRequest()
@@ -71,7 +73,7 @@ class CreateMapViewModel @Inject constructor(
             nominationUseCase(lat, lon)
                 .toLcenEventObservable { it }
                 .subscribe(
-                    _loadAddress::postValue,
+                    { state = state.copy(loadAddress = it) },
                     this::handleError
                 )
         }

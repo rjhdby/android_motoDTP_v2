@@ -1,15 +1,15 @@
 package motocitizen.presentation.screens.accident.details.tabs.messages
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import motocitizen.data.network.user.User
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
 import motocitizen.domain.model.message.Message
 import motocitizen.domain.usecases.GetUserUseCase
 import motocitizen.domain.usecases.MessageUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
+import motocitizen.presentation.base.viewmodel.delegate
+import motocitizen.presentation.base.viewmodel.mapDistinct
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,17 +20,20 @@ class DetailMessagesViewModel @Inject constructor(
 
     lateinit var accidentId: String
 
-    private val _loadMessageListState = MutableLiveData<LcenState<List<Message>>>(LcenState.None)
-    val loadMessageListState: LiveData<LcenState<List<Message>>>
-        get() = _loadMessageListState
+    private val liveState = MutableLiveData(createInitialViewState())
+    private var state: DetailMessagesViewState by liveState.delegate()
 
-    private val _newMessageListState = MutableLiveData<LcenState<Message>>(LcenState.None)
-    val newMessageListState: LiveData<LcenState<Message>>
-        get() = _newMessageListState
+    val loadMessageListState = liveState.mapDistinct { it.loadMessageListState }
+    val newMessageListState = liveState.mapDistinct { it.newMessageListState }
+    val checkUserState = liveState.mapDistinct { it.checkUserState }
 
-    private val _checkRestrictionsState = MutableLiveData<LcenState<User>>(LcenState.None)
-    val checkUserState: LiveData<LcenState<User>>
-        get() = _checkRestrictionsState
+    private fun createInitialViewState(): DetailMessagesViewState {
+        return DetailMessagesViewState(
+            loadMessageListState = LcenState.None,
+            newMessageListState = LcenState.None,
+            checkUserState = LcenState.None,
+        )
+    }
 
     fun onAfterInit(accidentId: String) {
         this.accidentId = accidentId
@@ -45,7 +48,7 @@ class DetailMessagesViewModel @Inject constructor(
             messageUseCase.getMessageList(accidentId)
                 .toLcenEventObservable { it }
                 .subscribe(
-                    _loadMessageListState::postValue,
+                    { state = state.copy(loadMessageListState = it) },
                     ::handleError
                 )
         }
@@ -56,7 +59,7 @@ class DetailMessagesViewModel @Inject constructor(
             messageUseCase.createMessage(accidentId, text)
                 .toLcenEventObservable { it }
                 .subscribe(
-                    _newMessageListState::postValue,
+                    { state = state.copy(newMessageListState = it) },
                     ::handleError
                 )
         }
@@ -67,7 +70,7 @@ class DetailMessagesViewModel @Inject constructor(
             getUser(skipCache = false)
                 .toLcenEventObservable { it }
                 .subscribe(
-                    _checkRestrictionsState::postValue,
+                    { state = state.copy(checkUserState = it) },
                     ::handleError
                 )
         }

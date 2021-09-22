@@ -1,6 +1,5 @@
 package motocitizen.presentation.screens.accident.details
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import motocitizen.domain.lcenstate.LcenState
@@ -9,7 +8,8 @@ import motocitizen.domain.model.accident.Accident
 import motocitizen.domain.usecases.AccidentUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 import motocitizen.presentation.base.viewmodel.commands.VMCommand
-import motocitizen.presentation.base.viewmodel.requireValue
+import motocitizen.presentation.base.viewmodel.delegate
+import motocitizen.presentation.base.viewmodel.mapDistinct
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,14 +17,18 @@ class AccidentDetailsViewModel @Inject constructor(
     private val getAccidentUseCase: AccidentUseCase
 ) : BaseViewModel() {
 
-    private val _loadAccident = MutableLiveData<LcenState<Accident>>(
-        LcenState.None
-    )
-    val loadAccident: LiveData<LcenState<Accident>>
-        get() = _loadAccident
-
     private lateinit var accidentId: String
     private lateinit var userId: String
+
+    private val liveState = MutableLiveData(createInitialViewState())
+    private var state: AccidentDetailsViewState by liveState.delegate()
+    val loadAccidentState = liveState.mapDistinct { it.loadAccident }
+
+    private fun createInitialViewState(): AccidentDetailsViewState {
+        return AccidentDetailsViewState(
+            loadAccident = LcenState.None
+        )
+    }
 
     fun onAfterInit(accidentId: String, userId: String) {
         this.accidentId = accidentId
@@ -36,39 +40,39 @@ class AccidentDetailsViewModel @Inject constructor(
             getAccidentUseCase.getAccident(userId, accidentId)
                 .toLcenEventObservable { it }
                 .subscribe(
-                    _loadAccident::postValue,
+                    { state = state.copy(loadAccident = it) },
                     this::handleError
                 )
         }
     }
 
     fun changeConflict() {
-        if (loadAccident.requireValue().asContentOrNull()?.conflict!!)
+        if (state.loadAccident.asContentOrNull()?.conflict!!)
             dropConflict()
         else
             setConflict()
     }
 
     fun resolveReopen() {
-        if (loadAccident.requireValue().asContentOrNull()?.hidden!!)
+        if (state.loadAccident.asContentOrNull()?.hidden!!)
             reopen()
         else
             resolve()
     }
 
     fun getAccident(): Accident? {
-        return loadAccident.requireValue().asContentOrNull()
+        return state.loadAccident.asContentOrNull()
     }
 
     private fun setConflict() {
         safeSubscribe {
             getAccidentUseCase.setConflict(
                 userId,
-                loadAccident.requireValue().asContentOrNull()?.id!!
+                state.loadAccident.asContentOrNull()?.id!!
             )
                 .toLcenEventObservable { it }
                 .subscribe(
-                    _loadAccident::postValue,
+                    { state = state.copy(loadAccident = it) },
                     this::handleError
                 )
         }
@@ -78,11 +82,11 @@ class AccidentDetailsViewModel @Inject constructor(
         safeSubscribe {
             getAccidentUseCase.dropConflict(
                 userId,
-                loadAccident.requireValue().asContentOrNull()?.id!!
+                state.loadAccident.asContentOrNull()?.id!!
             )
                 .toLcenEventObservable { it }
                 .subscribe(
-                    _loadAccident::postValue,
+                    { state = state.copy(loadAccident = it) },
                     this::handleError
                 )
         }
@@ -92,11 +96,11 @@ class AccidentDetailsViewModel @Inject constructor(
         safeSubscribe {
             getAccidentUseCase.reopen(
                 userId,
-                loadAccident.requireValue().asContentOrNull()?.id!!
+                state.loadAccident.asContentOrNull()?.id!!
             )
                 .toLcenEventObservable { it }
                 .subscribe(
-                    _loadAccident::postValue,
+                    { state = state.copy(loadAccident = it) },
                     this::handleError
                 )
         }
@@ -106,11 +110,11 @@ class AccidentDetailsViewModel @Inject constructor(
         safeSubscribe {
             getAccidentUseCase.resolve(
                 userId,
-                loadAccident.requireValue().asContentOrNull()?.id!!
+                state.loadAccident.asContentOrNull()?.id!!
             )
                 .toLcenEventObservable { it }
                 .subscribe(
-                    _loadAccident::postValue,
+                    { state = state.copy(loadAccident = it) },
                     this::handleError
                 )
         }

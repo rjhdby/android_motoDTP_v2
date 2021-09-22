@@ -1,17 +1,17 @@
 package motocitizen.presentation.screens.root
 
 import android.location.LocationManager
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.lifecycle.HiltViewModel
-import motocitizen.data.network.user.User
 import motocitizen.data.repos.AuthDataRepo
 import motocitizen.domain.lcenstate.LcenState
 import motocitizen.domain.lcenstate.toLcenEventObservable
 import motocitizen.domain.usecases.GetUserUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 import motocitizen.presentation.base.viewmodel.commands.VMCommand
+import motocitizen.presentation.base.viewmodel.delegate
+import motocitizen.presentation.base.viewmodel.mapDistinct
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,16 +21,15 @@ class RootViewModel @Inject constructor(
     var fusedLocationProviderClient: FusedLocationProviderClient
 ) : BaseViewModel() {
 
-    companion object {
-        const val LOC_MIN_DISTANCE = 1F
-    }
-
-    private val _checkRestrictionsState = MutableLiveData<LcenState<User>>(LcenState.None)
-
-    val checkUserState: LiveData<LcenState<User>>
-        get() = _checkRestrictionsState
-
     private lateinit var locationManager: LocationManager
+
+    private val liveState = MutableLiveData(createInitialViewState())
+    private var state: RootViewState by liveState.delegate()
+    val checkUserState = liveState.mapDistinct { it.checkUserState }
+
+    private fun createInitialViewState(): RootViewState {
+        return RootViewState(checkUserState = LcenState.None)
+    }
 
     fun onAfterInit(locManager: LocationManager) {
         checkClientCertificate()
@@ -43,7 +42,7 @@ class RootViewModel @Inject constructor(
             getUser(skipCache = true)
                 .toLcenEventObservable { it }
                 .subscribe(
-                    _checkRestrictionsState::postValue,
+                    { state = state.copy(checkUserState = it) },
                     ::handleError
                 )
         }

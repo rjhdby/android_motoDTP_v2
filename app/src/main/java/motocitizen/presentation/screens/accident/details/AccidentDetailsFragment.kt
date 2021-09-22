@@ -35,7 +35,7 @@ class AccidentDetailsFragment :
 
     override fun initViewModel() {
         viewModel.onAfterInit(args.accidentId, args.user.id)
-        viewModel.loadAccident.observe {
+        viewModel.loadAccidentState.observe {
             show_progress.isVisible = it.isLoading()
             error_view.isVisible = it.isError()
             view_panel.isVisible = it.isContent()
