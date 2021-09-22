@@ -75,6 +75,9 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
     override fun onResume() {
         super.onResume()
         viewModel.loadUser()
+        if (viewModel.requestingLocationUpdates) {
+            startLocationUpdates()
+        }
     }
 
     private fun renderContent(list: List<Accident>) {
@@ -95,12 +98,22 @@ class MapFragment : VMFragment<MapViewModel>(R.layout.fragment_map), OnMapReadyC
             googleMap.isMyLocationEnabled = true
             setMapListeners()
             viewModel.buildLocationCallBack(googleMap)
-            viewModel.fusedLocationProviderClient.requestLocationUpdates(
-                viewModel.locationRequest,
-                viewModel.locationCallback,
-                requireActivity().mainLooper
-            )
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.fusedLocationProviderClient.removeLocationUpdates(viewModel.locationCallback)
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun startLocationUpdates() {
+        viewModel.fusedLocationProviderClient.requestLocationUpdates(
+            viewModel.locationRequest,
+            viewModel.locationCallback,
+            requireActivity().mainLooper
+        )
+        viewModel.requestingLocationUpdates = true
     }
 
     private fun setMapListeners() {

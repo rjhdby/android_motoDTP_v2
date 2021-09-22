@@ -24,7 +24,7 @@ import javax.inject.Inject
 class MapViewModel @Inject constructor(
     private val getAccidentUseCase: AccidentUseCase,
     private val getUser: GetUserUseCase,
-    var fusedLocationProviderClient: FusedLocationProviderClient
+    val fusedLocationProviderClient: FusedLocationProviderClient
 ) : BaseViewModel() {
 
     //todo Вынести в общий object для обоих карт
@@ -33,7 +33,7 @@ class MapViewModel @Inject constructor(
         const val LOC_REQUEST_FAST_INTERVAL = 250L
         const val LOC_REQUEST_SMALLEST_DISTANCE = 1f
     }
-
+    var requestingLocationUpdates = false
     var isBindCam = true
     var accident: Accident? = null
 
