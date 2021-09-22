@@ -90,5 +90,5 @@ class MockInterceptor : Interceptor {
 }
 
 const val nomination = """
-    Красная площадь д.1
+Красная площадь д.1
 """
