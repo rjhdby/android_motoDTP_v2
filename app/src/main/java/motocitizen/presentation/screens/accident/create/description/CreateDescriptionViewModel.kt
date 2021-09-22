@@ -1,6 +1,5 @@
 package motocitizen.presentation.screens.accident.create.description
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import motocitizen.domain.lcenstate.LcenState
@@ -10,7 +9,8 @@ import motocitizen.domain.model.accident.AccidentType
 import motocitizen.domain.model.accident.Address
 import motocitizen.domain.usecases.AccidentUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
-import okhttp3.ResponseBody
+import motocitizen.presentation.base.viewmodel.delegate
+import motocitizen.presentation.base.viewmodel.mapDistinct
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,16 +18,19 @@ class CreateDescriptionViewModel @Inject constructor(
     private val accidentUseCase: AccidentUseCase,
 ) : BaseViewModel() {
 
-    private val _newAccident = MutableLiveData<LcenState<ResponseBody>>(
-        LcenState.None
-    )
-    val newAccident: LiveData<LcenState<ResponseBody>>
-        get() = _newAccident
+    private val liveState = MutableLiveData(createInitialViewState())
+    private var state: CreateDescriptionViewState by liveState.delegate()
+
+    val createState = liveState.mapDistinct { it.newAccident }
 
     lateinit var type: AccidentType
     lateinit var address: Address
 
     var hardness: AccidentHardness? = null
+
+    private fun createInitialViewState(): CreateDescriptionViewState {
+        return CreateDescriptionViewState(newAccident = LcenState.None)
+    }
 
     fun onAfterInit(type: AccidentType, hardness: AccidentHardness?, address: Address) {
         this.type = type
@@ -45,7 +48,7 @@ class CreateDescriptionViewModel @Inject constructor(
             )
                 .toLcenEventObservable { it }
                 .subscribe(
-                    { _newAccident.postValue(it) },
+                    { state = state.copy(newAccident = it) },
                     ::handleError
                 )
         }

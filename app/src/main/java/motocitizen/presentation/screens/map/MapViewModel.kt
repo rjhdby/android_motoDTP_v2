@@ -18,6 +18,8 @@ import motocitizen.domain.usecases.AccidentUseCase
 import motocitizen.domain.usecases.GetUserUseCase
 import motocitizen.presentation.base.viewmodel.BaseViewModel
 import motocitizen.presentation.base.viewmodel.commands.VMCommand
+import motocitizen.presentation.base.viewmodel.delegate
+import motocitizen.presentation.base.viewmodel.mapDistinct
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,6 +35,7 @@ class MapViewModel @Inject constructor(
         const val LOC_REQUEST_FAST_INTERVAL = 250L
         const val LOC_REQUEST_SMALLEST_DISTANCE = 1f
     }
+
     var requestingLocationUpdates = false
     var isBindCam = true
     var accident: Accident? = null
@@ -44,9 +47,14 @@ class MapViewModel @Inject constructor(
     //todo убрать после реализации входных параметров
     private val depth: Int = 999
 
-    private val _loadAccidentListState = MutableLiveData<LcenState<List<Accident>>>(LcenState.None)
-    val loadAccidentListState: LiveData<LcenState<List<Accident>>>
-        get() = _loadAccidentListState
+    private val liveState = MutableLiveData(createInitialViewState())
+    private var state: MapViewModelState by liveState.delegate()
+
+    val loadAccidentListState = liveState.mapDistinct { it.loadAccidentListState }
+
+    private fun createInitialViewState(): MapViewModelState {
+        return MapViewModelState(loadAccidentListState = LcenState.None)
+    }
 
     init {
         buildLocationRequest()
@@ -57,18 +65,18 @@ class MapViewModel @Inject constructor(
             safeSubscribe {
                 getAccidentUseCase.getAccidentList(
                     depth = depth,
-                    userId = userState.value!!.asContent().id
+                    userId = userState.value!!.asContentOrNull()?.id!!
                 )
                     .toLcenEventObservable { it }
                     .subscribe(
-                        _loadAccidentListState::postValue,
+                        { state = state.copy(loadAccidentListState = it) },
                         ::handleError
                     )
             }
         } else {
             val list = mutableListOf<Accident>()
             list.add(accident!!)
-            _loadAccidentListState.postValue(LcenState.Content(list))
+            state = state.copy(loadAccidentListState = LcenState.Content(list))
         }
     }
 

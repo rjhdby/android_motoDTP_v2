@@ -24,16 +24,19 @@ class CreateDescriptionFragment :
     VMFragment<CreateDescriptionViewModel>(R.layout.fragment_create_final) {
 
     private val navController by lazy { findNavController() }
+    private val args: CreateDescriptionFragmentArgs by navArgs()
 
     override val viewModel: CreateDescriptionViewModel by viewModels()
-
-    private val args: CreateDescriptionFragmentArgs by navArgs()
 
     override fun initViewModel() {
         viewModel.onAfterInit(
             args.type,
             //todo #69 Переделать когда Custom Enum supports null values
-            if (args.hardness != AccidentHardness.NULL) args.hardness else null,
+            if (args.hardness != AccidentHardness.NULL) {
+                args.hardness
+            } else {
+                null
+            },
             args.address
         )
     }
@@ -64,7 +67,7 @@ class CreateDescriptionFragment :
             viewModel.create(create_final_text.text.toString())
         }
 
-        viewModel.newAccident.observe {
+        viewModel.createState.observe {
             show_progress.isVisible = it.isLoading()
             error_view.isVisible = it.isError()
             result.isVisible = it.isContent()
